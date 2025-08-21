@@ -1,0 +1,201 @@
+import { MenuItem, MenuCategory, RestaurantInfo } from '@/types/menu';
+import dishPasta from '@/assets/dish-pasta.jpg';
+import dishSalmon from '@/assets/dish-salmon.jpg';
+import dishDessert from '@/assets/dish-dessert.jpg';
+import dishAppetizer from '@/assets/dish-appetizer.jpg';
+
+export const categories: MenuCategory[] = [
+  { id: 'appetizers', name: 'Appetizers', icon: '🥗', order: 1 },
+  { id: 'mains', name: 'Main Courses', icon: '🍽️', order: 2 },
+  { id: 'pasta', name: 'Pasta & Risotto', icon: '🍝', order: 3 },
+  { id: 'seafood', name: 'Seafood', icon: '🐟', order: 4 },
+  { id: 'desserts', name: 'Desserts', icon: '🍰', order: 5 },
+  { id: 'beverages', name: 'Beverages', icon: '🥂', order: 6 },
+];
+
+export const menuItems: MenuItem[] = [
+  // Appetizers
+  {
+    id: 'app-1',
+    name: 'Bruschetta Trio',
+    description: 'Three varieties of bruschetta with fresh tomatoes, burrata, and prosciutto',
+    price: 14.50,
+    category: categories[0],
+    image: dishAppetizer,
+    ingredients: ['Sourdough bread', 'Tomatoes', 'Burrata cheese', 'Prosciutto', 'Basil', 'Olive oil'],
+    allergens: ['Gluten', 'Dairy'],
+    dietary: [],
+    isPopular: true,
+    prepTime: 10,
+  },
+  {
+    id: 'app-2',
+    name: 'Crispy Calamari',
+    description: 'Fresh squid rings with spicy marinara sauce and lemon aioli',
+    price: 16.00,
+    category: categories[0],
+    image: dishAppetizer,
+    ingredients: ['Fresh squid', 'Semolina flour', 'Marinara sauce', 'Lemon', 'Garlic aioli'],
+    allergens: ['Gluten', 'Eggs'],
+    dietary: [],
+    prepTime: 12,
+  },
+
+  // Main Courses
+  {
+    id: 'main-1',
+    name: 'Grilled Ribeye Steak',
+    description: 'Prime 12oz ribeye with roasted vegetables and red wine jus',
+    price: 45.00,
+    category: categories[1],
+    image: dishSalmon,
+    ingredients: ['Ribeye steak', 'Seasonal vegetables', 'Red wine', 'Herbs', 'Butter'],
+    allergens: ['Dairy'],
+    dietary: ['gluten-free'],
+    isSpecial: true,
+    prepTime: 25,
+  },
+  {
+    id: 'main-2',
+    name: 'Herb-Crusted Lamb',
+    description: 'New Zealand lamb rack with rosemary, garlic and mint sauce',
+    price: 38.00,
+    category: categories[1],
+    image: dishSalmon,
+    ingredients: ['Lamb rack', 'Fresh herbs', 'Garlic', 'Mint', 'Olive oil'],
+    allergens: [],
+    dietary: ['gluten-free'],
+    prepTime: 30,
+  },
+
+  // Pasta
+  {
+    id: 'pasta-1',
+    name: 'Truffle Carbonara',
+    description: 'Fresh linguine with pancetta, black truffle, farm eggs and pecorino',
+    price: 28.00,
+    category: categories[2],
+    image: dishPasta,
+    ingredients: ['Fresh linguine', 'Pancetta', 'Black truffle', 'Farm eggs', 'Pecorino cheese'],
+    allergens: ['Gluten', 'Eggs', 'Dairy'],
+    dietary: [],
+    isPopular: true,
+    prepTime: 15,
+  },
+  {
+    id: 'pasta-2',
+    name: 'Lobster Ravioli',
+    description: 'House-made ravioli filled with fresh lobster in saffron cream sauce',
+    price: 34.00,
+    category: categories[2],
+    image: dishPasta,
+    ingredients: ['House pasta', 'Fresh lobster', 'Saffron', 'Cream', 'White wine'],
+    allergens: ['Gluten', 'Dairy', 'Shellfish'],
+    dietary: [],
+    isSpecial: true,
+    prepTime: 18,
+  },
+
+  // Seafood
+  {
+    id: 'sea-1',
+    name: 'Pan-Seared Salmon',
+    description: 'Atlantic salmon with lemon butter sauce and seasonal vegetables',
+    price: 32.00,
+    category: categories[3],
+    image: dishSalmon,
+    ingredients: ['Atlantic salmon', 'Lemon', 'Butter', 'Seasonal vegetables', 'Fresh dill'],
+    allergens: ['Fish', 'Dairy'],
+    dietary: ['gluten-free'],
+    isPopular: true,
+    prepTime: 20,
+  },
+  {
+    id: 'sea-2',
+    name: 'Seafood Risotto',
+    description: 'Creamy Arborio rice with mixed seafood and saffron',
+    price: 36.00,
+    category: categories[3],
+    image: dishPasta,
+    ingredients: ['Arborio rice', 'Mixed seafood', 'Saffron', 'White wine', 'Parmesan'],
+    allergens: ['Dairy', 'Shellfish'],
+    dietary: ['gluten-free'],
+    prepTime: 25,
+  },
+
+  // Desserts
+  {
+    id: 'des-1',
+    name: 'Chocolate Soufflé',
+    description: 'Warm dark chocolate soufflé with vanilla ice cream',
+    price: 12.00,
+    category: categories[4],
+    image: dishDessert,
+    ingredients: ['Dark chocolate', 'Eggs', 'Cream', 'Vanilla ice cream', 'Sugar'],
+    allergens: ['Eggs', 'Dairy'],
+    dietary: ['vegetarian'],
+    isPopular: true,
+    prepTime: 20,
+  },
+  {
+    id: 'des-2',
+    name: 'Tiramisu',
+    description: 'Classic Italian dessert with coffee-soaked ladyfingers and mascarpone',
+    price: 10.00,
+    category: categories[4],
+    image: dishDessert,
+    ingredients: ['Ladyfingers', 'Coffee', 'Mascarpone', 'Eggs', 'Cocoa powder'],
+    allergens: ['Eggs', 'Dairy', 'Gluten'],
+    dietary: ['vegetarian'],
+    prepTime: 5,
+  },
+
+  // Beverages
+  {
+    id: 'bev-1',
+    name: 'House Wine Selection',
+    description: 'Curated selection of red, white, and rosé wines',
+    price: 8.00,
+    category: categories[5],
+    image: dishAppetizer,
+    ingredients: ['Premium grapes'],
+    allergens: ['Sulfites'],
+    dietary: ['vegan'],
+    prepTime: 2,
+  },
+  {
+    id: 'bev-2',
+    name: 'Artisan Coffee',
+    description: 'Freshly roasted single-origin coffee beans',
+    price: 4.50,
+    category: categories[5],
+    image: dishAppetizer,
+    ingredients: ['Single-origin coffee beans'],
+    allergens: [],
+    dietary: ['vegan', 'gluten-free'],
+    prepTime: 3,
+  },
+];
+
+export const restaurantInfo: RestaurantInfo = {
+  name: 'Bella Vista',
+  description: 'An elegant dining experience featuring contemporary cuisine with Mediterranean influences',
+  address: '123 Gourmet Street, Culinary District, City 12345',
+  phone: '+1 (555) 123-4567',
+  email: 'reservations@bellavista.com',
+  website: 'www.bellavista.com',
+  hours: {
+    'Monday': 'Closed',
+    'Tuesday': '5:00 PM - 10:00 PM',
+    'Wednesday': '5:00 PM - 10:00 PM',
+    'Thursday': '5:00 PM - 10:00 PM',
+    'Friday': '5:00 PM - 11:00 PM',
+    'Saturday': '12:00 PM - 11:00 PM',
+    'Sunday': '12:00 PM - 9:00 PM',
+  },
+  socialMedia: {
+    facebook: 'https://facebook.com/bellavista',
+    instagram: 'https://instagram.com/bellavista',
+    twitter: 'https://twitter.com/bellavista',
+  },
+};
