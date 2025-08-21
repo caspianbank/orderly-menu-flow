@@ -18,11 +18,11 @@ interface OrderSummaryProps {
   onPlaceOrder: (customerInfo: { name: string; tableNumber: string; notes?: string }) => void;
 }
 
-export function OrderSummary({ 
-  orderItems, 
-  onUpdateQuantity, 
-  onRemoveItem, 
-  onPlaceOrder 
+export function OrderSummary({
+  orderItems,
+  onUpdateQuantity,
+  onRemoveItem,
+  onPlaceOrder
 }: OrderSummaryProps) {
   const [showOrderDialog, setShowOrderDialog] = useState(false);
   const [customerName, setCustomerName] = useState('');
@@ -30,7 +30,7 @@ export function OrderSummary({
   const [orderNotes, setOrderNotes] = useState('');
   const { toast } = useToast();
 
-  const totalAmount = orderItems.reduce((sum, item) => 
+  const totalAmount = orderItems.reduce((sum, item) =>
     sum + (item.menuItem.price * item.quantity), 0
   );
 
@@ -75,7 +75,7 @@ export function OrderSummary({
               <ShoppingCart className="h-6 w-6" />
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-md bg-card">
+          <DialogContent className="max-w-lg w-[95vw] max-h-[90vh] overflow-y-auto bg-card px-4 sm:px-6 mx-auto rounded-xl">
             <DialogHeader>
               <DialogTitle>Your Order</DialogTitle>
             </DialogHeader>
@@ -98,7 +98,7 @@ export function OrderSummary({
             className="h-14 w-14 rounded-full shadow-hover bg-primary hover:bg-primary-hover relative"
           >
             <ShoppingCart className="h-6 w-6" />
-            <Badge 
+            <Badge
               className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-secondary text-secondary-foreground font-bold text-xs min-w-[24px]"
             >
               {totalItems}
@@ -106,14 +106,14 @@ export function OrderSummary({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="max-w-lg w-[95vw] max-h-[90vh] overflow-y-auto bg-card">
+        <DialogContent className="max-w-lg w-[95vw] max-h-[90vh] overflow-y-auto bg-card px-4 sm:px-6 mx-auto rounded-xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <ShoppingCart className="h-5 w-5" />
               Your Order ({totalItems} {totalItems === 1 ? 'item' : 'items'})
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             <div className="max-h-48 overflow-y-auto space-y-2 border rounded-lg p-3 bg-muted/30">
               {orderItems.map((orderItem) => (
@@ -124,7 +124,7 @@ export function OrderSummary({
                       ${orderItem.menuItem.price.toFixed(2)} each
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
@@ -134,11 +134,11 @@ export function OrderSummary({
                     >
                       <Minus className="h-3 w-3" />
                     </Button>
-                    
+
                     <span className="w-8 text-center text-sm font-medium">
                       {orderItem.quantity}
                     </span>
-                    
+
                     <Button
                       variant="ghost"
                       size="sm"
@@ -147,7 +147,7 @@ export function OrderSummary({
                     >
                       <Plus className="h-3 w-3" />
                     </Button>
-                    
+
                     <Button
                       variant="ghost"
                       size="sm"
@@ -160,15 +160,15 @@ export function OrderSummary({
                 </div>
               ))}
             </div>
-            
+
             <div className="flex justify-between items-center font-semibold text-lg p-3 bg-muted/50 rounded-lg">
               <span>Total:</span>
               <span className="text-primary">${totalAmount.toFixed(2)}</span>
             </div>
           </div>
-          
+
           <Separator />
-          
+
           <div className="space-y-4">
             <h4 className="font-semibold">Customer Information</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -181,7 +181,7 @@ export function OrderSummary({
                   onChange={(e) => setCustomerName(e.target.value)}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="tableNumber">Table Number *</Label>
                 <Input
@@ -192,7 +192,7 @@ export function OrderSummary({
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="orderNotes">Special Instructions (Optional)</Label>
               <Textarea
@@ -204,8 +204,8 @@ export function OrderSummary({
               />
             </div>
 
-            <Button 
-              onClick={handlePlaceOrder} 
+            <Button
+              onClick={handlePlaceOrder}
               className="w-full gap-2 bg-primary hover:bg-primary-hover"
               size="lg"
             >
