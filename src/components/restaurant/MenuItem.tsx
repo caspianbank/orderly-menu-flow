@@ -106,7 +106,7 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
         <div className="flex gap-2 pt-2 mt-auto">
           <Dialog open={showDetails} onOpenChange={setShowDetails}>
             <DialogTrigger asChild>
-              <Button variant="outline" size="sm" className="flex-1 gap-1">
+              <Button variant="outline" size="sm" className="flex-1 gap-1 border border-gray-200">
                 <Info className="h-3 w-3" />
                 Details
               </Button>
