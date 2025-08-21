@@ -1,6 +1,9 @@
 import { MenuCategory } from '@/types/menu';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  ScrollArea,
+  ScrollBar,
+} from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowUpDown } from 'lucide-react';
 
@@ -14,20 +17,28 @@ interface CategoryTabsProps {
   onSortOrderChange: (order: 'asc' | 'desc') => void;
 }
 
-export function CategoryTabs({ categories, activeCategory, onCategorySelect, sortBy, sortOrder, onSortChange, onSortOrderChange }: CategoryTabsProps) {
+export function CategoryTabs({
+  categories,
+  activeCategory,
+  onCategorySelect,
+  sortBy,
+  sortOrder,
+  onSortChange,
+  onSortOrderChange,
+}: CategoryTabsProps) {
   return (
     <div className="sticky top-[80px] z-30 bg-background/95 backdrop-blur-sm border-b py-4">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-          <ScrollArea className="w-full lg:flex-1">
-            <div className="flex gap-2 pb-2">
+          <ScrollArea orientation="horizontal" className="w-full lg:flex-1">
+            <div className="flex gap-2 pb-2 w-max">
               <Button
                 variant={activeCategory === null ? "default" : "ghost"}
                 size="sm"
                 onClick={() => onCategorySelect(null)}
                 className={`whitespace-nowrap ${
-                  activeCategory === null 
-                    ? 'bg-primary text-primary-foreground shadow-soft' 
+                  activeCategory === null
+                    ? 'bg-primary text-primary-foreground shadow-soft'
                     : 'hover:bg-muted hover:text-foreground'
                 }`}
               >
@@ -40,8 +51,8 @@ export function CategoryTabs({ categories, activeCategory, onCategorySelect, sor
                   size="sm"
                   onClick={() => onCategorySelect(category.id)}
                   className={`whitespace-nowrap gap-2 ${
-                    activeCategory === category.id 
-                      ? 'bg-primary text-primary-foreground shadow-soft' 
+                    activeCategory === category.id
+                      ? 'bg-primary text-primary-foreground shadow-soft'
                       : 'hover:bg-muted hover:text-foreground'
                   }`}
                 >
@@ -50,8 +61,11 @@ export function CategoryTabs({ categories, activeCategory, onCategorySelect, sor
                 </Button>
               ))}
             </div>
+            {/* ✅ optional: custom horizontal scrollbar */}
+            <ScrollBar orientation="horizontal" />
           </ScrollArea>
-          
+
+          {/* Sorting controls */}
           <div className="flex gap-2 items-center w-full lg:w-auto">
             <Select value={sortBy} onValueChange={onSortChange}>
               <SelectTrigger className="w-full lg:w-32">
@@ -62,7 +76,7 @@ export function CategoryTabs({ categories, activeCategory, onCategorySelect, sor
                 <SelectItem value="price">Price</SelectItem>
               </SelectContent>
             </Select>
-            
+
             <Button
               variant="outline"
               size="sm"
