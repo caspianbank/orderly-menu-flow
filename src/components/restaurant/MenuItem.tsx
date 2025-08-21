@@ -33,7 +33,7 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
   };
 
   return (
-    <Card className="menu-card bg-gradient-card border shadow-soft overflow-hidden">
+    <Card className="menu-card bg-gradient-card border shadow-soft overflow-hidden flex flex-col h-full">
       <div className="relative">
         <div className="aspect-[4/3] overflow-hidden">
           <img 
@@ -65,8 +65,8 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
         </div>
       </div>
 
-      <CardContent className="p-4 space-y-3">
-        <div className="space-y-2">
+      <CardContent className="p-4 space-y-3 flex flex-col flex-1">
+        <div className="space-y-2 flex-1">
           <h3 className="font-semibold text-lg text-card-foreground line-clamp-1">
             {item.name}
           </h3>
@@ -103,7 +103,7 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
           </div>
         )}
 
-        <div className="flex gap-2 pt-2">
+        <div className="flex gap-2 pt-2 mt-auto">
           <Dialog open={showDetails} onOpenChange={setShowDetails}>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="flex-1 gap-1">

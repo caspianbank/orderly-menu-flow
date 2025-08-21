@@ -105,7 +105,22 @@ export function Header({
         {/* Restaurant Hours Info */}
         <div className="mt-3 flex items-center justify-center gap-2 text-sm text-muted-foreground">
           <Clock className="h-4 w-4" />
-          <span>Today: {restaurantInfo.hours[new Date().toLocaleDateString('en-US', { weekday: 'long' })]}</span>
+          {(() => {
+            const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+            const todayHours = restaurantInfo.hours[today as keyof typeof restaurantInfo.hours] || 'Closed';
+            
+            // Convert to 24-hour format
+            const convert24Hour = (time: string) => {
+              return time.replace(/(\d{1,2}):(\d{2})\s*(AM|PM)/gi, (match, hour, minute, period) => {
+                let h = parseInt(hour);
+                if (period.toUpperCase() === 'PM' && h !== 12) h += 12;
+                if (period.toUpperCase() === 'AM' && h === 12) h = 0;
+                return `${h.toString().padStart(2, '0')}:${minute}`;
+              });
+            };
+            
+            return <span>Today: {convert24Hour(todayHours)}</span>;
+          })()}
         </div>
       </div>
     </header>

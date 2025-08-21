@@ -40,30 +40,30 @@ export function Footer() {
                     variant="ghost" 
                     size="sm" 
                     onClick={handleLocationClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50"
+                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
                   >
                     <MapPin className="h-4 w-4 text-primary" />
-                    <span className="text-sm text-left">{restaurantInfo.address}</span>
+                    <span className="text-sm text-left hover:text-foreground">{restaurantInfo.address}</span>
                   </Button>
                   
                   <Button 
                     variant="ghost" 
                     size="sm" 
                     onClick={handleCallClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50"
+                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
                   >
                     <Phone className="h-4 w-4 text-primary" />
-                    <span className="text-sm">{restaurantInfo.phone}</span>
+                    <span className="text-sm hover:text-foreground">{restaurantInfo.phone}</span>
                   </Button>
                   
                   <Button 
                     variant="ghost" 
                     size="sm" 
                     onClick={handleEmailClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50"
+                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
                   >
                     <Mail className="h-4 w-4 text-primary" />
-                    <span className="text-sm">{restaurantInfo.email}</span>
+                    <span className="text-sm hover:text-foreground">{restaurantInfo.email}</span>
                   </Button>
                 </div>
               </div>
@@ -75,14 +75,26 @@ export function Footer() {
                   Opening Hours
                 </h3>
                 <div className="space-y-1">
-                  {Object.entries(restaurantInfo.hours).map(([day, hours]) => (
-                    <div key={day} className="flex justify-between text-sm">
-                      <span className="font-medium">{day}:</span>
-                      <span className={`${hours === 'Closed' ? 'text-muted-foreground' : 'text-foreground'}`}>
-                        {hours}
-                      </span>
-                    </div>
-                  ))}
+                  {Object.entries(restaurantInfo.hours).map(([day, hours]) => {
+                    // Convert to 24-hour format
+                    const convert24Hour = (time: string) => {
+                      return time.replace(/(\d{1,2}):(\d{2})\s*(AM|PM)/gi, (match, hour, minute, period) => {
+                        let h = parseInt(hour);
+                        if (period.toUpperCase() === 'PM' && h !== 12) h += 12;
+                        if (period.toUpperCase() === 'AM' && h === 12) h = 0;
+                        return `${h.toString().padStart(2, '0')}:${minute}`;
+                      });
+                    };
+                    
+                    return (
+                      <div key={day} className="flex justify-between text-sm">
+                        <span className="font-medium">{day}:</span>
+                        <span className={`${hours === 'Closed' ? 'text-muted-foreground' : 'text-foreground'}`}>
+                          {convert24Hour(hours)}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 

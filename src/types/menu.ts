@@ -38,7 +38,7 @@ export interface Order {
 
 export type DietaryInfo = 'vegetarian' | 'vegan' | 'gluten-free' | 'dairy-free' | 'nut-free' | 'halal' | 'kosher';
 
-export type Language = 'en' | 'es' | 'fr' | 'de' | 'it';
+export type Language = 'az' | 'en' | 'es' | 'fr' | 'de' | 'it';
 
 export interface RestaurantInfo {
   name: string;

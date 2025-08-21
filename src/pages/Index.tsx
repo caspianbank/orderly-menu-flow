@@ -13,7 +13,9 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('en');
+  const [currentLanguage, setCurrentLanguage] = useState<Language>('az');
+  const [sortBy, setSortBy] = useState<'name' | 'price'>('name');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const { toast } = useToast();
 
   // Filter menu items based on search and category
@@ -38,8 +40,17 @@ const Index = () => {
       );
     }
 
-    return filtered;
-  }, [searchQuery, activeCategory]);
+    // Sort the filtered results
+    return filtered.sort((a, b) => {
+      let comparison = 0;
+      if (sortBy === 'name') {
+        comparison = a.name.localeCompare(b.name);
+      } else if (sortBy === 'price') {
+        comparison = a.price - b.price;
+      }
+      return sortOrder === 'asc' ? comparison : -comparison;
+    });
+  }, [searchQuery, activeCategory, sortBy, sortOrder]);
 
   const handleAddToOrder = (item: MenuItemType) => {
     setOrderItems(prev => {
@@ -128,11 +139,15 @@ const Index = () => {
       </section>
 
       {/* Category Navigation */}
-      <CategoryTabs
-        categories={categories}
-        activeCategory={activeCategory}
-        onCategorySelect={setActiveCategory}
-      />
+        <CategoryTabs 
+          categories={categories}
+          activeCategory={activeCategory}
+          onCategorySelect={setActiveCategory}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          onSortChange={setSortBy}
+          onSortOrderChange={setSortOrder}
+        />
 
       {/* Menu Items Grid */}
       <main className="container mx-auto px-4 py-8 pb-24">
