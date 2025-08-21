@@ -76,21 +76,11 @@ export function Footer() {
                 </h3>
                 <div className="space-y-1">
                   {Object.entries(restaurantInfo.hours).map(([day, hours]) => {
-                    // Convert to 24-hour format
-                    const convert24Hour = (time: string) => {
-                      return time.replace(/(\d{1,2}):(\d{2})\s*(AM|PM)/gi, (match, hour, minute, period) => {
-                        let h = parseInt(hour);
-                        if (period.toUpperCase() === 'PM' && h !== 12) h += 12;
-                        if (period.toUpperCase() === 'AM' && h === 12) h = 0;
-                        return `${h.toString().padStart(2, '0')}:${minute}`;
-                      });
-                    };
-                    
                     return (
                       <div key={day} className="flex justify-between text-sm">
                         <span className="font-medium">{day}:</span>
                         <span className={`${hours === 'Closed' ? 'text-muted-foreground' : 'text-foreground'}`}>
-                          {convert24Hour(hours)}
+                          {hours}
                         </span>
                       </div>
                     );

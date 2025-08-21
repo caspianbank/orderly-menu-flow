@@ -186,12 +186,12 @@ export const restaurantInfo: RestaurantInfo = {
   website: 'www.bellavista.com',
   hours: {
     'Monday': 'Closed',
-    'Tuesday': '5:00 PM - 10:00 PM',
-    'Wednesday': '5:00 PM - 10:00 PM',
-    'Thursday': '5:00 PM - 10:00 PM',
-    'Friday': '5:00 PM - 11:00 PM',
-    'Saturday': '12:00 PM - 11:00 PM',
-    'Sunday': '12:00 PM - 9:00 PM',
+    'Tuesday': '17:00 - 22:00',
+    'Wednesday': '17:00 - 22:00',
+    'Thursday': '17:00 - 22:00',
+    'Friday': '17:00 - 23:00',
+    'Saturday': '12:00 - 23:00',
+    'Sunday': '12:00 - 21:00',
   },
   socialMedia: {
     facebook: 'https://facebook.com/bellavista',
