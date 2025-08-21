@@ -34,31 +34,33 @@ export function Footer() {
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {restaurantInfo.description}
                 </p>
-                
+
                 <div className="space-y-2">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleLocationClick}
                     className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
                   >
-                    <MapPin className="h-4 w-4 text-primary" />
-                    <span className="text-sm text-left hover:text-foreground">{restaurantInfo.address}</span>
+                    <MapPin className="h-4 w-4 text-primary shrink-0" />
+                    <span className="text-sm text-left break-words whitespace-normal">
+                      {restaurantInfo.address}
+                    </span>
                   </Button>
-                  
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleCallClick}
                     className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
                   >
                     <Phone className="h-4 w-4 text-primary" />
                     <span className="text-sm hover:text-foreground">{restaurantInfo.phone}</span>
                   </Button>
-                  
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleEmailClick}
                     className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
                   >
@@ -91,7 +93,7 @@ export function Footer() {
               {/* Social Media & Actions */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Connect With Us</h3>
-                
+
                 <div className="flex gap-2">
                   {restaurantInfo.socialMedia.facebook && (
                     <Button
@@ -104,7 +106,7 @@ export function Footer() {
                       <span className="sr-only">Facebook</span>
                     </Button>
                   )}
-                  
+
                   {restaurantInfo.socialMedia.instagram && (
                     <Button
                       variant="outline"
@@ -116,7 +118,7 @@ export function Footer() {
                       <span className="sr-only">Instagram</span>
                     </Button>
                   )}
-                  
+
                   {restaurantInfo.socialMedia.twitter && (
                     <Button
                       variant="outline"
@@ -133,16 +135,16 @@ export function Footer() {
                 <Separator />
 
                 <div className="space-y-2">
-                  <Button 
+                  <Button
                     onClick={handleCallClick}
                     className="w-full gap-2 bg-primary hover:bg-primary-hover"
                   >
                     <Phone className="h-4 w-4" />
                     Call for Assistance
                   </Button>
-                  
-                  <Button 
-                    variant="outline" 
+
+                  <Button
+                    variant="outline"
                     onClick={handleCallClick}
                     className="w-full gap-2"
                   >
