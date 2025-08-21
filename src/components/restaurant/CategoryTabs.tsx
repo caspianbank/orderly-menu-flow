@@ -21,7 +21,7 @@ export function CategoryTabs({ categories, activeCategory, onCategorySelect }: C
               className={`whitespace-nowrap ${
                 activeCategory === null 
                   ? 'bg-primary text-primary-foreground shadow-soft' 
-                  : 'hover:bg-muted'
+                  : 'hover:bg-muted hover:text-foreground'
               }`}
             >
               All Menu
@@ -35,7 +35,7 @@ export function CategoryTabs({ categories, activeCategory, onCategorySelect }: C
                 className={`whitespace-nowrap gap-2 ${
                   activeCategory === category.id 
                     ? 'bg-primary text-primary-foreground shadow-soft' 
-                    : 'hover:bg-muted'
+                    : 'hover:bg-muted hover:text-foreground'
                 }`}
               >
                 <span className="text-lg">{category.icon}</span>
