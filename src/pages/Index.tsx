@@ -135,7 +135,7 @@ const Index = () => {
       />
 
       {/* Menu Items Grid */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pb-24">
         {filteredMenuItems.length === 0 ? (
           <div className="text-center py-16 animate-fade-in">
             <div className="text-6xl mb-4">🔍</div>
@@ -145,7 +145,7 @@ const Index = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
             {filteredMenuItems.map((item) => (
               <MenuItem
                 key={item.id}

@@ -65,128 +65,132 @@ export function OrderSummary({
 
   if (orderItems.length === 0) {
     return (
-      <div className="floating-action">
-        <Card className="w-64 shadow-hover">
-          <CardContent className="p-4 text-center">
-            <ShoppingCart className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-            <p className="text-sm text-muted-foreground">Your order is empty</p>
-          </CardContent>
-        </Card>
+      <div className="floating-basket">
+        <Dialog open={showOrderDialog} onOpenChange={setShowOrderDialog}>
+          <DialogTrigger asChild>
+            <Button
+              size="lg"
+              className="h-14 w-14 rounded-full shadow-hover bg-primary hover:bg-primary-hover relative"
+            >
+              <ShoppingCart className="h-6 w-6" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-md bg-card">
+            <DialogHeader>
+              <DialogTitle>Your Order</DialogTitle>
+            </DialogHeader>
+            <div className="text-center py-8">
+              <ShoppingCart className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+              <p className="text-muted-foreground">Your order is empty</p>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
 
   return (
-    <div className="floating-action">
+    <div className="floating-basket">
       <Dialog open={showOrderDialog} onOpenChange={setShowOrderDialog}>
         <DialogTrigger asChild>
-          <Card className="w-80 shadow-hover cursor-pointer hover:shadow-dish transition-shadow">
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-lg">
-                <span className="flex items-center gap-2">
-                  <ShoppingCart className="h-5 w-5" />
-                  Your Order
-                </span>
-                <Badge variant="secondary" className="bg-primary text-primary-foreground">
-                  {totalItems} {totalItems === 1 ? 'item' : 'items'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            
-            <CardContent className="space-y-3">
-              <div className="max-h-60 overflow-y-auto space-y-2">
-                {orderItems.map((orderItem) => (
-                  <div key={orderItem.menuItem.id} className="flex items-center gap-2 p-2 rounded bg-muted/50">
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm truncate">{orderItem.menuItem.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        ${orderItem.menuItem.price.toFixed(2)} each
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-center gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onUpdateQuantity(orderItem.menuItem.id, orderItem.quantity - 1);
-                        }}
-                      >
-                        <Minus className="h-3 w-3" />
-                      </Button>
-                      
-                      <span className="w-8 text-center text-sm font-medium">
-                        {orderItem.quantity}
-                      </span>
-                      
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 w-6 p-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onUpdateQuantity(orderItem.menuItem.id, orderItem.quantity + 1);
-                        }}
-                      >
-                        <Plus className="h-3 w-3" />
-                      </Button>
-                      
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 w-6 p-0 text-destructive hover:text-destructive"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onRemoveItem(orderItem.menuItem.id);
-                        }}
-                      >
-                        <X className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <Separator />
-              
-              <div className="flex justify-between items-center font-semibold">
-                <span>Total:</span>
-                <span className="text-lg text-primary">${totalAmount.toFixed(2)}</span>
-              </div>
-              
-              <p className="text-xs text-center text-muted-foreground">
-                Click to place your order
-              </p>
-            </CardContent>
-          </Card>
+          <Button
+            size="lg"
+            className="h-14 w-14 rounded-full shadow-hover bg-primary hover:bg-primary-hover relative"
+          >
+            <ShoppingCart className="h-6 w-6" />
+            <Badge 
+              className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-secondary text-secondary-foreground font-bold text-xs min-w-[24px]"
+            >
+              {totalItems}
+            </Badge>
+          </Button>
         </DialogTrigger>
 
-        <DialogContent className="max-w-md bg-card">
+        <DialogContent className="max-w-lg w-[95vw] max-h-[90vh] overflow-y-auto bg-card">
           <DialogHeader>
-            <DialogTitle>Complete Your Order</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <ShoppingCart className="h-5 w-5" />
+              Your Order ({totalItems} {totalItems === 1 ? 'item' : 'items'})
+            </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="customerName">Your Name *</Label>
-              <Input
-                id="customerName"
-                placeholder="Enter your name"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
+            <div className="max-h-48 overflow-y-auto space-y-2 border rounded-lg p-3 bg-muted/30">
+              {orderItems.map((orderItem) => (
+                <div key={orderItem.menuItem.id} className="flex items-center gap-3 p-2 rounded bg-card shadow-sm">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">{orderItem.menuItem.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      ${orderItem.menuItem.price.toFixed(2)} each
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 w-7 p-0"
+                      onClick={() => onUpdateQuantity(orderItem.menuItem.id, orderItem.quantity - 1)}
+                    >
+                      <Minus className="h-3 w-3" />
+                    </Button>
+                    
+                    <span className="w-8 text-center text-sm font-medium">
+                      {orderItem.quantity}
+                    </span>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 w-7 p-0"
+                      onClick={() => onUpdateQuantity(orderItem.menuItem.id, orderItem.quantity + 1)}
+                    >
+                      <Plus className="h-3 w-3" />
+                    </Button>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 w-7 p-0 text-destructive hover:text-destructive ml-1"
+                      onClick={() => onRemoveItem(orderItem.menuItem.id)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="tableNumber">Table Number *</Label>
-              <Input
-                id="tableNumber"
-                placeholder="e.g., T5, Table 12"
-                value={tableNumber}
-                onChange={(e) => setTableNumber(e.target.value)}
-              />
+            <div className="flex justify-between items-center font-semibold text-lg p-3 bg-muted/50 rounded-lg">
+              <span>Total:</span>
+              <span className="text-primary">${totalAmount.toFixed(2)}</span>
+            </div>
+          </div>
+          
+          <Separator />
+          
+          <div className="space-y-4">
+            <h4 className="font-semibold">Customer Information</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="customerName">Your Name *</Label>
+                <Input
+                  id="customerName"
+                  placeholder="Enter your name"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="tableNumber">Table Number *</Label>
+                <Input
+                  id="tableNumber"
+                  placeholder="e.g., T5, Table 12"
+                  value={tableNumber}
+                  onChange={(e) => setTableNumber(e.target.value)}
+                />
+              </div>
             </div>
             
             <div className="space-y-2">
@@ -196,25 +200,8 @@ export function OrderSummary({
                 placeholder="Any special requests or dietary notes..."
                 value={orderNotes}
                 onChange={(e) => setOrderNotes(e.target.value)}
-                rows={3}
+                rows={2}
               />
-            </div>
-
-            <Separator />
-
-            <div className="space-y-2">
-              <h4 className="font-medium">Order Summary</h4>
-              {orderItems.map((orderItem) => (
-                <div key={orderItem.menuItem.id} className="flex justify-between text-sm">
-                  <span>{orderItem.quantity}x {orderItem.menuItem.name}</span>
-                  <span>${(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}</span>
-                </div>
-              ))}
-              <Separator />
-              <div className="flex justify-between font-semibold">
-                <span>Total:</span>
-                <span className="text-primary">${totalAmount.toFixed(2)}</span>
-              </div>
             </div>
 
             <Button 
@@ -223,7 +210,7 @@ export function OrderSummary({
               size="lg"
             >
               <Send className="h-4 w-4" />
-              Place Order
+              Place Order - ${totalAmount.toFixed(2)}
             </Button>
           </div>
         </DialogContent>
