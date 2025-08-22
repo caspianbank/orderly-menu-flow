@@ -2,6 +2,7 @@ import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter } from 'lucide
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { RateRestaurant } from '@/components/restaurant/RateRestaurant';
 import { restaurantInfo } from '@/data/menuData';
 
 export function Footer() {
@@ -151,6 +152,10 @@ export function Footer() {
                     <Phone className="h-4 w-4" />
                     Make a Reservation
                   </Button>
+
+                  <div className="flex justify-center mt-3">
+                    <RateRestaurant />
+                  </div>
                 </div>
               </div>
             </div>

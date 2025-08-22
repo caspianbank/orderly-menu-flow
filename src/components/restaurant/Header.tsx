@@ -37,7 +37,42 @@ export function Header({
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b shadow-soft">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between gap-4">
+        {/* Mobile Layout - Restaurant name full width */}
+        <div className="flex md:hidden flex-col space-y-3">
+          {/* Restaurant Name - Full Width */}
+          <div className="text-center">
+            <div className="text-2xl font-bold text-primary">
+              {restaurantInfo.name}
+            </div>
+          </div>
+          
+          {/* Mobile Actions Row */}
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <ThemeToggle />
+            <LanguageSelector 
+              currentLanguage={currentLanguage}
+              onLanguageChange={onLanguageChange}
+            />
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleCallWaiter}
+              className="gap-2 hover:bg-accent hover:text-accent-foreground"
+            >
+              <Phone className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <MenuIcon className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Desktop & Tablet Layout */}
+        <div className="hidden md:flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="text-2xl font-bold text-primary">
@@ -45,8 +80,8 @@ export function Header({
             </div>
           </div>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-md mx-4">
+          {/* Search Bar - Desktop Only */}
+          <div className="hidden lg:flex flex-1 max-w-md mx-4">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -60,21 +95,11 @@ export function Header({
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {/* Rate Restaurant */}
-            <div className="hidden sm:block">
-              <RateRestaurant />
-            </div>
-
-            {/* Theme Toggle */}
             <ThemeToggle />
-
-            {/* Language Selector */}
             <LanguageSelector 
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
             />
-
-            {/* Call Waiter Button */}
             <Button 
               variant="outline" 
               size="sm" 
@@ -84,16 +109,19 @@ export function Header({
               <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">Call Waiter</span>
             </Button>
+          </div>
+        </div>
 
-            {/* Mobile Menu Button */}
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <MenuIcon className="h-5 w-5" />
-            </Button>
+        {/* Tablet Search Bar - Below header */}
+        <div className="hidden md:block lg:hidden mt-4">
+          <div className="relative w-full max-w-md mx-auto">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              placeholder="Search dishes..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="pl-10 bg-muted/50 border-border focus:bg-card"
+            />
           </div>
         </div>
 
@@ -108,10 +136,6 @@ export function Header({
                 onChange={handleSearchChange}
                 className="pl-10 bg-muted/50"
               />
-            </div>
-            {/* Mobile Rate Restaurant */}
-            <div className="flex justify-center">
-              <RateRestaurant />
             </div>
           </div>
         )}
