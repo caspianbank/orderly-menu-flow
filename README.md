@@ -2,7 +2,8 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/2003bd9d-f997-4bc9-a2db-631b6d2afa37
+- **URL**: https://lovable.dev/projects/2003bd9d-f997-4bc9-a2db-631b6d2afa37
+- **Deployed Website:** https://orderly-menu-flow.lovable.app/
 
 ## How can I edit this code?
 
