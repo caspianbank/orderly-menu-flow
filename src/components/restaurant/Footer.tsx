@@ -136,13 +136,9 @@ export function Footer() {
                 <Separator />
 
                 <div className="space-y-2">
-                  <Button
-                    onClick={handleCallClick}
-                    className="w-full gap-2 bg-primary hover:bg-primary-hover"
-                  >
-                    <Phone className="h-4 w-4" />
-                    Call for Assistance
-                  </Button>
+                  <div className="flex justify-center">
+                    <RateRestaurant />
+                  </div>
 
                   <Button
                     variant="outline"
@@ -152,10 +148,6 @@ export function Footer() {
                     <Phone className="h-4 w-4" />
                     Make a Reservation
                   </Button>
-
-                  <div className="flex justify-center mt-3">
-                    <RateRestaurant />
-                  </div>
                 </div>
               </div>
             </div>

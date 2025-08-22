@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { RateRestaurant } from '@/components/restaurant/RateRestaurant';
+import { LoginButton } from '@/components/restaurant/LoginButton';
 import { Language } from '@/types/menu';
 import { restaurantInfo } from '@/data/menuData';
 
@@ -48,6 +48,7 @@ export function Header({
           
           {/* Mobile Actions Row */}
           <div className="flex items-center justify-center gap-2 flex-wrap">
+            <LoginButton />
             <ThemeToggle />
             <LanguageSelector 
               currentLanguage={currentLanguage}
@@ -95,6 +96,7 @@ export function Header({
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            <LoginButton />
             <ThemeToggle />
             <LanguageSelector 
               currentLanguage={currentLanguage}
