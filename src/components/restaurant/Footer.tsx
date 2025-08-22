@@ -136,7 +136,7 @@ export function Footer() {
                 <Separator />
 
                 <div className="space-y-2">
-                  <div className="flex justify-center">
+                  <div className="w-full">
                     <RateRestaurant />
                   </div>
 

@@ -64,54 +64,55 @@ export function LoginButton() {
         <DialogHeader>
           <DialogTitle>Login to Your Account</DialogTitle>
           <DialogDescription>
-            Enter your phone number to access your account.
+            Enter your phone number to access exclusive discounts, campaigns, and loyalty points!
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="country">Country</Label>
-            <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-              <SelectTrigger>
-                <SelectValue>
-                  {selectedCountryData && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg">{selectedCountryData.flag}</span>
-                      <span>{selectedCountryData.dialCode}</span>
-                      <span className="text-muted-foreground">{selectedCountryData.name}</span>
-                    </div>
-                  )}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {countries.map((country) => (
-                  <SelectItem key={country.code} value={country.code}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg">{country.flag}</span>
-                      <span>{country.dialCode}</span>
-                      <span>{country.name}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="phone">Phone Number</Label>
             <div className="flex">
-              <div className="flex items-center px-3 border border-r-0 bg-muted/50 rounded-l-md">
-                <span className="text-lg mr-1">{selectedCountryData?.flag}</span>
-                <span className="text-sm text-muted-foreground">{selectedCountryData?.dialCode}</span>
-              </div>
+              <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                <SelectTrigger className="w-32 rounded-r-none border-r-0">
+                  <SelectValue>
+                    {selectedCountryData && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm">{selectedCountryData.flag}</span>
+                        <span className="text-xs">{selectedCountryData.dialCode}</span>
+                      </div>
+                    )}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {countries.map((country) => (
+                    <SelectItem key={country.code} value={country.code}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{country.flag}</span>
+                        <span>{country.dialCode}</span>
+                        <span>{country.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Input
                 id="phone"
                 type="tel"
                 placeholder="Phone number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="rounded-l-none border-l-0"
+                className="rounded-l-none border-l-0 flex-1"
               />
             </div>
+          </div>
+
+          <div className="bg-muted/50 p-3 rounded-md">
+            <p className="text-sm text-muted-foreground">
+              🎉 <strong>Benefits of logging in:</strong><br/>
+              • Get exclusive discounts and special offers<br/>
+              • Receive notifications about new campaigns<br/>
+              • Earn and redeem loyalty points<br/>
+              • Priority reservations and faster ordering
+            </p>
           </div>
 
           <div className="flex space-x-2 pt-4">

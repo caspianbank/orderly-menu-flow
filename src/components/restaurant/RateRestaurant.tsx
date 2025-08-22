@@ -33,7 +33,7 @@ export function RateRestaurant() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button className="gap-2 w-full bg-primary hover:bg-primary/90">
           <Star className="h-4 w-4" />
           Rate Restaurant
         </Button>
