@@ -30,7 +30,7 @@ export function CategoryTabs({
     <div className="sticky top-[100px] z-30 bg-background/95 backdrop-blur-sm border-b py-4">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-          <ScrollArea orientation="horizontal" className="w-full lg:flex-1">
+          <ScrollArea className="w-full lg:flex-1">
             <div className="flex gap-2 pb-2 w-max">
               <Button
                 variant={activeCategory === null ? "default" : "ghost"}

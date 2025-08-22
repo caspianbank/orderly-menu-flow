@@ -3,6 +3,8 @@ import { Search, Menu as MenuIcon, Phone, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { LanguageSelector } from '@/components/ui/language-selector';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { RateRestaurant } from '@/components/restaurant/RateRestaurant';
 import { Language } from '@/types/menu';
 import { restaurantInfo } from '@/data/menuData';
 
@@ -58,6 +60,14 @@ export function Header({
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            {/* Rate Restaurant */}
+            <div className="hidden sm:block">
+              <RateRestaurant />
+            </div>
+
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* Language Selector */}
             <LanguageSelector 
               currentLanguage={currentLanguage}
@@ -89,7 +99,7 @@ export function Header({
 
         {/* Mobile Search */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 animate-slide-up">
+          <div className="md:hidden mt-4 animate-slide-up space-y-3">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -98,6 +108,10 @@ export function Header({
                 onChange={handleSearchChange}
                 className="pl-10 bg-muted/50"
               />
+            </div>
+            {/* Mobile Rate Restaurant */}
+            <div className="flex justify-center">
+              <RateRestaurant />
             </div>
           </div>
         )}
