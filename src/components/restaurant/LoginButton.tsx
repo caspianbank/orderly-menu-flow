@@ -105,18 +105,8 @@ export function LoginButton() {
             </div>
           </div>
 
-          <div className="bg-muted/50 p-3 rounded-md">
-            <p className="text-sm text-muted-foreground">
-              🎉 <strong>Benefits of logging in:</strong><br/>
-              • Get exclusive discounts and special offers<br/>
-              • Receive notifications about new campaigns<br/>
-              • Earn and redeem loyalty points<br/>
-              • Priority reservations and faster ordering
-            </p>
-          </div>
-
           <div className="flex space-x-2 pt-4">
-            <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1">
+            <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1 gap-1 border border-gray-200">
               Cancel
             </Button>
             <Button onClick={handleLogin} className="flex-1">
