@@ -167,8 +167,9 @@ export function Footer() {
             <Separator className="my-6" />
 
             <div className="text-center text-sm text-muted-foreground">
-              <p>&copy; 2024 {restaurantInfo.name}. All rights reserved.</p>
+              <p>&copy; {new Date().getFullYear()} {restaurantInfo.name}. All rights reserved.</p>
               <p className="mt-1">Crafted with care for an exceptional dining experience.</p>
+               <p>Powered by <span className="font-medium">CassaPoint</span></p>
             </div>
           </CardContent>
         </Card>

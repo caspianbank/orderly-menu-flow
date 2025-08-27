@@ -54,5 +54,6 @@ export interface RestaurantInfo {
     facebook?: string;
     instagram?: string;
     twitter?: string;
+    youtube?: string;
   };
 }
