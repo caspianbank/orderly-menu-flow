@@ -34,7 +34,7 @@ const Index = () => {
       filtered = filtered.filter(item =>
         item.name.toLowerCase().includes(query) ||
         item.description.toLowerCase().includes(query) ||
-        item.ingredients.some(ingredient => 
+        item.ingredients.some(ingredient =>
           ingredient.toLowerCase().includes(query)
         ) ||
         item.category.name.toLowerCase().includes(query)
@@ -56,7 +56,7 @@ const Index = () => {
   const handleAddToOrder = (item: MenuItemType) => {
     setOrderItems(prev => {
       const existingItem = prev.find(orderItem => orderItem.menuItem.id === item.id);
-      
+
       if (existingItem) {
         return prev.map(orderItem =>
           orderItem.menuItem.id === item.id
@@ -64,7 +64,7 @@ const Index = () => {
             : orderItem
         );
       }
-      
+
       return [...prev, { menuItem: item, quantity: 1 }];
     });
 
@@ -91,7 +91,7 @@ const Index = () => {
 
   const handleRemoveItem = (itemId: string) => {
     setOrderItems(prev => prev.filter(orderItem => orderItem.menuItem.id !== itemId));
-    
+
     toast({
       title: "Item Removed",
       description: "Item has been removed from your order.",
@@ -122,8 +122,8 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative h-64 md:h-80 overflow-hidden">
-        <img 
-          src={restaurantHero} 
+        <img
+          src={restaurantHero}
           alt="Restaurant interior"
           className="w-full h-full object-cover"
         />
@@ -140,7 +140,7 @@ const Index = () => {
       </section>
 
       {/* Category Navigation */}
-      <CategoryTabs 
+      <CategoryTabs
         categories={categories}
         activeCategory={activeCategory}
         onCategorySelect={setActiveCategory}
@@ -151,7 +151,7 @@ const Index = () => {
       />
 
       {/* Menu Items Grid */}
-      <main className="container mx-auto px-4 py-8 pb-24">
+      <main className="container mx-auto px-4">
         {filteredMenuItems.length === 0 ? (
           <div className="text-center py-16 animate-fade-in">
             <div className="text-6xl mb-4">🔍</div>

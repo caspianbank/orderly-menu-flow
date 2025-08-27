@@ -27,7 +27,7 @@ export function CategoryTabs({
   onSortOrderChange,
 }: CategoryTabsProps) {
   return (
-    <div className="sticky top-[100px] z-30 bg-background/95 backdrop-blur-sm border-b py-4">
+    <div className="sticky top-[145px] z-30 bg-background/95 backdrop-blur-sm border-b py-4">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
           <ScrollArea className="w-full lg:flex-1">
