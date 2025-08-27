@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -129,6 +129,18 @@ export function Footer() {
                     >
                       <Twitter className="h-4 w-4" />
                       <span className="sr-only">Twitter</span>
+                    </Button>
+                  )}
+
+                  {restaurantInfo.socialMedia.youtube && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSocialClick(restaurantInfo.socialMedia.youtube!)}
+                      className="gap-2"
+                    >
+                      <Youtube className="h-4 w-4" />
+                      <span className="sr-only">YouTube</span>
                     </Button>
                   )}
                 </div>
