@@ -1,178 +1,202 @@
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { RateRestaurant } from '@/components/restaurant/RateRestaurant';
-import { restaurantInfo } from '@/data/menuData';
+import { MenuItem, MenuCategory, RestaurantInfo } from '@/types/menu';
+import dishPasta from '@/assets/dish-pasta.jpg';
+import dishSalmon from '@/assets/dish-salmon.jpg';
+import dishDessert from '@/assets/dish-dessert.jpg';
+import dishAppetizer from '@/assets/dish-appetizer.jpg';
 
-export function Footer() {
-  const handleSocialClick = (url: string) => {
-    window.open(url, '_blank');
-  };
+export const categories: MenuCategory[] = [
+  { id: 'appetizers', name: 'Appetizers', icon: '🥗', order: 1 },
+  { id: 'mains', name: 'Main Courses', icon: '🍽️', order: 2 },
+  { id: 'pasta', name: 'Pasta & Risotto', icon: '🍝', order: 3 },
+  { id: 'seafood', name: 'Seafood', icon: '🐟', order: 4 },
+  { id: 'desserts', name: 'Desserts', icon: '🍰', order: 5 },
+  { id: 'beverages', name: 'Beverages', icon: '🥂', order: 6 },
+];
 
-  const handleCallClick = () => {
-    window.open(`tel:${restaurantInfo.phone}`, '_self');
-  };
+export const menuItems: MenuItem[] = [
+  // Appetizers
+  {
+    id: 'app-1',
+    name: 'Bruschetta Trio',
+    description: 'Three varieties of bruschetta with fresh tomatoes, burrata, and prosciutto',
+    price: 14.50,
+    category: categories[0],
+    image: dishAppetizer,
+    ingredients: ['Sourdough bread', 'Tomatoes', 'Burrata cheese', 'Prosciutto', 'Basil', 'Olive oil'],
+    allergens: ['Gluten', 'Dairy'],
+    dietary: [],
+    isPopular: true,
+    prepTime: 10,
+  },
+  {
+    id: 'app-2',
+    name: 'Crispy Calamari',
+    description: 'Fresh squid rings with spicy marinara sauce and lemon aioli',
+    price: 16.00,
+    category: categories[0],
+    image: dishAppetizer,
+    ingredients: ['Fresh squid', 'Semolina flour', 'Marinara sauce', 'Lemon', 'Garlic aioli'],
+    allergens: ['Gluten', 'Eggs'],
+    dietary: [],
+    prepTime: 12,
+  },
 
-  const handleEmailClick = () => {
-    window.open(`mailto:${restaurantInfo.email}`, '_self');
-  };
+  // Main Courses
+  {
+    id: 'main-1',
+    name: 'Grilled Ribeye Steak',
+    description: 'Prime 12oz ribeye with roasted vegetables and red wine jus',
+    price: 45.00,
+    category: categories[1],
+    image: dishSalmon,
+    ingredients: ['Ribeye steak', 'Seasonal vegetables', 'Red wine', 'Herbs', 'Butter'],
+    allergens: ['Dairy'],
+    dietary: ['gluten-free'],
+    isSpecial: true,
+    prepTime: 25,
+  },
+  {
+    id: 'main-2',
+    name: 'Herb-Crusted Lamb',
+    description: 'New Zealand lamb rack with rosemary, garlic and mint sauce',
+    price: 38.00,
+    category: categories[1],
+    image: dishSalmon,
+    ingredients: ['Lamb rack', 'Fresh herbs', 'Garlic', 'Mint', 'Olive oil'],
+    allergens: [],
+    dietary: ['gluten-free'],
+    prepTime: 30,
+  },
 
-  const handleLocationClick = () => {
-    const encodedAddress = encodeURIComponent(restaurantInfo.address);
-    window.open(`https://maps.google.com/?q=${encodedAddress}`, '_blank');
-  };
+  // Pasta
+  {
+    id: 'pasta-1',
+    name: 'Truffle Carbonara',
+    description: 'Fresh linguine with pancetta, black truffle, farm eggs and pecorino',
+    price: 28.00,
+    category: categories[2],
+    image: dishPasta,
+    ingredients: ['Fresh linguine', 'Pancetta', 'Black truffle', 'Farm eggs', 'Pecorino cheese'],
+    allergens: ['Gluten', 'Eggs', 'Dairy'],
+    dietary: [],
+    isPopular: true,
+    prepTime: 15,
+  },
+  {
+    id: 'pasta-2',
+    name: 'Lobster Ravioli',
+    description: 'House-made ravioli filled with fresh lobster in saffron cream sauce',
+    price: 34.00,
+    category: categories[2],
+    image: dishPasta,
+    ingredients: ['House pasta', 'Fresh lobster', 'Saffron', 'Cream', 'White wine'],
+    allergens: ['Gluten', 'Dairy', 'Shellfish'],
+    dietary: [],
+    isSpecial: true,
+    prepTime: 18,
+  },
 
-  return (
-    <footer className="mt-16 bg-muted/30 border-t">
-      <div className="container mx-auto px-4 py-8">
-        <Card className="bg-gradient-card shadow-soft">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Restaurant Info */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-primary">{restaurantInfo.name}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {restaurantInfo.description}
-                </p>
+  // Seafood
+  {
+    id: 'sea-1',
+    name: 'Pan-Seared Salmon',
+    description: 'Atlantic salmon with lemon butter sauce and seasonal vegetables',
+    price: 32.00,
+    category: categories[3],
+    image: dishSalmon,
+    ingredients: ['Atlantic salmon', 'Lemon', 'Butter', 'Seasonal vegetables', 'Fresh dill'],
+    allergens: ['Fish', 'Dairy'],
+    dietary: ['gluten-free'],
+    isPopular: true,
+    prepTime: 20,
+  },
+  {
+    id: 'sea-2',
+    name: 'Seafood Risotto',
+    description: 'Creamy Arborio rice with mixed seafood and saffron',
+    price: 36.00,
+    category: categories[3],
+    image: dishPasta,
+    ingredients: ['Arborio rice', 'Mixed seafood', 'Saffron', 'White wine', 'Parmesan'],
+    allergens: ['Dairy', 'Shellfish'],
+    dietary: ['gluten-free'],
+    prepTime: 25,
+  },
 
-                <div className="space-y-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLocationClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
-                  >
-                    <MapPin className="h-4 w-4 text-primary shrink-0" />
-                    <span className="text-sm text-left break-words whitespace-normal">
-                      {restaurantInfo.address}
-                    </span>
-                  </Button>
+  // Desserts
+  {
+    id: 'des-1',
+    name: 'Chocolate Soufflé',
+    description: 'Warm dark chocolate soufflé with vanilla ice cream',
+    price: 12.00,
+    category: categories[4],
+    image: dishDessert,
+    ingredients: ['Dark chocolate', 'Eggs', 'Cream', 'Vanilla ice cream', 'Sugar'],
+    allergens: ['Eggs', 'Dairy'],
+    dietary: ['vegetarian'],
+    isPopular: true,
+    prepTime: 20,
+  },
+  {
+    id: 'des-2',
+    name: 'Tiramisu',
+    description: 'Classic Italian dessert with coffee-soaked ladyfingers and mascarpone',
+    price: 10.00,
+    category: categories[4],
+    image: dishDessert,
+    ingredients: ['Ladyfingers', 'Coffee', 'Mascarpone', 'Eggs', 'Cocoa powder'],
+    allergens: ['Eggs', 'Dairy', 'Gluten'],
+    dietary: ['vegetarian'],
+    prepTime: 5,
+  },
 
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleCallClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
-                  >
-                    <Phone className="h-4 w-4 text-primary" />
-                    <span className="text-sm hover:text-foreground">{restaurantInfo.phone}</span>
-                  </Button>
+  // Beverages
+  {
+    id: 'bev-1',
+    name: 'House Wine Selection',
+    description: 'Curated selection of red, white, and rosé wines',
+    price: 8.00,
+    category: categories[5],
+    image: dishAppetizer,
+    ingredients: ['Premium grapes'],
+    allergens: ['Sulfites'],
+    dietary: ['vegan'],
+    prepTime: 2,
+  },
+  {
+    id: 'bev-2',
+    name: 'Artisan Coffee',
+    description: 'Freshly roasted single-origin coffee beans',
+    price: 4.50,
+    category: categories[5],
+    image: dishAppetizer,
+    ingredients: ['Single-origin coffee beans'],
+    allergens: [],
+    dietary: ['vegan', 'gluten-free'],
+    prepTime: 3,
+  },
+];
 
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleEmailClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
-                  >
-                    <Mail className="h-4 w-4 text-primary" />
-                    <span className="text-sm hover:text-foreground">{restaurantInfo.email}</span>
-                  </Button>
-                </div>
-              </div>
-
-              {/* Opening Hours */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-primary" />
-                  Opening Hours
-                </h3>
-                <div className="space-y-1">
-                  {Object.entries(restaurantInfo.hours).map(([day, hours]) => {
-                    return (
-                      <div key={day} className="flex justify-between text-sm">
-                        <span className="font-medium">{day}:</span>
-                        <span className={`${hours === 'Closed' ? 'text-muted-foreground' : 'text-foreground'}`}>
-                          {hours}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Social Media & Actions */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Connect With Us</h3>
-
-                <div className="flex gap-2">
-                  {restaurantInfo.socialMedia.facebook && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleSocialClick(restaurantInfo.socialMedia.facebook!)}
-                      className="gap-2"
-                    >
-                      <Facebook className="h-4 w-4" />
-                      <span className="sr-only">Facebook</span>
-                    </Button>
-                  )}
-
-                  {restaurantInfo.socialMedia.instagram && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleSocialClick(restaurantInfo.socialMedia.instagram!)}
-                      className="gap-2"
-                    >
-                      <Instagram className="h-4 w-4" />
-                      <span className="sr-only">Instagram</span>
-                    </Button>
-                  )}
-
-                  {restaurantInfo.socialMedia.twitter && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleSocialClick(restaurantInfo.socialMedia.twitter!)}
-                      className="gap-2"
-                    >
-                      <Twitter className="h-4 w-4" />
-                      <span className="sr-only">Twitter</span>
-                    </Button>
-                  )}
-
-                  {restaurantInfo.socialMedia.youtube && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleSocialClick(restaurantInfo.socialMedia.youtube!)}
-                      className="gap-2"
-                    >
-                      <Youtube className="h-4 w-4" />
-                      <span className="sr-only">YouTube</span>
-                    </Button>
-                  )}
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <div className="w-full">
-                    <RateRestaurant />
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    onClick={handleCallClick}
-                    className="w-full gap-2"
-                  >
-                    <Phone className="h-4 w-4" />
-                    Make a Reservation
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            <Separator className="my-6" />
-
-            <div className="text-center text-sm text-muted-foreground">
-              <p>&copy; 2024 {restaurantInfo.name}. All rights reserved.</p>
-              <p className="mt-1">Crafted with care for an exceptional dining experience.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </footer>
-  );
-}
+export const restaurantInfo: RestaurantInfo = {
+  name: 'Bella Vista',
+  description: 'An elegant dining experience featuring contemporary cuisine with Mediterranean influences',
+  address: '123 Gourmet Street, Culinary District, City 12345',
+  phone: '+1 (555) 123-4567',
+  email: 'reservations@bellavista.com',
+  website: 'www.bellavista.com',
+  hours: {
+    'Monday': 'Closed',
+    'Tuesday': '17:00 - 22:00',
+    'Wednesday': '17:00 - 22:00',
+    'Thursday': '17:00 - 22:00',
+    'Friday': '17:00 - 23:00',
+    'Saturday': '12:00 - 23:00',
+    'Sunday': '12:00 - 21:00',
+  },
+  socialMedia: {
+    facebook: 'https://facebook.com/bellavista',
+    instagram: 'https://instagram.com/bellavista',
+    twitter: 'https://twitter.com/bellavista',
+    youtube: 'https://youtube.com/bellavista',
+  },
+};
