@@ -8,6 +8,7 @@ import { OrderSummary } from '@/components/restaurant/OrderSummary';
 import { Footer } from '@/components/restaurant/Footer';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
+import { Toaster } from '@/components/ui/toaster';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -139,15 +140,15 @@ const Index = () => {
       </section>
 
       {/* Category Navigation */}
-        <CategoryTabs 
-          categories={categories}
-          activeCategory={activeCategory}
-          onCategorySelect={setActiveCategory}
-          sortBy={sortBy}
-          sortOrder={sortOrder}
-          onSortChange={setSortBy}
-          onSortOrderChange={setSortOrder}
-        />
+      <CategoryTabs 
+        categories={categories}
+        activeCategory={activeCategory}
+        onCategorySelect={setActiveCategory}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        onSortChange={setSortBy}
+        onSortOrderChange={setSortOrder}
+      />
 
       {/* Menu Items Grid */}
       <main className="container mx-auto px-4 py-8 pb-24">
@@ -182,6 +183,8 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
+
+      <Toaster />
     </div>
   );
 };
