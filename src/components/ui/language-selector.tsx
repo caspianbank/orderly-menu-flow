@@ -15,12 +15,12 @@ interface LanguageSelectorProps {
 }
 
 const languages = [
-  { code: 'az' as Language, name: 'Azərbaycan', flag: '🇦🇿' },
-  { code: 'en' as Language, name: 'English', flag: '🇺🇸' },
-  { code: 'es' as Language, name: 'Español', flag: '🇪🇸' },
-  { code: 'fr' as Language, name: 'Français', flag: '🇫🇷' },
-  { code: 'de' as Language, name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'it' as Language, name: 'Italiano', flag: '🇮🇹' },
+  { code: 'az' as Language, name: 'AZE', flag: '🇦🇿' },
+  { code: 'en' as Language, name: 'ENG', flag: '🇺🇸' },
+  { code: 'es' as Language, name: 'ESP', flag: '🇪🇸' },
+  { code: 'fr' as Language, name: 'FRA', flag: '🇫🇷' },
+  { code: 'de' as Language, name: 'DEU', flag: '🇩🇪' },
+  { code: 'it' as Language, name: 'ITA', flag: '🇮🇹' },
 ];
 
 export function LanguageSelector({ currentLanguage, onLanguageChange }: LanguageSelectorProps) {
