@@ -26,11 +26,21 @@ const countries: Country[] = [
 
 export function LoginButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('AZ');
   const [phoneNumber, setPhoneNumber] = useState('');
   const { toast } = useToast();
 
   const handleLogin = () => {
+    if (!fullName.trim()) {
+      toast({
+        title: "Full name required",
+        description: "Please enter your full name to continue.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!phoneNumber.trim()) {
       toast({
         title: "Phone number required",
@@ -64,15 +74,29 @@ export function LoginButton() {
         <DialogHeader>
           <DialogTitle>Login to Your Account</DialogTitle>
           <DialogDescription>
-            Enter your phone number to access exclusive discounts, campaigns, and loyalty points!
+            Enter your full name and phone number to access exclusive discounts, campaigns, and loyalty points!
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
+          {/* Full Name Input */}
+          <div className="space-y-2">
+            <Label htmlFor="fullname">Full Name</Label>
+            <Input
+              id="fullname"
+              className='border-gray-200'
+              type="text"
+              placeholder="Enter your full name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          </div>
+
+          {/* Phone Number Input */}
           <div className="space-y-2">
             <Label htmlFor="phone">Phone Number</Label>
             <div className="flex">
               <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                <SelectTrigger className="w-32 rounded-r-none border-r-0">
+                <SelectTrigger className="w-32 rounded-r-none border-r-0 border-gray-200">
                   <SelectValue>
                     {selectedCountryData && (
                       <div className="flex items-center gap-1">
@@ -100,11 +124,12 @@ export function LoginButton() {
                 placeholder="Phone number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="rounded-l-none border-l-0 flex-1"
+                className="rounded-l-none border-l-0 border-gray-200 flex-1"
               />
             </div>
           </div>
 
+          {/* Buttons */}
           <div className="flex space-x-2 pt-4">
             <Button variant="outline" onClick={() => setIsOpen(false)} className="flex-1 gap-1 border border-gray-200">
               Cancel
