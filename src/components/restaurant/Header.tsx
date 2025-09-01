@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, Menu as MenuIcon, Phone, Clock } from 'lucide-react';
+import { CallWaiterDialog } from '@/components/restaurant/CallWaiterDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { LanguageSelector } from '@/components/ui/language-selector';
@@ -15,23 +16,20 @@ interface HeaderProps {
   onLanguageChange: (language: Language) => void;
 }
 
-export function Header({ 
-  onSearchChange, 
-  onCategorySelect, 
-  currentLanguage, 
-  onLanguageChange 
+export function Header({
+  onSearchChange,
+  onCategorySelect,
+  currentLanguage,
+  onLanguageChange
 }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isWaiterDialogOpen, setIsWaiterDialogOpen] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
     onSearchChange(query);
-  };
-
-  const handleCallWaiter = () => {
-    window.open(`tel:${restaurantInfo.phone}`, '_self');
   };
 
   return (
@@ -45,25 +43,25 @@ export function Header({
               {restaurantInfo.name}
             </div>
           </div>
-          
+
           {/* Mobile Actions Row */}
           <div className="flex items-center justify-center gap-2 flex-wrap">
             <LoginButton />
             <ThemeToggle />
-            <LanguageSelector 
+            <LanguageSelector
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
             />
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleCallWaiter}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsWaiterDialogOpen(true)}
               className="gap-2 hover:bg-accent hover:text-accent-foreground"
             >
               <Phone className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -98,19 +96,24 @@ export function Header({
           <div className="flex items-center gap-2">
             <LoginButton />
             <ThemeToggle />
-            <LanguageSelector 
+            <LanguageSelector
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
             />
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleCallWaiter}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsWaiterDialogOpen(true)}
               className="gap-2 hover:bg-accent hover:text-accent-foreground"
             >
               <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">Call Waiter</span>
             </Button>
+
+            <CallWaiterDialog
+              isOpen={isWaiterDialogOpen}
+              onClose={() => setIsWaiterDialogOpen(false)}
+            />
           </div>
         </div>
 
