@@ -11,7 +11,12 @@ export interface MenuItem {
   isPopular?: boolean;
   isSpecial?: boolean;
   prepTime?: number;
+  isTrending?: boolean;
+  ordersToday?: number;
+  timeCategory?: TimeCategory[];
 }
+
+export type TimeCategory = 'breakfast' | 'lunch' | 'dinner' | 'late-night' | 'all-day';
 
 export interface MenuCategory {
   id: string;

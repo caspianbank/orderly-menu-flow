@@ -13,7 +13,40 @@ export const categories: MenuCategory[] = [
   { id: 'beverages', name: 'Beverages', icon: '🥂', order: 6 },
 ];
 
+// Add breakfast items
+export const breakfastItems: MenuItem[] = [
+  {
+    id: 'breakfast-1',
+    name: 'Mediterranean Eggs Benedict',
+    description: 'Poached eggs with prosciutto and hollandaise on brioche',
+    price: 18.00,
+    category: { id: 'breakfast', name: 'Breakfast', icon: '🍳', order: 0 },
+    image: dishAppetizer,
+    ingredients: ['Poached eggs', 'Prosciutto', 'Brioche', 'Hollandaise sauce', 'Fresh herbs'],
+    allergens: ['Gluten', 'Dairy', 'Eggs'],
+    dietary: [],
+    isTrending: true,
+    ordersToday: 45,
+    timeCategory: ['breakfast'],
+    prepTime: 15,
+  },
+  {
+    id: 'breakfast-2', 
+    name: 'Avocado Toast Deluxe',
+    description: 'Smashed avocado with cherry tomatoes and feta on sourdough',
+    price: 14.00,
+    category: { id: 'breakfast', name: 'Breakfast', icon: '🍳', order: 0 },
+    image: dishAppetizer,
+    ingredients: ['Avocado', 'Cherry tomatoes', 'Feta cheese', 'Sourdough bread', 'Lime'],
+    allergens: ['Gluten', 'Dairy'],
+    dietary: ['vegetarian'],
+    timeCategory: ['breakfast'],
+    prepTime: 8,
+  },
+];
+
 export const menuItems: MenuItem[] = [
+  ...breakfastItems,
   // Appetizers
   {
     id: 'app-1',
@@ -26,6 +59,9 @@ export const menuItems: MenuItem[] = [
     allergens: ['Gluten', 'Dairy'],
     dietary: [],
     isPopular: true,
+    isTrending: true,
+    ordersToday: 32,
+    timeCategory: ['lunch', 'dinner'],
     prepTime: 10,
   },
   {
@@ -38,6 +74,7 @@ export const menuItems: MenuItem[] = [
     ingredients: ['Fresh squid', 'Semolina flour', 'Marinara sauce', 'Lemon', 'Garlic aioli'],
     allergens: ['Gluten', 'Eggs'],
     dietary: [],
+    timeCategory: ['lunch', 'dinner'],
     prepTime: 12,
   },
 
@@ -53,6 +90,9 @@ export const menuItems: MenuItem[] = [
     allergens: ['Dairy'],
     dietary: ['gluten-free'],
     isSpecial: true,
+    isTrending: true,
+    ordersToday: 28,
+    timeCategory: ['dinner'],
     prepTime: 25,
   },
   {
@@ -65,6 +105,7 @@ export const menuItems: MenuItem[] = [
     ingredients: ['Lamb rack', 'Fresh herbs', 'Garlic', 'Mint', 'Olive oil'],
     allergens: [],
     dietary: ['gluten-free'],
+    timeCategory: ['dinner'],
     prepTime: 30,
   },
 
@@ -80,6 +121,9 @@ export const menuItems: MenuItem[] = [
     allergens: ['Gluten', 'Eggs', 'Dairy'],
     dietary: [],
     isPopular: true,
+    isTrending: true,
+    ordersToday: 41,
+    timeCategory: ['lunch', 'dinner'],
     prepTime: 15,
   },
   {
@@ -93,6 +137,7 @@ export const menuItems: MenuItem[] = [
     allergens: ['Gluten', 'Dairy', 'Shellfish'],
     dietary: [],
     isSpecial: true,
+    timeCategory: ['dinner'],
     prepTime: 18,
   },
 
@@ -108,6 +153,7 @@ export const menuItems: MenuItem[] = [
     allergens: ['Fish', 'Dairy'],
     dietary: ['gluten-free'],
     isPopular: true,
+    timeCategory: ['lunch', 'dinner'],
     prepTime: 20,
   },
   {
@@ -120,6 +166,7 @@ export const menuItems: MenuItem[] = [
     ingredients: ['Arborio rice', 'Mixed seafood', 'Saffron', 'White wine', 'Parmesan'],
     allergens: ['Dairy', 'Shellfish'],
     dietary: ['gluten-free'],
+    timeCategory: ['dinner'],
     prepTime: 25,
   },
 
@@ -135,6 +182,9 @@ export const menuItems: MenuItem[] = [
     allergens: ['Eggs', 'Dairy'],
     dietary: ['vegetarian'],
     isPopular: true,
+    isTrending: true,
+    ordersToday: 38,
+    timeCategory: ['dinner', 'late-night'],
     prepTime: 20,
   },
   {
@@ -147,6 +197,7 @@ export const menuItems: MenuItem[] = [
     ingredients: ['Ladyfingers', 'Coffee', 'Mascarpone', 'Eggs', 'Cocoa powder'],
     allergens: ['Eggs', 'Dairy', 'Gluten'],
     dietary: ['vegetarian'],
+    timeCategory: ['all-day'],
     prepTime: 5,
   },
 
@@ -161,6 +212,7 @@ export const menuItems: MenuItem[] = [
     ingredients: ['Premium grapes'],
     allergens: ['Sulfites'],
     dietary: ['vegan'],
+    timeCategory: ['all-day'],
     prepTime: 2,
   },
   {
@@ -173,6 +225,9 @@ export const menuItems: MenuItem[] = [
     ingredients: ['Single-origin coffee beans'],
     allergens: [],
     dietary: ['vegan', 'gluten-free'],
+    isTrending: true,
+    ordersToday: 52,
+    timeCategory: ['breakfast', 'all-day'],
     prepTime: 3,
   },
 ];

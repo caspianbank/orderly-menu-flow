@@ -45,6 +45,11 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
         
         {/* Badges */}
         <div className="absolute top-2 left-2 flex gap-1">
+          {item.isTrending && (
+            <Badge className="bg-red-500 text-white border-0 shadow-sm animate-pulse">
+              🔥 Trending
+            </Badge>
+          )}
           {item.isPopular && (
             <Badge className="bg-menu-popular text-white border-0 shadow-sm">
               Popular

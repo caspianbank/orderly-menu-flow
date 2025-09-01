@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { MenuItem as MenuItemType, OrderItem, Language } from '@/types/menu';
+import { MenuItem as MenuItemType, OrderItem, Language, TimeCategory } from '@/types/menu';
 import { menuItems, categories } from '@/data/menuData';
 import { Header } from '@/components/restaurant/Header';
 import { CategoryTabs } from '@/components/restaurant/CategoryTabs';
@@ -9,6 +9,9 @@ import { Footer } from '@/components/restaurant/Footer';
 import MysteryChoice from '@/components/restaurant/MysteryChoice';
 import Recommendations from '@/components/restaurant/Recommendations';
 import Challenges from '@/components/restaurant/Challenges';
+import { TrendingItems } from '@/components/restaurant/TrendingItems';
+import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
+import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
@@ -20,11 +23,20 @@ const Index = () => {
   const [currentLanguage, setCurrentLanguage] = useState<Language>('az');
   const [sortBy, setSortBy] = useState<'name' | 'price'>('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [activeTimeCategory, setActiveTimeCategory] = useState<TimeCategory | null>(null);
   const { toast } = useToast();
 
-  // Filter menu items based on search and category
+  // Filter menu items based on search, category, and time
   const filteredMenuItems = useMemo(() => {
     let filtered = menuItems;
+
+    // Filter by time category first
+    if (activeTimeCategory) {
+      filtered = filtered.filter(item => 
+        item.timeCategory?.includes(activeTimeCategory) || 
+        item.timeCategory?.includes('all-day')
+      );
+    }
 
     // Filter by category
     if (activeCategory) {
@@ -44,8 +56,13 @@ const Index = () => {
       );
     }
 
-    // Sort the filtered results
+    // Sort the filtered results - prioritize trending items
     return filtered.sort((a, b) => {
+      // First sort by trending status
+      if (a.isTrending && !b.isTrending) return -1;
+      if (!a.isTrending && b.isTrending) return 1;
+      
+      // Then by the selected sort option
       let comparison = 0;
       if (sortBy === 'name') {
         comparison = a.name.localeCompare(b.name);
@@ -54,7 +71,7 @@ const Index = () => {
       }
       return sortOrder === 'asc' ? comparison : -comparison;
     });
-  }, [searchQuery, activeCategory, sortBy, sortOrder]);
+  }, [searchQuery, activeCategory, activeTimeCategory, sortBy, sortOrder]);
 
   const handleAddToOrder = (item: MenuItemType) => {
     setOrderItems(prev => {
@@ -142,14 +159,24 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Trending Items */}
+      <TrendingItems items={menuItems} />
+
       {/* Special Features */}
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
           <MysteryChoice />
+          <SpinRoulette items={filteredMenuItems} onAddToOrder={handleAddToOrder} />
           <Challenges />
         </div>
         <Recommendations />
       </section>
+
+      {/* Time-Based Menu Filter */}
+      <TimeBasedMenu 
+        currentTimeCategory={activeTimeCategory}
+        onTimeCategoryChange={setActiveTimeCategory}
+      />
 
       {/* Category Navigation */}
       <CategoryTabs
