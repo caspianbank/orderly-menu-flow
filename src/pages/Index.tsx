@@ -6,6 +6,9 @@ import { CategoryTabs } from '@/components/restaurant/CategoryTabs';
 import { MenuItem } from '@/components/restaurant/MenuItem';
 import { OrderSummary } from '@/components/restaurant/OrderSummary';
 import { Footer } from '@/components/restaurant/Footer';
+import MysteryChoice from '@/components/restaurant/MysteryChoice';
+import Recommendations from '@/components/restaurant/Recommendations';
+import Challenges from '@/components/restaurant/Challenges';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
@@ -137,6 +140,15 @@ const Index = () => {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Special Features */}
+      <section className="container mx-auto px-4 py-6">
+        <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
+          <MysteryChoice />
+          <Challenges />
+        </div>
+        <Recommendations />
       </section>
 
       {/* Category Navigation */}
