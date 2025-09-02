@@ -210,7 +210,7 @@ const Index = () => {
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
           <MysteryChoice />
-          <SpinRoulette items={filteredMenuItems} onAddToOrder={handleAddToOrder} />
+          <SpinRoulette items={filteredMenuItems} categories={categories} onAddToOrder={handleAddToOrder} />
           <Challenges />
         </div>
         <Recommendations />

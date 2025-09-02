@@ -1,39 +1,55 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dices, Sparkles } from 'lucide-react';
-import { MenuItem } from '@/types/menu';
+import { MenuItem, MenuCategory } from '@/types/menu';
 
 interface SpinRouletteProps {
   items: MenuItem[];
+  categories: MenuCategory[];
   onAddToOrder: (item: MenuItem) => void;
 }
 
-export const SpinRoulette = ({ items, onAddToOrder }: SpinRouletteProps) => {
+export const SpinRoulette = ({ items, categories, onAddToOrder }: SpinRouletteProps) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [rotation, setRotation] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const filteredItems = selectedCategory === 'all' 
+    ? items 
+    : items.filter(item => item.category.id === selectedCategory);
 
   const spinWheel = () => {
-    if (isSpinning || items.length === 0) return;
+    if (isSpinning || filteredItems.length === 0) return;
     
     setIsSpinning(true);
     setSelectedItem(null);
     
-    // Random rotation between 1440 and 2160 degrees (4-6 full rotations)
-    const randomRotation = 1440 + Math.random() * 720;
+    // Play spin sound
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        // Ignore audio play errors (e.g., user hasn't interacted with page yet)
+      });
+    }
+    
+    // Random rotation between 1800 and 3600 degrees (5-10 full rotations)
+    const randomRotation = 1800 + Math.random() * 1800;
     setRotation(prev => prev + randomRotation);
     
     setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * items.length);
-      setSelectedItem(items[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * filteredItems.length);
+      setSelectedItem(filteredItems[randomIndex]);
       setIsSpinning(false);
-    }, 3000);
+    }, 4000);
   };
 
-  const wheelItems = items.slice(0, 8); // Limit to 8 items for better visual
-  const itemAngle = 360 / wheelItems.length;
+  const wheelItems = filteredItems.slice(0, 6); // Limit to 6 items for better visual and less overlap
+  const itemAngle = 360 / (wheelItems.length || 1);
 
   return (
     <Dialog>
@@ -53,6 +69,27 @@ export const SpinRoulette = ({ items, onAddToOrder }: SpinRouletteProps) => {
           </DialogTitle>
         </DialogHeader>
         
+        {/* Category Selection */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Choose Category:</label>
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category.id} value={category.id}>
+                  <span className="flex items-center gap-2">
+                    <span>{category.icon}</span>
+                    <span>{category.name}</span>
+                  </span>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
         <div className="flex flex-col items-center space-y-6">
           {/* Roulette Wheel */}
           <div className="relative">
@@ -63,42 +100,64 @@ export const SpinRoulette = ({ items, onAddToOrder }: SpinRouletteProps) => {
             </div>
             
             <div 
-              className="relative w-80 h-80 rounded-full border-8 border-primary shadow-2xl overflow-hidden transition-transform duration-3000 ease-out"
+              className="relative w-80 h-80 rounded-full border-8 border-primary shadow-2xl overflow-hidden transition-transform ease-out"
               style={{ 
                 transform: `rotate(${rotation}deg)`,
-                background: 'conic-gradient(from 0deg, hsl(var(--primary)) 0deg, hsl(var(--secondary)) 45deg, hsl(var(--accent)) 90deg, hsl(var(--primary)) 135deg, hsl(var(--secondary)) 180deg, hsl(var(--accent)) 225deg, hsl(var(--primary)) 270deg, hsl(var(--secondary)) 315deg)'
+                transitionDuration: isSpinning ? '4s' : '0.3s',
+                background: wheelItems.length > 0 
+                  ? `conic-gradient(${wheelItems.map((_, index) => {
+                      const colors = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--primary)/0.8)', 'hsl(var(--secondary)/0.8)', 'hsl(var(--accent)/0.8)'];
+                      const startAngle = (index * itemAngle);
+                      const endAngle = ((index + 1) * itemAngle);
+                      return `${colors[index % colors.length]} ${startAngle}deg ${endAngle}deg`;
+                    }).join(', ')})` 
+                  : 'hsl(var(--muted))'
               }}
             >
-              {wheelItems.map((item, index) => (
-                <div
-                  key={item.id}
-                  className="absolute w-full h-full flex items-center justify-center text-white font-semibold text-xs text-center px-2"
-                  style={{
-                    transform: `rotate(${index * itemAngle}deg)`,
-                    transformOrigin: '50% 50%',
-                    clipPath: `polygon(50% 50%, ${50 + 40 * Math.cos((index * itemAngle - itemAngle/2) * Math.PI / 180)}% ${50 + 40 * Math.sin((index * itemAngle - itemAngle/2) * Math.PI / 180)}%, ${50 + 40 * Math.cos((index * itemAngle + itemAngle/2) * Math.PI / 180)}% ${50 + 40 * Math.sin((index * itemAngle + itemAngle/2) * Math.PI / 180)}%)`
-                  }}
-                >
-                  <div 
-                    className="transform"
-                    style={{ transform: `rotate(${itemAngle/2}deg)` }}
+              {wheelItems.map((item, index) => {
+                const angle = index * itemAngle;
+                const textAngle = angle + itemAngle / 2;
+                const radius = 100; // Distance from center
+                const x = 50 + (radius * 0.6 * Math.cos((textAngle - 90) * Math.PI / 180));
+                const y = 50 + (radius * 0.6 * Math.sin((textAngle - 90) * Math.PI / 180));
+                
+                return (
+                  <div
+                    key={item.id}
+                    className="absolute text-white font-bold text-center pointer-events-none"
+                    style={{
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      transform: `translate(-50%, -50%) rotate(${textAngle}deg)`,
+                      fontSize: wheelItems.length <= 4 ? '12px' : '10px',
+                      lineHeight: '1.2',
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+                      width: wheelItems.length <= 4 ? '80px' : '60px'
+                    }}
                   >
-                    <div className="text-[10px] leading-tight">
-                      {item.name.length > 15 ? item.name.substring(0, 15) + '...' : item.name}
+                    <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+                      {item.name.length > (wheelItems.length <= 4 ? 12 : 8) 
+                        ? item.name.substring(0, wheelItems.length <= 4 ? 12 : 8) + '...' 
+                        : item.name}
                     </div>
-                    <div className="text-[8px] opacity-80">
+                    <div className="text-[8px] opacity-90 mt-1">
                       ${item.price}
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
+              
+              {/* Center circle */}
+              <div className="absolute top-1/2 left-1/2 w-8 h-8 bg-background border-4 border-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                <Dices className="w-4 h-4 text-primary" />
+              </div>
             </div>
           </div>
           
           {/* Spin Button */}
           <Button 
             onClick={spinWheel}
-            disabled={isSpinning || items.length === 0}
+            disabled={isSpinning || filteredItems.length === 0}
             size="lg"
             className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
           >
@@ -114,6 +173,21 @@ export const SpinRoulette = ({ items, onAddToOrder }: SpinRouletteProps) => {
               </>
             )}
           </Button>
+          
+          {filteredItems.length === 0 && (
+            <p className="text-muted-foreground text-center">
+              No items available in selected category
+            </p>
+          )}
+          
+          {/* Hidden audio element for spin sound */}
+          <audio 
+            ref={audioRef}
+            preload="auto"
+            className="hidden"
+          >
+            <source src="data:audio/wav;base64,UklGRvIBAABXQVZFZm10IBAAAAABAAABACEAACAHAAACAAEAQWF0YdQBAAA=" type="audio/wav" />
+          </audio>
           
           {/* Result */}
           {selectedItem && !isSpinning && (
