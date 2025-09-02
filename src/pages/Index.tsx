@@ -12,6 +12,7 @@ import Recommendations from '@/components/restaurant/Recommendations';
 import Challenges from '@/components/restaurant/Challenges';
 import { TrendingItems } from '@/components/restaurant/TrendingItems';
 import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
+import { Stories, StoriesButton } from '@/components/restaurant/Stories';
 import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
@@ -23,6 +24,7 @@ const Index = () => {
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState<Language>('az');
   const [activeTimeCategory, setActiveTimeCategory] = useState<TimeCategory | null>(null);
+  const [showStories, setShowStories] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     sortBy: 'name',
     sortOrder: 'asc',
@@ -211,6 +213,7 @@ const Index = () => {
         <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
           <MysteryChoice />
           <SpinRoulette items={filteredMenuItems} categories={categories} onAddToOrder={handleAddToOrder} />
+          <StoriesButton onClick={() => setShowStories(true)} />
           <Challenges />
         </div>
         <Recommendations />
@@ -264,7 +267,13 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
-
+      
+      {/* Stories Modal */}
+      <Stories 
+        isOpen={showStories} 
+        onClose={() => setShowStories(false)} 
+      />
+      
       <Toaster />
     </div>
   );
