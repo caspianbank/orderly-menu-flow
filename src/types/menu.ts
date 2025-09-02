@@ -14,6 +14,7 @@ export interface MenuItem {
   isTrending?: boolean;
   ordersToday?: number;
   timeCategory?: TimeCategory[];
+  labels?: string[];
 }
 
 export type TimeCategory = 'breakfast' | 'lunch' | 'dinner' | 'late-night' | 'all-day';

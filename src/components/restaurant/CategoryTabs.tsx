@@ -4,27 +4,22 @@ import {
   ScrollArea,
   ScrollBar,
 } from '@/components/ui/scroll-area';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowUpDown } from 'lucide-react';
+import { FilterDialog, FilterOptions } from './FilterDialog';
 
 interface CategoryTabsProps {
   categories: MenuCategory[];
   activeCategory: string | null;
   onCategorySelect: (categoryId: string | null) => void;
-  sortBy: 'name' | 'price';
-  sortOrder: 'asc' | 'desc';
-  onSortChange: (sortBy: 'name' | 'price') => void;
-  onSortOrderChange: (order: 'asc' | 'desc') => void;
+  filters: FilterOptions;
+  onFiltersChange: (filters: FilterOptions) => void;
 }
 
 export function CategoryTabs({
   categories,
   activeCategory,
   onCategorySelect,
-  sortBy,
-  sortOrder,
-  onSortChange,
-  onSortOrderChange,
+  filters,
+  onFiltersChange,
 }: CategoryTabsProps) {
   return (
     <div className="sticky z-30 bg-background/95 backdrop-blur-sm border-b py-4 top-[calc(145px)] md:top-[80px] lg:top-[100px]">
@@ -65,27 +60,13 @@ export function CategoryTabs({
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
 
-          {/* Sorting controls */}
+          {/* Filter controls */}
           <div className="flex gap-2 items-center w-full lg:w-auto">
-            <Select value={sortBy} onValueChange={onSortChange}>
-              <SelectTrigger className="w-full lg:w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name">Name</SelectItem>
-                <SelectItem value="price">Price</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onSortOrderChange(sortOrder === 'asc' ? 'desc' : 'asc')}
-              className="gap-1"
-            >
-              <ArrowUpDown className="h-4 w-4" />
-              {sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
-            </Button>
+            <FilterDialog
+              categories={categories}
+              filters={filters}
+              onFiltersChange={onFiltersChange}
+            />
           </div>
         </div>
       </div>

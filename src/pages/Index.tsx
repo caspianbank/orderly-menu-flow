@@ -3,6 +3,7 @@ import { MenuItem as MenuItemType, OrderItem, Language, TimeCategory } from '@/t
 import { menuItems, categories } from '@/data/menuData';
 import { Header } from '@/components/restaurant/Header';
 import { CategoryTabs } from '@/components/restaurant/CategoryTabs';
+import { FilterOptions } from '@/components/restaurant/FilterDialog';
 import { MenuItem } from '@/components/restaurant/MenuItem';
 import { OrderSummary } from '@/components/restaurant/OrderSummary';
 import { Footer } from '@/components/restaurant/Footer';
@@ -21,12 +22,17 @@ const Index = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState<Language>('az');
-  const [sortBy, setSortBy] = useState<'name' | 'price'>('name');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [activeTimeCategory, setActiveTimeCategory] = useState<TimeCategory | null>(null);
+  const [filters, setFilters] = useState<FilterOptions>({
+    sortBy: 'name',
+    sortOrder: 'asc',
+    selectedCategories: [],
+    priceRange: [0, 50],
+    labels: [],
+  });
   const { toast } = useToast();
 
-  // Filter menu items based on search, category, and time
+  // Filter menu items based on search, category, time, and filters
   const filteredMenuItems = useMemo(() => {
     let filtered = menuItems;
 
@@ -43,6 +49,40 @@ const Index = () => {
       filtered = filtered.filter(item => item.category.id === activeCategory);
     }
 
+    // Filter by selected categories from filters
+    if (filters.selectedCategories.length > 0) {
+      filtered = filtered.filter(item => 
+        filters.selectedCategories.includes(item.category.id)
+      );
+    }
+
+    // Filter by price range
+    filtered = filtered.filter(item => 
+      item.price >= filters.priceRange[0] && item.price <= filters.priceRange[1]
+    );
+
+    // Filter by labels
+    if (filters.labels.length > 0) {
+      filtered = filtered.filter(item => {
+        return filters.labels.some(label => {
+          switch (label) {
+            case 'vegan':
+              return item.dietary?.includes('vegan') || item.labels?.includes('vegan');
+            case 'vegetarian':
+              return item.dietary?.includes('vegetarian') || item.labels?.includes('vegetarian');
+            case 'discounted':
+              return item.labels?.includes('discounted');
+            case 'popular':
+              return item.isPopular || item.labels?.includes('popular');
+            case 'trending':
+              return item.isTrending;
+            default:
+              return false;
+          }
+        });
+      });
+    }
+
     // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
@@ -56,22 +96,26 @@ const Index = () => {
       );
     }
 
-    // Sort the filtered results - prioritize trending items
+    // Sort the filtered results
     return filtered.sort((a, b) => {
-      // First sort by trending status
-      if (a.isTrending && !b.isTrending) return -1;
-      if (!a.isTrending && b.isTrending) return 1;
+      // First sort by trending status if not filtered by trending
+      if (!filters.labels.includes('trending')) {
+        if (a.isTrending && !b.isTrending) return -1;
+        if (!a.isTrending && b.isTrending) return 1;
+      }
       
       // Then by the selected sort option
       let comparison = 0;
-      if (sortBy === 'name') {
+      if (filters.sortBy === 'name') {
         comparison = a.name.localeCompare(b.name);
-      } else if (sortBy === 'price') {
+      } else if (filters.sortBy === 'price') {
         comparison = a.price - b.price;
+      } else if (filters.sortBy === 'prepTime') {
+        comparison = (a.prepTime || 0) - (b.prepTime || 0);
       }
-      return sortOrder === 'asc' ? comparison : -comparison;
+      return filters.sortOrder === 'asc' ? comparison : -comparison;
     });
-  }, [searchQuery, activeCategory, activeTimeCategory, sortBy, sortOrder]);
+  }, [searchQuery, activeCategory, activeTimeCategory, filters]);
 
   const handleAddToOrder = (item: MenuItemType) => {
     setOrderItems(prev => {
@@ -183,10 +227,8 @@ const Index = () => {
         categories={categories}
         activeCategory={activeCategory}
         onCategorySelect={setActiveCategory}
-        sortBy={sortBy}
-        sortOrder={sortOrder}
-        onSortChange={setSortBy}
-        onSortOrderChange={setSortOrder}
+        filters={filters}
+        onFiltersChange={setFilters}
       />
 
       {/* Menu Items Grid */}
