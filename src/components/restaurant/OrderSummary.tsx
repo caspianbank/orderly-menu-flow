@@ -161,9 +161,31 @@ export function OrderSummary({
               ))}
             </div>
 
-            <div className="flex justify-between items-center font-semibold text-lg p-3 bg-muted/50 rounded-lg">
-              <span>Total:</span>
-              <span className="text-primary">${totalAmount.toFixed(2)}</span>
+            {/* Order Summary */}
+            <div className="space-y-3 p-4 bg-muted/30 rounded-lg border">
+              <h4 className="font-semibold text-base">Order Summary</h4>
+              
+              {/* Items breakdown */}
+              <div className="space-y-2">
+                {orderItems.map((orderItem) => (
+                  <div key={orderItem.menuItem.id} className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      {orderItem.quantity}x {orderItem.menuItem.name}
+                    </span>
+                    <span>${(orderItem.menuItem.price * orderItem.quantity).toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <Separator />
+              
+              {/* Total amount - prominently displayed */}
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-semibold">Amount to Pay:</span>
+                <span className="text-xl font-bold text-primary bg-primary/10 px-3 py-1 rounded-md">
+                  ${totalAmount.toFixed(2)}
+                </span>
+              </div>
             </div>
           </div>
 
