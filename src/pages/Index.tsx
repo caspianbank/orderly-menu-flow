@@ -14,6 +14,7 @@ import { TrendingItems } from '@/components/restaurant/TrendingItems';
 import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
 import { Stories, StoriesButton } from '@/components/restaurant/Stories';
 import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
+import { OrderHistory } from '@/components/restaurant/OrderHistory';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
