@@ -15,6 +15,7 @@ import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
 import { Stories, StoriesButton } from '@/components/restaurant/Stories';
 import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
 import { OrderHistory } from '@/components/restaurant/OrderHistory';
+import { AdvertisementPopup } from '@/components/restaurant/AdvertisementPopup';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
@@ -274,6 +275,9 @@ const Index = () => {
         isOpen={showStories} 
         onClose={() => setShowStories(false)} 
       />
+      
+      {/* Advertisement Popup */}
+      <AdvertisementPopup onAddToOrder={handleAddToOrder} />
       
       <Toaster />
     </div>
