@@ -16,13 +16,15 @@ interface OrderSummaryProps {
   onUpdateQuantity: (itemId: string, quantity: number) => void;
   onRemoveItem: (itemId: string) => void;
   onPlaceOrder: (customerInfo: { name: string; tableNumber: string; notes?: string }) => void;
+  onProceedToPayment: () => void;
 }
 
 export function OrderSummary({
   orderItems,
   onUpdateQuantity,
   onRemoveItem,
-  onPlaceOrder
+  onPlaceOrder,
+  onProceedToPayment
 }: OrderSummaryProps) {
   const [showOrderDialog, setShowOrderDialog] = useState(false);
   const [customerName, setCustomerName] = useState('');
@@ -226,14 +228,25 @@ export function OrderSummary({
               />
             </div>
 
-            <Button
-              onClick={handlePlaceOrder}
-              className="w-full gap-2 bg-primary hover:bg-primary-hover"
-              size="lg"
-            >
-              <Send className="h-4 w-4" />
-              Place Order - ${totalAmount.toFixed(2)}
-            </Button>
+            <div className="grid grid-cols-1 gap-3">
+              <Button
+                onClick={handlePlaceOrder}
+                className="w-full gap-2 bg-primary hover:bg-primary-hover"
+                size="lg"
+              >
+                <Send className="h-4 w-4" />
+                Place Order - ${totalAmount.toFixed(2)}
+              </Button>
+              
+              <Button
+                onClick={onProceedToPayment}
+                variant="outline"
+                className="w-full gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                size="lg"
+              >
+                💳 Proceed to Payment
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

@@ -17,6 +17,7 @@ import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
 import { OrderHistory } from '@/components/restaurant/OrderHistory';
 import { AdvertisementPopup } from '@/components/restaurant/AdvertisementPopup';
 import { CustomerProfile } from '@/components/restaurant/CustomerProfile';
+import { PaymentPage } from '@/components/restaurant/PaymentPage';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
@@ -29,6 +30,7 @@ const Index = () => {
   const [activeTimeCategory, setActiveTimeCategory] = useState<TimeCategory | null>(null);
   const [showStories, setShowStories] = useState(false);
   const [loggedInCustomer, setLoggedInCustomer] = useState<{ fullName: string; phoneNumber: string } | null>(null);
+  const [showPaymentPage, setShowPaymentPage] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     sortBy: 'name',
     sortOrder: 'asc',
@@ -188,6 +190,29 @@ const Index = () => {
     setLoggedInCustomer(null);
   };
 
+  // Show payment page if requested
+  if (showPaymentPage) {
+    return (
+      <PaymentPage 
+        orderItems={orderItems.map(item => ({
+          id: item.menuItem.id,
+          name: item.menuItem.name,
+          price: item.menuItem.price,
+          quantity: item.quantity
+        }))}
+        onPaymentComplete={() => {
+          setShowPaymentPage(false);
+          setOrderItems([]);
+          toast({
+            title: "Payment Successful!",
+            description: "Thank you for your order. Enjoy your meal!",
+          });
+        }}
+        onBack={() => setShowPaymentPage(false)}
+      />
+    );
+  }
+
   // Show customer profile if logged in
   if (loggedInCustomer) {
     return <CustomerProfile customer={loggedInCustomer} onLogout={handleLogout} />;
@@ -281,6 +306,7 @@ const Index = () => {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
         onPlaceOrder={handlePlaceOrder}
+        onProceedToPayment={() => setShowPaymentPage(true)}
       />
 
       {/* Footer */}
