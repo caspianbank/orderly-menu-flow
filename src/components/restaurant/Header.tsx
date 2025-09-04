@@ -14,13 +14,15 @@ interface HeaderProps {
   onCategorySelect: (categoryId: string) => void;
   currentLanguage: Language;
   onLanguageChange: (language: Language) => void;
+  onLoginSuccess: (customer: { fullName: string; phoneNumber: string }) => void;
 }
 
 export function Header({
   onSearchChange,
   onCategorySelect,
   currentLanguage,
-  onLanguageChange
+  onLanguageChange,
+  onLoginSuccess
 }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,7 +48,7 @@ export function Header({
 
           {/* Mobile Actions Row */}
           <div className="flex items-center justify-center gap-2 flex-wrap">
-            <LoginButton />
+            <LoginButton onLoginSuccess={onLoginSuccess} />
             <ThemeToggle />
             <LanguageSelector
               currentLanguage={currentLanguage}
@@ -94,7 +96,7 @@ export function Header({
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <LoginButton />
+            <LoginButton onLoginSuccess={onLoginSuccess} />
             <ThemeToggle />
             <LanguageSelector
               currentLanguage={currentLanguage}

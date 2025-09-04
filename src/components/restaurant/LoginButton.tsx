@@ -24,7 +24,11 @@ const countries: Country[] = [
   { code: 'RU', name: 'Russia', flag: '🇷🇺', dialCode: '+7' },
 ];
 
-export function LoginButton() {
+interface LoginButtonProps {
+  onLoginSuccess: (customer: { fullName: string; phoneNumber: string }) => void;
+}
+
+export function LoginButton({ onLoginSuccess }: LoginButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('AZ');
@@ -53,10 +57,19 @@ export function LoginButton() {
     const country = countries.find(c => c.code === selectedCountry);
     const fullNumber = `${country?.dialCode}${phoneNumber}`;
     
+    // Simulate successful login with static data
+    onLoginSuccess({
+      fullName: fullName.trim(),
+      phoneNumber: fullNumber,
+    });
+    
+    setIsOpen(false);
+    setFullName('');
+    setPhoneNumber('');
+    
     toast({
-      title: "Login requires backend",
-      description: "Phone authentication needs Supabase integration to work properly.",
-      variant: "destructive"
+      title: "Login successful!",
+      description: "Welcome back to Bella Vista.",
     });
   };
 

@@ -16,6 +16,7 @@ import { Stories, StoriesButton } from '@/components/restaurant/Stories';
 import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
 import { OrderHistory } from '@/components/restaurant/OrderHistory';
 import { AdvertisementPopup } from '@/components/restaurant/AdvertisementPopup';
+import { CustomerProfile } from '@/components/restaurant/CustomerProfile';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
@@ -27,6 +28,7 @@ const Index = () => {
   const [currentLanguage, setCurrentLanguage] = useState<Language>('az');
   const [activeTimeCategory, setActiveTimeCategory] = useState<TimeCategory | null>(null);
   const [showStories, setShowStories] = useState(false);
+  const [loggedInCustomer, setLoggedInCustomer] = useState<{ fullName: string; phoneNumber: string } | null>(null);
   const [filters, setFilters] = useState<FilterOptions>({
     sortBy: 'name',
     sortOrder: 'asc',
@@ -178,6 +180,19 @@ const Index = () => {
     setOrderItems([]);
   };
 
+  const handleLoginSuccess = (customer: { fullName: string; phoneNumber: string }) => {
+    setLoggedInCustomer(customer);
+  };
+
+  const handleLogout = () => {
+    setLoggedInCustomer(null);
+  };
+
+  // Show customer profile if logged in
+  if (loggedInCustomer) {
+    return <CustomerProfile customer={loggedInCustomer} onLogout={handleLogout} />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -186,6 +201,7 @@ const Index = () => {
         onCategorySelect={setActiveCategory}
         currentLanguage={currentLanguage}
         onLanguageChange={setCurrentLanguage}
+        onLoginSuccess={handleLoginSuccess}
       />
 
       {/* Hero Section */}
