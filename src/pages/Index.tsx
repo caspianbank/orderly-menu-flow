@@ -31,6 +31,7 @@ const Index = () => {
   const [showStories, setShowStories] = useState(false);
   const [loggedInCustomer, setLoggedInCustomer] = useState<{ fullName: string; phoneNumber: string } | null>(null);
   const [showPaymentPage, setShowPaymentPage] = useState(false);
+  const [showCustomerProfile, setShowCustomerProfile] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     sortBy: 'name',
     sortOrder: 'asc',
@@ -213,9 +214,17 @@ const Index = () => {
     );
   }
 
-  // Show customer profile if logged in
-  if (loggedInCustomer) {
-    return <CustomerProfile customer={loggedInCustomer} onLogout={handleLogout} />;
+  // Show customer profile if requested
+  if (showCustomerProfile && loggedInCustomer) {
+    return (
+      <CustomerProfile 
+        customer={loggedInCustomer} 
+        onLogout={() => {
+          handleLogout();
+          setShowCustomerProfile(false);
+        }} 
+      />
+    );
   }
 
   return (
@@ -227,6 +236,8 @@ const Index = () => {
         currentLanguage={currentLanguage}
         onLanguageChange={setCurrentLanguage}
         onLoginSuccess={handleLoginSuccess}
+        currentCustomer={loggedInCustomer}
+        onShowProfile={() => setShowCustomerProfile(true)}
       />
 
       {/* Hero Section */}

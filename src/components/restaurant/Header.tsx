@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Search, Menu as MenuIcon, Phone, Clock } from 'lucide-react';
+import { Search, Menu as MenuIcon, Phone, Clock, User } from 'lucide-react';
 import { CallWaiterDialog } from '@/components/restaurant/CallWaiterDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { LoginButton } from '@/components/restaurant/LoginButton';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Language } from '@/types/menu';
 import { restaurantInfo } from '@/data/menuData';
 
@@ -15,6 +16,8 @@ interface HeaderProps {
   currentLanguage: Language;
   onLanguageChange: (language: Language) => void;
   onLoginSuccess: (customer: { fullName: string; phoneNumber: string }) => void;
+  currentCustomer: { fullName: string; phoneNumber: string } | null;
+  onShowProfile: () => void;
 }
 
 export function Header({
@@ -22,7 +25,9 @@ export function Header({
   onCategorySelect,
   currentLanguage,
   onLanguageChange,
-  onLoginSuccess
+  onLoginSuccess,
+  currentCustomer,
+  onShowProfile
 }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -47,28 +52,48 @@ export function Header({
           </div>
 
           {/* Mobile Actions Row */}
-          <div className="flex items-center justify-center gap-2 flex-wrap">
-            <LoginButton onLoginSuccess={onLoginSuccess} />
-            <ThemeToggle />
-            <LanguageSelector
-              currentLanguage={currentLanguage}
-              onLanguageChange={onLanguageChange}
-            />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsWaiterDialogOpen(true)}
-              className="gap-2 hover:bg-accent hover:text-accent-foreground"
-            >
-              <Phone className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <MenuIcon className="h-5 w-5" />
-            </Button>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <LanguageSelector
+                currentLanguage={currentLanguage}
+                onLanguageChange={onLanguageChange}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsWaiterDialogOpen(true)}
+                className="gap-2 hover:bg-accent hover:text-accent-foreground"
+              >
+                <Phone className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                <MenuIcon className="h-5 w-5" />
+              </Button>
+            </div>
+            {/* Login/Profile on the right */}
+            <div>
+              {currentCustomer ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onShowProfile}
+                  className="p-2"
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {currentCustomer.fullName.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              ) : (
+                <LoginButton onLoginSuccess={onLoginSuccess} />
+              )}
+            </div>
           </div>
         </div>
 
@@ -96,7 +121,6 @@ export function Header({
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <LoginButton onLoginSuccess={onLoginSuccess} />
             <ThemeToggle />
             <LanguageSelector
               currentLanguage={currentLanguage}
@@ -111,6 +135,24 @@ export function Header({
               <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">Call Waiter</span>
             </Button>
+            
+            {/* Login/Profile on the right */}
+            {currentCustomer ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onShowProfile}
+                className="p-2"
+              >
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    {currentCustomer.fullName.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            ) : (
+              <LoginButton onLoginSuccess={onLoginSuccess} />
+            )}
 
             <CallWaiterDialog
               isOpen={isWaiterDialogOpen}
