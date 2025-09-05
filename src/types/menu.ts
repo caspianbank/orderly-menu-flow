@@ -5,6 +5,7 @@ export interface MenuItem {
   price: number;
   category: MenuCategory;
   image: string;
+  images?: string[];
   ingredients: string[];
   allergens: string[];
   dietary: DietaryInfo[];

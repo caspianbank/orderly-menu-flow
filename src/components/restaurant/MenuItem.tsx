@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 interface MenuItemProps {
   item: MenuItemType;
@@ -122,11 +123,30 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
               </DialogHeader>
               
               <div className="space-y-4">
-                <img 
-                  src={item.image} 
-                  alt={item.name}
-                  className="w-full h-48 object-cover rounded-lg"
-                />
+                {/* Multiple Images Carousel */}
+                {item.images && item.images.length > 1 ? (
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {item.images.map((image, index) => (
+                        <CarouselItem key={index}>
+                          <img 
+                            src={image} 
+                            alt={`${item.name} - Image ${index + 1}`}
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="left-2" />
+                    <CarouselNext className="right-2" />
+                  </Carousel>
+                ) : (
+                  <img 
+                    src={item.images?.[0] || item.image} 
+                    alt={item.name}
+                    className="w-full h-48 object-cover rounded-lg"
+                  />
+                )}
                 
                 <div className="space-y-3">
                   <p className="text-muted-foreground">{item.description}</p>
