@@ -82,7 +82,7 @@ export function Header({
                   variant="ghost"
                   size="sm"
                   onClick={onShowProfile}
-                  className="p-2"
+                  className="p-2 hover:bg-transparent"
                 >
                   <Avatar className="h-8 w-8">
                     <AvatarFallback className="bg-primary text-primary-foreground">
@@ -142,7 +142,7 @@ export function Header({
                 variant="ghost"
                 size="sm"
                 onClick={onShowProfile}
-                className="p-2"
+                className="p-2 hover:bg-transparent"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarFallback className="bg-primary text-primary-foreground">

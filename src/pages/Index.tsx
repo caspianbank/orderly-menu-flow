@@ -222,7 +222,8 @@ const Index = () => {
         onLogout={() => {
           handleLogout();
           setShowCustomerProfile(false);
-        }} 
+        }}
+        onBack={() => setShowCustomerProfile(false)}
       />
     );
   }

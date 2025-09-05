@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, MapPin, Phone, Mail, Edit, LogOut } from 'lucide-react';
+import { User, MapPin, Phone, Mail, Edit, LogOut, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,6 +13,7 @@ interface CustomerProfileProps {
     email?: string;
   };
   onLogout: () => void;
+  onBack?: () => void;
 }
 
 // Static customer data
@@ -61,7 +62,7 @@ const customerDetails = {
   ],
 };
 
-export function CustomerProfile({ customer, onLogout }: CustomerProfileProps) {
+export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileProps) {
   const [activeTab, setActiveTab] = useState('profile');
 
   const getInitials = (name: string) => {
@@ -76,6 +77,18 @@ export function CustomerProfile({ customer, onLogout }: CustomerProfileProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6 max-w-6xl">
+        {/* Back Button */}
+        {onBack && (
+          <Button
+            variant="ghost"
+            onClick={onBack}
+            className="gap-2 mb-4"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Menu
+          </Button>
+        )}
+        
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
