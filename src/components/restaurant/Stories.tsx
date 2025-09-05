@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, MessageCircle, Send, X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { Heart, MessageCircle, Send, X, ChevronLeft, ChevronRight, Play, Share } from 'lucide-react';
 import { Story, StoryResponse } from '@/types/stories';
 import { restaurantStories } from '@/data/storiesData';
 import { useToast } from '@/hooks/use-toast';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface StoriesProps {
   isOpen: boolean;
@@ -68,17 +69,50 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
   };
 
   const toggleLove = () => {
-    setStories(prev => 
-      prev.map(story => 
-        story.id === currentStory.id 
-          ? { 
-              ...story, 
-              isLoved: !story.isLoved,
-              loves: story.isLoved ? story.loves - 1 : story.loves + 1
-            }
+    setStories(prev =>
+      prev.map(story =>
+        story.id === currentStory.id
+          ? {
+            ...story,
+            isLoved: !story.isLoved,
+            loves: story.isLoved ? story.loves - 1 : story.loves + 1
+          }
           : story
       )
     );
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: currentStory.title,
+      text: `Check out this story from ${currentStory.author.name}: ${currentStory.title}`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        toast({
+          title: "Story shared!",
+          description: "The story has been shared successfully.",
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        await navigator.clipboard.writeText(`${shareData.text} - ${shareData.url}`);
+        toast({
+          title: "Link copied!",
+          description: "Story link has been copied to clipboard.",
+        });
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        toast({
+          title: "Share failed",
+          description: "Unable to share the story. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   const sendResponse = () => {
@@ -94,15 +128,16 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
       timestamp: new Date()
     };
 
-    setStories(prev => 
-      prev.map(story => 
-        story.id === currentStory.id 
+    setStories(prev =>
+      prev.map(story =>
+        story.id === currentStory.id
           ? { ...story, responses: [...story.responses, newResponse] }
           : story
       )
     );
 
     setResponseText('');
+    setShowResponses(false);
     toast({
       title: "Response sent!",
       description: "Your message has been sent to the restaurant.",
@@ -119,11 +154,11 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
           <div className="absolute top-2 left-2 right-2 z-20 flex gap-1">
             {stories.map((_, index) => (
               <div key={index} className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-white transition-all duration-100"
-                  style={{ 
-                    width: index < currentStoryIndex ? '100%' : 
-                           index === currentStoryIndex ? `${progress}%` : '0%'
+                  style={{
+                    width: index < currentStoryIndex ? '100%' :
+                      index === currentStoryIndex ? `${progress}%` : '0%'
                   }}
                 />
               </div>
@@ -140,9 +175,9 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
               <div>
                 <p className="font-semibold text-sm">{currentStory.author.name}</p>
                 <p className="text-xs text-white/80">
-                  {new Date(currentStory.timestamp).toLocaleTimeString([], { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
+                  {new Date(currentStory.timestamp).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
                   })}
                 </p>
               </div>
@@ -159,24 +194,24 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
 
           {/* Story Image */}
           <div className="relative flex-1 flex items-center justify-center">
-            <img 
+            <img
               src={currentStory.image}
               alt={currentStory.title}
               className="w-full h-full object-cover"
             />
-            
+
             {/* Navigation areas */}
-            <button 
+            <button
               className="absolute left-0 top-0 w-1/3 h-full z-10"
               onClick={prevStory}
             />
-            <button 
+            <button
               className="absolute right-0 top-0 w-1/3 h-full z-10"
               onClick={nextStory}
             />
-            
+
             {/* Pause on tap */}
-            <button 
+            <button
               className="absolute inset-0 z-5"
               onTouchStart={() => setIsPaused(true)}
               onTouchEnd={() => setIsPaused(false)}
@@ -186,88 +221,85 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
           </div>
 
           {/* Story Title */}
-          <div className="absolute bottom-20 left-4 right-4 z-20">
-            <h3 className="text-white text-lg font-bold mb-2">{currentStory.title}</h3>
-          </div>
+          <motion.div
+            className="absolute bottom-0 z-20"
+            animate={{
+              marginBottom: showResponses ? 60 : 0, // push up when input opens
+            }}>
+            <h1 className="p-4 text-white text-lg font-bold mb-2">{currentStory.title}</h1>
+          </motion.div>
 
-          {/* Action buttons */}
-          <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          {/* Bottom actions + input */}
+          <div className="absolute bottom-4 right-4 left-4 z-20">
+            <motion.div
+              animate={{
+                marginBottom: showResponses ? 60 : 0, // push up when input opens
+              }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-end gap-1"
+            >
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={toggleLove}
-                className={`text-white hover:bg-white/20 ${currentStory.isLoved ? 'text-red-500' : ''}`}
+                className={`flex flex-col text-white w-12 hover:bg-white/20 py-8 transition-colors ${currentStory.isLoved ? "text-red-500" : ""}`}
               >
-                <Heart className={`w-6 h-6 ${currentStory.isLoved ? 'fill-red-500' : ''}`} />
-                <span className="ml-1 text-sm">{currentStory.loves}</span>
+                <Heart className={`w-6 h-6 ${currentStory.isLoved ? "fill-red-500" : ""}`} />
+                <span className="text-sm mt-1">{currentStory.loves}</span>
               </Button>
-              
+
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowResponses(!showResponses)}
-                className="text-white hover:bg-white/20"
+                className="flex flex-col text-white w-12 hover:bg-white/20 py-8 transition-colors"
               >
                 <MessageCircle className="w-6 h-6" />
-                <span className="ml-1 text-sm">{currentStory.responses.length}</span>
+                <span className="text-sm mt-1">{currentStory.responses.length}</span>
               </Button>
-            </div>
 
-            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={prevStory}
-                disabled={currentStoryIndex === 0}
-                className="text-white hover:bg-white/20 disabled:opacity-50"
+                onClick={handleShare}
+                className="flex flex-col text-white w-12 hover:bg-white/20 py-8 transition-colors"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <Share className="w-6 h-6" />
+                <span className="text-sm mt-1">Share</span>
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={nextStory}
-                className="text-white hover:bg-white/20"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
+            </motion.div>
+
+            {/* Input box */}
+            <AnimatePresence>
+              {showResponses && (
+                <motion.div
+                  initial={{ y: 60, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 60, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute left-0 right-0 bottom-0"
+                >
+                  <div className="flex gap-2 items-center">
+                    <Input
+                      placeholder="Send a message..."
+                      value={responseText}
+                      onChange={(e) => setResponseText(e.target.value)}
+                      onKeyPress={(e) => e.key === "Enter" && sendResponse()}
+                      className="flex-1 bg-white text-black placeholder:text-gray-500 rounded-full px-4 py-2"
+                    />
+                    <Button
+                      onClick={sendResponse}
+                      size="icon"
+                      className="rounded-full bg-green-500 hover:bg-green-600 text-white"
+                    >
+                      <Send className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Response panel */}
-          {showResponses && (
-            <div className="absolute bottom-0 left-0 right-0 bg-black/90 backdrop-blur-sm text-white p-4 max-h-64 overflow-y-auto">
-              <div className="space-y-3 mb-4">
-                {currentStory.responses.map((response) => (
-                  <div key={response.id} className="flex items-start gap-2">
-                    <div className="text-lg">{response.author.avatar}</div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold">{response.author.name}</p>
-                      <p className="text-sm text-white/80">{response.message}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Send a message..."
-                  value={responseText}
-                  onChange={(e) => setResponseText(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && sendResponse()}
-                  className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                />
-                <Button
-                  onClick={sendResponse}
-                  size="sm"
-                  className="bg-primary hover:bg-primary/90"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
       </DialogContent>
     </Dialog>
