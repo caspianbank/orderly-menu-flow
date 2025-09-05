@@ -123,26 +123,51 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
               </DialogHeader>
               
               <div className="space-y-4">
-                {/* Multiple Images Carousel */}
-                {item.images && item.images.length > 1 ? (
+                {/* Multiple Images and Video Carousel */}
+                {(item.images && item.images.length > 1) || item.video ? (
                   <Carousel className="w-full">
                     <CarouselContent>
-                      {item.images.map((image, index) => (
-                        <CarouselItem key={index}>
+                      {/* Show images first */}
+                      {item.images ? (
+                        item.images.map((image, index) => (
+                          <CarouselItem key={`image-${index}`}>
+                            <img 
+                              src={image} 
+                              alt={`${item.name} - Image ${index + 1}`}
+                              className="w-full h-48 object-cover rounded-lg"
+                            />
+                          </CarouselItem>
+                        ))
+                      ) : (
+                        <CarouselItem key="main-image">
                           <img 
-                            src={image} 
-                            alt={`${item.name} - Image ${index + 1}`}
+                            src={item.image} 
+                            alt={item.name}
                             className="w-full h-48 object-cover rounded-lg"
                           />
                         </CarouselItem>
-                      ))}
+                      )}
+                      
+                      {/* Show video as last item if available */}
+                      {item.video && (
+                        <CarouselItem key="video">
+                          <video 
+                            controls
+                            className="w-full h-48 object-cover rounded-lg"
+                            poster={item.image}
+                          >
+                            <source src={item.video} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        </CarouselItem>
+                      )}
                     </CarouselContent>
                     <CarouselPrevious className="left-2" />
                     <CarouselNext className="right-2" />
                   </Carousel>
                 ) : (
                   <img 
-                    src={item.images?.[0] || item.image} 
+                    src={item.image} 
                     alt={item.name}
                     className="w-full h-48 object-cover rounded-lg"
                   />

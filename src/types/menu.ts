@@ -6,6 +6,7 @@ export interface MenuItem {
   category: MenuCategory;
   image: string;
   images?: string[];
+  video?: string;
   ingredients: string[];
   allergens: string[];
   dietary: DietaryInfo[];
