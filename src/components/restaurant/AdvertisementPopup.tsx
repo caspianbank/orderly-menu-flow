@@ -88,7 +88,7 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
 
     // Trigger first ad after 10 seconds, then randomly every 2-5 minutes
     const initialTimeout = setTimeout(triggerAd, 10000);
-    
+
     const interval = setInterval(() => {
       triggerAd();
     }, Math.random() * 180000 + 120000); // 2-5 minutes
@@ -113,7 +113,7 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
     if (currentAd) {
       onAddToOrder(currentAd.item);
       setShowPopup(false);
-      
+
       toast({
         title: "Added to Order!",
         description: `${currentAd.item.name} has been added to your order${currentAd.specialPrice ? ' at special price!' : '.'}`,
@@ -132,7 +132,7 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
 
   return (
     <Dialog open={showPopup} onOpenChange={setShowPopup}>
-      <DialogContent className="max-w-md w-[95vw] mx-auto rounded-xl overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-background to-primary/5">
+      <DialogContent hideClose={true} className="max-w-md w-[95vw] mx-auto rounded-xl overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-background to-primary/5">
         {/* Header with close button and timer */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
@@ -142,10 +142,6 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4" />
-              <span>{timeLeft}s</span>
-            </div>
             <Button
               variant="ghost"
               size="sm"
@@ -173,7 +169,7 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
             <div className="w-20 h-20 rounded-lg bg-muted/50 flex items-center justify-center flex-shrink-0">
               <span className="text-2xl">🍽️</span>
             </div>
-            
+
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h3 className="font-semibold text-lg leading-tight">
@@ -196,11 +192,11 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
                   )}
                 </div>
               </div>
-              
+
               <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                 {currentAd.item.description}
               </p>
-              
+
               <div className="flex flex-wrap gap-2">
                 {currentAd.urgencyText && (
                   <Badge variant="secondary" className="bg-orange-100 text-orange-800 animate-pulse">
@@ -244,10 +240,10 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
         {/* Progress bar */}
         <div className="mt-4">
           <div className="h-1 bg-muted rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-primary transition-all duration-1000 ease-linear"
-              style={{ 
-                width: `${(timeLeft / currentAd.duration) * 100}%` 
+              style={{
+                width: `${(timeLeft / currentAd.duration) * 100}%`
               }}
             />
           </div>
