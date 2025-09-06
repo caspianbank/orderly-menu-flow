@@ -334,7 +334,7 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                         onChange={(e) => setProfileData({ ...profileData, fullName: e.target.value })}
                       />
                     ) : (
-                      <div className="flex items-center gap-2 p-3 border rounded-lg bg-muted/50">
+                      <div className="flex items-center gap-2 p-3 border-2 border-border rounded-lg bg-muted/50">
                         <User className="h-4 w-4 text-muted-foreground" />
                         <span>{profileData.fullName}</span>
                       </div>
@@ -350,7 +350,7 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                         onChange={(e) => setProfileData({ ...profileData, phoneNumber: e.target.value })}
                       />
                     ) : (
-                      <div className="flex items-center gap-2 p-3 border rounded-lg bg-muted/50">
+                      <div className="flex items-center gap-2 p-3 border-2 border-border rounded-lg bg-muted/50">
                         <Phone className="h-4 w-4 text-muted-foreground" />
                         <span>{profileData.phoneNumber}</span>
                       </div>
@@ -367,7 +367,7 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                         onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
                       />
                     ) : (
-                      <div className="flex items-center gap-2 p-3 border rounded-lg bg-muted/50">
+                      <div className="flex items-center gap-2 p-3 border-2 border-border rounded-lg bg-muted/50">
                         <Mail className="h-4 w-4 text-muted-foreground" />
                         <span>{profileData.email}</span>
                       </div>
@@ -376,7 +376,7 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                   
                   <div className="space-y-2">
                     <Label>Member Since</Label>
-                    <div className="flex items-center gap-2 p-3 border rounded-lg bg-muted/50 opacity-50">
+                    <div className="flex items-center gap-2 p-3 border-2 border-border rounded-lg bg-muted/50 opacity-50">
                       <span className="text-xl">🎉</span>
                       <span>{new Date(customerDetails.joinDate).toLocaleDateString()}</span>
                     </div>
@@ -490,7 +490,7 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                   {addresses.map((address) => (
                     <div
                       key={address.id}
-                      className={`p-4 border rounded-lg ${
+                      className={`p-4 border-2 rounded-lg ${
                         address.isDefault ? 'border-primary bg-primary/5' : 'border-border'
                       }`}
                     >

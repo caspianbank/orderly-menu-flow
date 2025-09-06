@@ -163,7 +163,7 @@ export function MiniGames() {
           <Button
             key={index}
             variant="outline"
-            className="h-20 w-20 text-2xl font-bold"
+            className="h-20 w-20 text-2xl font-bold border-2 border-border"
             onClick={() => handleTicTacClick(index)}
             disabled={!!square || !!ticTacWinner}
           >
@@ -181,7 +181,7 @@ export function MiniGames() {
         <p className="text-sm text-muted-foreground">Fill in numbers 1-9</p>
       </div>
       
-      <div className="grid grid-cols-9 gap-1 max-w-md mx-auto border-2 border-primary">
+      <div className="grid grid-cols-9 gap-1 max-w-md mx-auto border-4 border-primary p-2 rounded-lg bg-card">
         {sudokuBoard.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <input
@@ -189,10 +189,10 @@ export function MiniGames() {
               type="text"
               value={cell || ''}
               onChange={(e) => handleSudokuChange(rowIndex, colIndex, e.target.value)}
-              className={`w-8 h-8 text-center border text-xs font-semibold ${
-                INITIAL_SUDOKU_PUZZLE[rowIndex][colIndex] ? 'bg-muted' : 'bg-background'
-              } ${(rowIndex + 1) % 3 === 0 ? 'border-b-2 border-b-primary' : ''} 
-              ${(colIndex + 1) % 3 === 0 ? 'border-r-2 border-r-primary' : ''}`}
+              className={`w-8 h-8 text-center border-2 border-border text-xs font-semibold rounded ${
+                INITIAL_SUDOKU_PUZZLE[rowIndex][colIndex] ? 'bg-muted border-muted-foreground' : 'bg-background border-input'
+              } ${(rowIndex + 1) % 3 === 0 ? 'border-b-4 border-b-primary' : ''} 
+              ${(colIndex + 1) % 3 === 0 ? 'border-r-4 border-r-primary' : ''}`}
               maxLength={1}
               disabled={!!INITIAL_SUDOKU_PUZZLE[rowIndex][colIndex]}
             />
@@ -218,7 +218,7 @@ export function MiniGames() {
             <Button
               key={index}
               variant="outline"
-              className="h-16 w-16 text-xl"
+              className="h-16 w-16 text-xl border-2 border-border"
               onClick={() => handleMemoryCardClick(index)}
               disabled={matchedCards.includes(index)}
             >
@@ -272,7 +272,7 @@ export function MiniGames() {
             {games.map((game) => (
               <Card 
                 key={game.id} 
-                className="cursor-pointer hover:shadow-hover transition-all duration-300 hover-scale"
+                className="cursor-pointer hover:shadow-hover transition-all duration-300 hover-scale border-2 border-border"
                 onClick={() => setCurrentGame(game.id)}
               >
                 <CardHeader className="text-center pb-3">
