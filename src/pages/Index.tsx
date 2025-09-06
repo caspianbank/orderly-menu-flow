@@ -19,6 +19,7 @@ import { AdvertisementPopup } from '@/components/restaurant/AdvertisementPopup';
 import { CustomerProfile } from '@/components/restaurant/CustomerProfile';
 import { PaymentPage } from '@/components/restaurant/PaymentPage';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
+import { MiniGames } from '@/components/restaurant/MiniGames';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -270,6 +271,7 @@ const Index = () => {
           <SpinRoulette items={filteredMenuItems} categories={categories} onAddToOrder={handleAddToOrder} />
           <StoriesButton onClick={() => setShowStories(true)} />
           <Challenges />
+          <MiniGames />
         </div>
         <Recommendations />
       </section>
