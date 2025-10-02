@@ -7,19 +7,16 @@ import { FilterOptions } from '@/components/restaurant/FilterDialog';
 import { MenuItem } from '@/components/restaurant/MenuItem';
 import { OrderSummary } from '@/components/restaurant/OrderSummary';
 import { Footer } from '@/components/restaurant/Footer';
-import MysteryChoice from '@/components/restaurant/MysteryChoice';
 import Recommendations from '@/components/restaurant/Recommendations';
 import Challenges from '@/components/restaurant/Challenges';
 import { TrendingItems } from '@/components/restaurant/TrendingItems';
-import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
-import { Stories, StoriesButton } from '@/components/restaurant/Stories';
+import { Stories } from '@/components/restaurant/Stories';
 import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
 import { OrderHistory } from '@/components/restaurant/OrderHistory';
 import { AdvertisementPopup } from '@/components/restaurant/AdvertisementPopup';
 import { CustomerProfile } from '@/components/restaurant/CustomerProfile';
 import { PaymentPage } from '@/components/restaurant/PaymentPage';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
-import { MiniGames } from '@/components/restaurant/MiniGames';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -240,6 +237,8 @@ const Index = () => {
         onLoginSuccess={handleLoginSuccess}
         currentCustomer={loggedInCustomer}
         onShowProfile={() => setShowCustomerProfile(true)}
+        onStoriesClick={() => setShowStories(true)}
+        hasNewStories={true}
       />
 
       {/* Hero Section */}
@@ -267,13 +266,9 @@ const Index = () => {
       {/* Special Features */}
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
-          <MysteryChoice />
-          <SpinRoulette items={filteredMenuItems} categories={categories} onAddToOrder={handleAddToOrder} />
-          <StoriesButton onClick={() => setShowStories(true)} />
           <Challenges />
-          <MiniGames />
+          <Recommendations />
         </div>
-        <Recommendations />
       </section>
 
       {/* Time-Based Menu Filter */}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Search, Menu as MenuIcon, Phone, Clock, User } from 'lucide-react';
+import { Search, Menu as MenuIcon, Phone, Clock, Trophy, Circle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { CallWaiterDialog } from '@/components/restaurant/CallWaiterDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,6 +19,8 @@ interface HeaderProps {
   onLoginSuccess: (customer: { fullName: string; phoneNumber: string }) => void;
   currentCustomer: { fullName: string; phoneNumber: string } | null;
   onShowProfile: () => void;
+  onStoriesClick: () => void;
+  hasNewStories?: boolean;
 }
 
 export function Header({
@@ -27,7 +30,9 @@ export function Header({
   onLanguageChange,
   onLoginSuccess,
   currentCustomer,
-  onShowProfile
+  onShowProfile,
+  onStoriesClick,
+  hasNewStories = true
 }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -126,6 +131,33 @@ export function Header({
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
             />
+            
+            {/* Stories Icon */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onStoriesClick}
+              className="relative rounded-full"
+            >
+              {hasNewStories && (
+                <Circle className="absolute -top-0.5 -right-0.5 h-3 w-3 fill-primary text-primary animate-pulse" />
+              )}
+              <div className={`rounded-full p-2 ${hasNewStories ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}`}>
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+            </Button>
+
+            {/* Rewards Link */}
+            <Link to="/rewards">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Trophy className="h-4 w-4" />
+                <span className="hidden sm:inline">Rewards</span>
+              </Button>
+            </Link>
+
             <Button
               variant="outline"
               size="sm"
