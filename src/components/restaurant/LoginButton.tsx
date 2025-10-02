@@ -26,9 +26,10 @@ const countries: Country[] = [
 
 interface LoginButtonProps {
   onLoginSuccess: (customer: { fullName: string; phoneNumber: string }) => void;
+  className?: string;
 }
 
-export function LoginButton({ onLoginSuccess }: LoginButtonProps) {
+export function LoginButton({ onLoginSuccess, className }: LoginButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('AZ');
@@ -78,7 +79,7 @@ export function LoginButton({ onLoginSuccess }: LoginButtonProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className={`gap-2 ${className || ''}`}>
           <LogIn className="h-4 w-4" />
           Login
         </Button>
