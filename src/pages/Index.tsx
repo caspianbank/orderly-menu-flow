@@ -8,7 +8,6 @@ import { MenuItem } from '@/components/restaurant/MenuItem';
 import { OrderSummary } from '@/components/restaurant/OrderSummary';
 import { Footer } from '@/components/restaurant/Footer';
 import Recommendations from '@/components/restaurant/Recommendations';
-import Challenges from '@/components/restaurant/Challenges';
 import { TrendingItems } from '@/components/restaurant/TrendingItems';
 import { Stories } from '@/components/restaurant/Stories';
 import { TimeBasedMenu } from '@/components/restaurant/TimeBasedMenu';
@@ -263,12 +262,9 @@ const Index = () => {
       {/* Trending Items */}
       <TrendingItems items={menuItems} />
 
-      {/* Special Features */}
+      {/* Recommendations */}
       <section className="container mx-auto px-4 py-6">
-        <div className="flex flex-wrap gap-4 justify-center items-center mb-6">
-          <Challenges />
-          <Recommendations />
-        </div>
+        <Recommendations />
       </section>
 
       {/* Time-Based Menu Filter */}

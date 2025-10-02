@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import MysteryChoice from '@/components/restaurant/MysteryChoice';
 import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
 import { MiniGames } from '@/components/restaurant/MiniGames';
+import Challenges from '@/components/restaurant/Challenges';
 import { menuItems, categories } from '@/data/menuData';
 import { OrderItem } from '@/types/menu';
 
@@ -44,7 +45,7 @@ const Rewards = () => {
           </div>
 
           {/* Features Grid */}
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {/* Mystery Choice */}
             <Card className="border-2 hover:shadow-lg transition-shadow">
               <CardHeader className="text-center pb-4">
@@ -90,6 +91,22 @@ const Rewards = () => {
               </CardHeader>
               <CardContent className="flex justify-center pb-6">
                 <MiniGames />
+              </CardContent>
+            </Card>
+
+            {/* Challenges */}
+            <Card className="border-2 hover:shadow-lg transition-shadow">
+              <CardHeader className="text-center pb-4">
+                <div className="mx-auto mb-3 h-12 w-12 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-lg flex items-center justify-center">
+                  <Trophy className="h-6 w-6 text-green-500" />
+                </div>
+                <CardTitle className="text-xl">Challenges</CardTitle>
+                <CardDescription>
+                  Complete fun challenges to unlock exclusive rewards and badges
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-center pb-6">
+                <Challenges />
               </CardContent>
             </Card>
           </div>
