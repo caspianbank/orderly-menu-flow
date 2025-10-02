@@ -145,7 +145,7 @@ const Challenges = () => {
       <DialogTrigger asChild>
         <Button variant="outline" className="bg-gradient-to-r from-orange-500 to-red-500 text-white border-none hover:from-orange-600 hover:to-red-600 font-semibold">
           <Trophy className="mr-2 h-4 w-4" />
-          My Challenges
+          Challenges
           {activeChallenge.length > 0 && (
             <Badge className="ml-2 bg-white text-orange-600">
               {activeChallenge.length}
