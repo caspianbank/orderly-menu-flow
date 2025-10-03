@@ -259,4 +259,9 @@ export const restaurantInfo: RestaurantInfo = {
     twitter: 'https://twitter.com/bellavista',
     youtube: 'https://youtube.com/bellavista',
   },
+  wifi: {
+    ssid: 'BellaVista_Guest',
+    password: 'Welcome2024',
+    notes: 'Free Wi-Fi for all guests',
+  },
 };

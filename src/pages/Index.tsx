@@ -15,6 +15,7 @@ import { OrderHistory } from '@/components/restaurant/OrderHistory';
 import { AdvertisementPopup } from '@/components/restaurant/AdvertisementPopup';
 import { CustomerProfile } from '@/components/restaurant/CustomerProfile';
 import { PaymentPage } from '@/components/restaurant/PaymentPage';
+import { RestaurantInfoCard } from '@/components/restaurant/RestaurantInfoCard';
 import restaurantHero from '@/assets/restaurant-hero.jpg';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
@@ -266,6 +267,9 @@ const Index = () => {
       <section className="container mx-auto px-4 py-6">
         <Recommendations />
       </section>
+
+      {/* Restaurant Info Card with Wi-Fi */}
+      <RestaurantInfoCard />
 
       {/* Time-Based Menu Filter */}
       <TimeBasedMenu 

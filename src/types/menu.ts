@@ -64,4 +64,9 @@ export interface RestaurantInfo {
     twitter?: string;
     youtube?: string;
   };
+  wifi?: {
+    ssid: string;
+    password: string;
+    notes?: string;
+  };
 }
