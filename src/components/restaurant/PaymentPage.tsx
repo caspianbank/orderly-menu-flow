@@ -15,7 +15,9 @@ import {
   Smartphone, 
   Receipt,
   Share2,
-  ArrowRight
+  ArrowRight,
+  Banknote,
+  Award
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -46,6 +48,8 @@ const paymentMethods = [
   { id: 'card', name: 'Credit/Debit Card', icon: CreditCard },
   { id: 'apple', name: 'Apple Pay', icon: AppleIcon },
   { id: 'google', name: 'Google Pay', icon: Smartphone },
+  { id: 'cash', name: 'Cash', icon: Banknote },
+  { id: 'loyalty', name: 'Loyalty Points', icon: Award },
 ];
 
 export function PaymentPage({ 
@@ -53,7 +57,7 @@ export function PaymentPage({
   onPaymentComplete,
   onBack 
 }: PaymentPageProps) {
-  const [activeTab, setActiveTab] = useState('equal-split');
+  const [activeTab, setActiveTab] = useState('individual');
   const [numberOfDiners, setNumberOfDiners] = useState(4);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
   const [isSpinning, setIsSpinning] = useState(false);
@@ -333,7 +337,7 @@ export function PaymentPage({
                 {/* Payment Methods */}
                 <div className="mt-8 space-y-4">
                   <h3 className="text-lg font-semibold">Choose Payment Method</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                     {paymentMethods.map((method) => {
                       const Icon = method.icon;
                       return (
