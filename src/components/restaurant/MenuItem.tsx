@@ -1,12 +1,9 @@
-import { useState } from 'react';
-import { Plus, Clock, Info } from 'lucide-react';
+import { Plus, Clock } from 'lucide-react';
 import { MenuItem as MenuItemType } from '@/types/menu';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useNavigate } from 'react-router-dom';
 
 interface MenuItemProps {
   item: MenuItemType;
@@ -14,10 +11,14 @@ interface MenuItemProps {
 }
 
 export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
-  const [showDetails, setShowDetails] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddToOrder = () => {
     onAddToOrder(item);
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/menu/${item.id}`);
   };
 
   const getDietaryBadgeColor = (dietary: string) => {
@@ -109,131 +110,14 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
           </div>
         )}
 
-        <div className="flex gap-2 pt-2 mt-auto">
-          <Dialog open={showDetails} onOpenChange={setShowDetails}>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm" className="flex-1 gap-1 border border-gray-200">
-                <Info className="h-3 w-3" />
-                Details
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md bg-card">
-              <DialogHeader>
-                <DialogTitle className="text-xl">{item.name}</DialogTitle>
-              </DialogHeader>
-              
-              <div className="space-y-4">
-                {/* Multiple Images and Video Carousel */}
-                {(item.images && item.images.length > 1) || item.video ? (
-                  <Carousel className="w-full">
-                    <CarouselContent>
-                      {/* Show images first */}
-                      {item.images ? (
-                        item.images.map((image, index) => (
-                          <CarouselItem key={`image-${index}`}>
-                            <img 
-                              src={image} 
-                              alt={`${item.name} - Image ${index + 1}`}
-                              className="w-full h-48 object-cover rounded-lg"
-                            />
-                          </CarouselItem>
-                        ))
-                      ) : (
-                        <CarouselItem key="main-image">
-                          <img 
-                            src={item.image} 
-                            alt={item.name}
-                            className="w-full h-48 object-cover rounded-lg"
-                          />
-                        </CarouselItem>
-                      )}
-                      
-                      {/* Show video as last item if available */}
-                      {item.video && (
-                        <CarouselItem key="video">
-                          <video 
-                            controls
-                            className="w-full h-48 object-cover rounded-lg"
-                            poster={item.image}
-                          >
-                            <source src={item.video} type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
-                        </CarouselItem>
-                      )}
-                    </CarouselContent>
-                    <CarouselPrevious className="left-2" />
-                    <CarouselNext className="right-2" />
-                  </Carousel>
-                ) : (
-                  <img 
-                    src={item.image} 
-                    alt={item.name}
-                    className="w-full h-48 object-cover rounded-lg"
-                  />
-                )}
-                
-                <div className="space-y-3">
-                  <p className="text-muted-foreground">{item.description}</p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-primary">${item.price.toFixed(2)}</span>
-                    {item.prepTime && (
-                      <div className="flex items-center gap-1 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span>{item.prepTime} min</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <Separator />
-
-                  <div>
-                    <h4 className="font-medium mb-2">Ingredients</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {item.ingredients.join(', ')}
-                    </p>
-                  </div>
-
-                  {item.allergens.length > 0 && (
-                    <div>
-                      <h4 className="font-medium mb-2 text-destructive">Allergens</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {item.allergens.join(', ')}
-                      </p>
-                    </div>
-                  )}
-
-                  {item.dietary.length > 0 && (
-                    <div>
-                      <h4 className="font-medium mb-2">Dietary Information</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {item.dietary.map((dietary) => (
-                          <Badge 
-                            key={dietary} 
-                            variant="outline" 
-                            className={getDietaryBadgeColor(dietary)}
-                          >
-                            {dietary}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-
-          <Button 
-            size="sm" 
-            onClick={handleAddToOrder}
-            className="flex-1 gap-1 bg-primary hover:bg-primary-hover text-primary-foreground shadow-sm"
-          >
-            <Plus className="h-3 w-3" />
-            Add to Order
-          </Button>
-        </div>
+        <Button 
+          size="sm" 
+          onClick={handleViewDetails}
+          className="w-full gap-1 bg-primary hover:bg-primary-hover text-primary-foreground shadow-sm"
+        >
+          <Plus className="h-3 w-3" />
+          View & Customize
+        </Button>
       </CardContent>
     </Card>
   );
