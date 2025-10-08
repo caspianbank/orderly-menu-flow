@@ -54,53 +54,5 @@ export const TimeBasedMenu = ({ currentTimeCategory, onTimeCategoryChange }: Tim
     }
   ];
 
-  return (
-    <section className="container mx-auto px-4 py-4">
-      <div className="flex items-center gap-2 mb-4">
-        <Clock className="text-primary" size={20} />
-        <h3 className="text-lg font-semibold">Menu by Time</h3>
-      </div>
-      
-      <div className="flex flex-wrap gap-2">
-        <Badge
-          variant={currentTimeCategory === null ? "default" : "outline"}
-          className="cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2"
-          onClick={() => onTimeCategoryChange(null)}
-        >
-          All Day
-        </Badge>
-        
-        {timeCategories.map((category) => {
-          const Icon = category.icon;
-          const isSelected = currentTimeCategory === category.id;
-          const isCurrent = category.active;
-          
-          return (
-            <Badge
-              key={category.id}
-              variant={isSelected ? "default" : "outline"}
-              className={`cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2 flex items-center gap-2 ${
-                isCurrent ? category.color : ''
-              } ${isCurrent ? 'ring-2 ring-primary/30' : ''}`}
-              onClick={() => onTimeCategoryChange(category.id)}
-            >
-              <Icon size={14} />
-              <span>{category.name}</span>
-              <span className="text-xs opacity-70">{category.time}</span>
-              {isCurrent && (
-                <span className="animate-pulse">●</span>
-              )}
-            </Badge>
-          );
-        })}
-      </div>
-      
-      {actualCurrentCategory && (
-        <p className="text-sm text-muted-foreground mt-2 flex items-center gap-2">
-          <Clock size={14} />
-          Currently serving: <strong>{timeCategories.find(c => c.id === actualCurrentCategory)?.name}</strong>
-        </p>
-      )}
-    </section>
-  );
+  return null;
 };
