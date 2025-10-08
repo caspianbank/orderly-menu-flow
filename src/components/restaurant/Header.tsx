@@ -318,7 +318,7 @@ export function Header({
       <div className="md:hidden">
         <Button
           onClick={() => setIsWaiterDialogOpen(true)}
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
+          className="fixed bottom-6 left-6 h-14 w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
           size="icon"
         >
           <Bell className="h-6 w-6" />
