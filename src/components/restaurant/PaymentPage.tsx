@@ -310,18 +310,18 @@ export function PaymentPage({
                   </TabsContent>
 
                   <TabsContent value="individual" className="space-y-6">
-                    <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                      <UserCheck className="h-12 w-12 mx-auto mb-4 text-green-600" />
-                      <h3 className="text-xl font-semibold mb-2">Pay for Your Own Items</h3>
-                      <p className="text-muted-foreground mb-4">
+                    <div className="text-center p-4 sm:p-6 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <UserCheck className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 text-green-600" />
+                      <h3 className="text-lg sm:text-xl font-semibold mb-2">Pay for Your Own Items</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground mb-4">
                         Each person scans the QR code and pays only for their selected items
                       </p>
-                      <div className="flex items-center justify-center gap-2">
-                        <Button variant="outline" className="gap-2">
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+                        <Button variant="outline" className="gap-2 w-full sm:w-auto text-sm">
                           <Share2 className="h-4 w-4" />
                           Share QR Code
                         </Button>
-                        <Button variant="outline" className="gap-2">
+                        <Button variant="outline" className="gap-2 w-full sm:w-auto text-sm">
                           Generate Individual Links
                         </Button>
                       </div>
