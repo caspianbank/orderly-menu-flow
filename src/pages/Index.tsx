@@ -260,16 +260,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Trending Items */}
-      <TrendingItems items={menuItems} onAddToOrder={handleAddToOrder} />
-
-      {/* Recommendations */}
-      <section className="container mx-auto px-4 py-6">
-        <Recommendations />
-      </section>
-
       {/* Restaurant Info Card with Wi-Fi */}
       <RestaurantInfoCard />
+
+      {/* Trending Items */}
+      <TrendingItems items={menuItems} onAddToOrder={handleAddToOrder} />
 
       {/* Time-Based Menu Filter */}
       <TimeBasedMenu 
