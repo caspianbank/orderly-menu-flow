@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Menu as MenuIcon, Phone, Clock, Trophy, Circle, Bell, User, Globe, Moon, Sun, X } from 'lucide-react';
+import { Search, Menu as MenuIcon, Phone, Clock, Trophy, Circle, Bell, User, Globe, Moon, Sun, X, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 import { CallWaiterDialog } from '@/components/restaurant/CallWaiterDialog';
@@ -118,6 +118,14 @@ export function Header({
                       <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-3">
                         <Trophy className="h-5 w-5" />
                         <span>Rewards</span>
+                      </Button>
+                    </Link>
+
+                    {/* Events & Shows */}
+                    <Link to="/events" onClick={() => setIsHamburgerOpen(false)}>
+                      <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-3">
+                        <Calendar className="h-5 w-5" />
+                        <span>Events & Shows</span>
                       </Button>
                     </Link>
 
