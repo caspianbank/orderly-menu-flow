@@ -1,12 +1,14 @@
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Flame } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { TrendingUp, Flame, ShoppingCart } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
 
 interface TrendingItemsProps {
   items: MenuItem[];
+  onAddToOrder?: (item: MenuItem) => void;
 }
 
-export const TrendingItems = ({ items }: TrendingItemsProps) => {
+export const TrendingItems = ({ items, onAddToOrder }: TrendingItemsProps) => {
   const trendingItems = items
     .filter(item => item.isTrending)
     .sort((a, b) => (b.ordersToday || 0) - (a.ordersToday || 0))
@@ -56,6 +58,17 @@ export const TrendingItems = ({ items }: TrendingItemsProps) => {
                 </div>
               </div>
             </div>
+            
+            {onAddToOrder && (
+              <Button
+                onClick={() => onAddToOrder(item)}
+                className="w-full mt-3 gap-2"
+                size="sm"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Add to Basket
+              </Button>
+            )}
           </div>
         ))}
       </div>

@@ -261,7 +261,7 @@ const Index = () => {
       </section>
 
       {/* Trending Items */}
-      <TrendingItems items={menuItems} />
+      <TrendingItems items={menuItems} onAddToOrder={handleAddToOrder} />
 
       {/* Recommendations */}
       <section className="container mx-auto px-4 py-6">
