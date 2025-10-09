@@ -132,12 +132,12 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
 
   return (
     <Dialog open={showPopup} onOpenChange={setShowPopup}>
-      <DialogContent hideClose={true} className="max-w-md w-[95vw] mx-auto rounded-xl overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-background to-primary/5">
+      <DialogContent hideClose={true} className="max-w-md w-[95vw] sm:w-full mx-auto rounded-xl overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-background to-primary/5 p-4 sm:p-6">
         {/* Header with close button and timer */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-            <span className="text-sm font-medium text-muted-foreground">
+            <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-primary animate-pulse" />
+            <span className="text-xs sm:text-sm font-medium text-muted-foreground">
               Special Offer
             </span>
           </div>
@@ -145,7 +145,7 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
+              className="h-7 w-7 sm:h-8 sm:w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
               onClick={handleClose}
             >
               <X className="h-4 w-4" />
@@ -154,57 +154,57 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
         </div>
 
         {/* Title */}
-        <div className="text-center mb-4">
-          <h2 className="text-xl font-bold text-primary mb-2">
+        <div className="text-center mb-3 sm:mb-4">
+          <h2 className="text-lg sm:text-xl font-bold text-primary mb-2">
             {currentAd.title}
           </h2>
-          <p className="text-muted-foreground text-sm leading-relaxed">
+          <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
             {currentAd.message}
           </p>
         </div>
 
         {/* Item showcase */}
-        <div className="bg-card rounded-lg p-4 border mb-6">
-          <div className="flex items-start gap-4">
-            <div className="w-20 h-20 rounded-lg bg-muted/50 flex items-center justify-center flex-shrink-0">
-              <span className="text-2xl">🍽️</span>
+        <div className="bg-card rounded-lg p-3 sm:p-4 border mb-4 sm:mb-6">
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-muted/50 flex items-center justify-center flex-shrink-0">
+              <span className="text-xl sm:text-2xl">🍽️</span>
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2 mb-2">
-                <h3 className="font-semibold text-lg leading-tight">
+                <h3 className="font-semibold text-base sm:text-lg leading-tight">
                   {currentAd.item.name}
                 </h3>
                 <div className="text-right flex-shrink-0">
                   {hasDiscount ? (
                     <div className="space-y-1">
-                      <div className="text-sm text-muted-foreground line-through">
+                      <div className="text-xs sm:text-sm text-muted-foreground line-through">
                         ${currentAd.item.price.toFixed(2)}
                       </div>
-                      <div className="text-lg font-bold text-green-600">
+                      <div className="text-base sm:text-lg font-bold text-green-600">
                         ${displayPrice.toFixed(2)}
                       </div>
                     </div>
                   ) : (
-                    <div className="text-lg font-bold text-primary">
+                    <div className="text-base sm:text-lg font-bold text-primary">
                       ${displayPrice.toFixed(2)}
                     </div>
                   )}
                 </div>
               </div>
 
-              <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 leading-relaxed">
                 {currentAd.item.description}
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {currentAd.urgencyText && (
-                  <Badge variant="secondary" className="bg-orange-100 text-orange-800 animate-pulse">
+                  <Badge variant="secondary" className="bg-orange-100 text-orange-800 animate-pulse text-xs">
                     {currentAd.urgencyText}
                   </Badge>
                 )}
                 {hasDiscount && (
-                  <Badge variant="secondary" className="bg-green-100 text-green-800">
+                  <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
                     Save ${(currentAd.item.price - displayPrice).toFixed(2)}
                   </Badge>
                 )}
@@ -219,21 +219,21 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <Button
             variant="outline"
             onClick={handleClose}
-            className="flex-1"
+            className="flex-1 text-sm sm:text-base"
           >
             Maybe Later
           </Button>
           <Button
             onClick={handleOrderNow}
-            className="flex-1 gap-2 bg-primary hover:bg-primary-hover"
+            className="flex-1 gap-2 bg-primary hover:bg-primary-hover text-sm sm:text-base"
             size="lg"
           >
             <ShoppingCart className="h-4 w-4" />
-            Order Now - ${displayPrice.toFixed(2)}
+            <span className="hidden sm:inline">Order Now - </span>${displayPrice.toFixed(2)}
           </Button>
         </div>
 
