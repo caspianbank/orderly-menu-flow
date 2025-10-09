@@ -178,7 +178,7 @@ export default function MenuItemDetail() {
         </div>
 
         {/* Core Info */}
-        <div className="container mx-auto px-4 py-6 space-y-4">
+        <div className="container mx-auto px-4 pt-8 pb-6 space-y-4">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold">{item.name}</h2>
             <div className="flex items-center gap-4 flex-wrap">
