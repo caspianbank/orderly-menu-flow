@@ -207,115 +207,126 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container mx-auto px-4 py-6 max-w-6xl">
         {/* Back Button */}
         {onBack && (
           <Button
             variant="ghost"
             onClick={onBack}
-            className="gap-2 mb-4"
+            className="gap-2 mb-6 hover:bg-accent"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Menu
           </Button>
         )}
         
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={customerDetails.profileImage} />
-              <AvatarFallback className="text-lg">
-                {getInitials(customer.fullName)}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h1 className="text-2xl font-bold">{profileData.fullName}</h1>
-              <p className="text-muted-foreground">
-                Member since {new Date(customerDetails.joinDate).toLocaleDateString()}
-              </p>
+        {/* Header with gradient card */}
+        <Card className="mb-6 overflow-hidden border-2 shadow-lg">
+          <div className="bg-gradient-to-r from-primary/20 via-primary/10 to-accent/20 p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <Avatar className="h-20 w-20 border-4 border-background shadow-xl">
+                  <AvatarImage src={customerDetails.profileImage} />
+                  <AvatarFallback className="text-xl font-bold bg-gradient-to-br from-primary to-primary/70 text-primary-foreground">
+                    {getInitials(customer.fullName)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="text-center sm:text-left">
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">{profileData.fullName}</h1>
+                  <p className="text-muted-foreground flex items-center gap-2 justify-center sm:justify-start mt-1">
+                    <span>🎉</span>
+                    Member since {new Date(customerDetails.joinDate).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+              <Button variant="outline" onClick={onLogout} className="gap-2 bg-background/80 backdrop-blur hover:bg-destructive/10 hover:text-destructive hover:border-destructive">
+                <LogOut className="h-4 w-4" />
+                Logout
+              </Button>
             </div>
           </div>
-          <Button variant="outline" onClick={onLogout} className="gap-2">
-            <LogOut className="h-4 w-4" />
-            Logout
-          </Button>
-        </div>
+        </Card>
 
-        {/* Stats Cards */}
+        {/* Stats Cards with enhanced design */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <User className="h-6 w-6 text-primary" />
+          <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <div className="h-14 w-14 bg-gradient-to-br from-primary to-primary/70 rounded-xl flex items-center justify-center shadow-md">
+                  <User className="h-7 w-7 text-primary-foreground" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{customerDetails.loyaltyPoints}</p>
-                  <p className="text-sm text-muted-foreground">Loyalty Points</p>
+                  <p className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">{customerDetails.loyaltyPoints}</p>
+                  <p className="text-sm text-muted-foreground font-medium">Loyalty Points</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">🍽️</span>
+          <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <div className="h-14 w-14 bg-gradient-to-br from-accent to-accent/70 rounded-xl flex items-center justify-center shadow-md">
+                  <span className="text-2xl">🍽️</span>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{customerDetails.totalOrders}</p>
-                  <p className="text-sm text-muted-foreground">Total Orders</p>
+                  <p className="text-3xl font-bold bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent">{customerDetails.totalOrders}</p>
+                  <p className="text-sm text-muted-foreground font-medium">Total Orders</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">❤️</span>
+          <Card className="border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <div className="h-14 w-14 bg-gradient-to-br from-secondary to-secondary/70 rounded-xl flex items-center justify-center shadow-md">
+                  <span className="text-2xl">❤️</span>
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{customerDetails.favoriteCategory}</p>
-                  <p className="text-sm text-muted-foreground">Favorite Cuisine</p>
+                  <p className="text-sm text-muted-foreground font-medium">Favorite Cuisine</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="profile">Profile Details</TabsTrigger>
-            <TabsTrigger value="addresses">Addresses</TabsTrigger>
-            <TabsTrigger value="orders">Order History</TabsTrigger>
+        {/* Tabs with enhanced styling */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 h-12 bg-muted/50 p-1">
+            <TabsTrigger value="profile" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-medium">
+              Profile Details
+            </TabsTrigger>
+            <TabsTrigger value="addresses" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-medium">
+              Addresses
+            </TabsTrigger>
+            <TabsTrigger value="orders" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-medium">
+              Order History
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="profile" className="space-y-4">
-            <Card>
-              <CardHeader>
+            <Card className="border-2 shadow-md">
+              <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle>Personal Information</CardTitle>
-                    <CardDescription>Manage your account details</CardDescription>
+                    <CardTitle className="text-xl">Personal Information</CardTitle>
+                    <CardDescription className="text-base">Manage your account details</CardDescription>
                   </div>
                   {!isEditingProfile ? (
-                    <Button variant="outline" size="sm" className="gap-2" onClick={() => setIsEditingProfile(true)}>
+                    <Button variant="outline" size="sm" className="gap-2 hover:bg-primary hover:text-primary-foreground" onClick={() => setIsEditingProfile(true)}>
                       <Edit className="h-4 w-4" />
                       Edit
                     </Button>
                   ) : (
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={() => setIsEditingProfile(false)}>
+                      <Button variant="outline" size="sm" className="hover:bg-destructive hover:text-destructive-foreground" onClick={() => setIsEditingProfile(false)}>
                         <X className="h-4 w-4" />
                         Cancel
                       </Button>
-                      <Button size="sm" onClick={handleProfileSave}>
+                      <Button size="sm" className="gap-2 bg-primary hover:bg-primary/90" onClick={handleProfileSave}>
                         <Save className="h-4 w-4" />
                         Save
                       </Button>
