@@ -219,21 +219,21 @@ export function AdvertisementPopup({ onAddToOrder }: AdvertisementPopupProps) {
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <div className="flex gap-2 sm:gap-3">
           <Button
             variant="outline"
             onClick={handleClose}
-            className="flex-1 text-sm sm:text-base"
+            className="flex-1 text-xs sm:text-sm md:text-base px-2 sm:px-4"
           >
-            Maybe Later
+            <span className="hidden xs:inline">Maybe </span>Later
           </Button>
           <Button
             onClick={handleOrderNow}
-            className="flex-1 gap-2 bg-primary hover:bg-primary-hover text-sm sm:text-base"
+            className="flex-1 gap-1 sm:gap-2 bg-primary hover:bg-primary-hover text-xs sm:text-sm md:text-base px-2 sm:px-4"
             size="lg"
           >
-            <ShoppingCart className="h-4 w-4" />
-            <span className="hidden sm:inline">Order Now - </span>${displayPrice.toFixed(2)}
+            <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">Order - </span>${displayPrice.toFixed(2)}
           </Button>
         </div>
 
