@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Sparkles, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Sparkles, ShoppingCart, ChevronUp, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -57,12 +57,21 @@ const promptCategories: PromptButton[] = [
 const AIRecommendations = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [verticalOffset, setVerticalOffset] = useState(0);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       type: 'ai',
       content: "Hi! I'm your AI food guide. What kind of dish are you looking for today? Tap any question below to get started!",
     },
   ]);
+
+  const moveUp = () => {
+    setVerticalOffset(prev => Math.max(prev - 100, -300)); // Max move up by 300px
+  };
+
+  const moveDown = () => {
+    setVerticalOffset(prev => Math.min(prev + 100, 0)); // Max move down to original position
+  };
 
   const getRecommendations = (question: string): MenuItemType[] => {
     const lowerQuestion = question.toLowerCase();
@@ -333,7 +342,35 @@ const AIRecommendations = () => {
       </div>
 
       {/* Predefined Prompts */}
-      <div className="sticky bottom-0 bg-gradient-to-t from-background via-background to-background/80 backdrop-blur-md border-t-2 border-primary/20 shadow-2xl p-4 space-y-3">
+      <div 
+        className="sticky bg-gradient-to-t from-background via-background to-background/80 backdrop-blur-md border-t-2 border-primary/20 shadow-2xl p-4 space-y-3 transition-transform duration-300"
+        style={{ 
+          bottom: 0,
+          transform: `translateY(${verticalOffset}px)` 
+        }}
+      >
+        {/* Up/Down Controls */}
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={moveUp}
+            disabled={verticalOffset <= -300}
+            className="h-8 w-8"
+          >
+            <ChevronUp className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={moveDown}
+            disabled={verticalOffset >= 0}
+            className="h-8 w-8"
+          >
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        </div>
+
         <div className="flex items-center justify-center gap-2 mb-1">
           <Sparkles className="h-4 w-4 text-primary animate-pulse" />
           <p className="text-sm font-semibold text-foreground">Ask me anything about our menu!</p>
@@ -353,7 +390,7 @@ const AIRecommendations = () => {
                   <Button
                     key={question}
                     variant="outline"
-                    className="w-full justify-start text-left h-auto py-3 px-4 border-2 hover:border-primary hover:bg-primary/5 transition-all duration-200 hover:shadow-md"
+                    className="w-full justify-start text-left h-auto py-3 px-4 border-2 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover:shadow-md"
                     onClick={() => handlePromptClick(question)}
                   >
                     <span className="text-sm font-medium">{question}</span>
