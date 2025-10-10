@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -284,9 +284,9 @@ const AIRecommendations = () => {
                 <div className="space-y-3">
                   {message.recommendations.map((item) => (
                     <Card key={item.id} className="overflow-hidden">
-                      <div className="flex gap-3 p-3">
+                      <div className="flex flex-col sm:flex-row gap-3 p-3">
                         {/* Item Image */}
-                        <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
+                        <div className="flex-shrink-0 w-full sm:w-24 h-48 sm:h-24 rounded-lg overflow-hidden">
                           <img
                             src={item.image}
                             alt={item.name}
@@ -296,8 +296,8 @@ const AIRecommendations = () => {
 
                         {/* Item Details */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-sm line-clamp-1">{item.name}</h3>
-                          <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                          <h3 className="font-semibold text-sm sm:text-base line-clamp-1">{item.name}</h3>
+                          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mt-1">
                             {item.description}
                           </p>
                           
@@ -312,13 +312,13 @@ const AIRecommendations = () => {
 
                           {/* Price and Add button */}
                           <div className="flex items-center justify-between mt-2">
-                            <span className="font-bold text-primary">${item.price.toFixed(2)}</span>
+                            <span className="font-bold text-primary text-base sm:text-lg">${item.price.toFixed(2)}</span>
                             <Button
-                              size="sm"
+                              size="icon"
                               onClick={() => handleAddToBasket(item)}
-                              className="h-7 px-3 text-xs"
+                              className="h-9 w-9 sm:h-10 sm:w-10"
                             >
-                              Add to Basket
+                              <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                             </Button>
                           </div>
                         </div>
