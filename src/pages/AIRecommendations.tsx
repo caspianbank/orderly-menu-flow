@@ -333,22 +333,30 @@ const AIRecommendations = () => {
       </div>
 
       {/* Predefined Prompts */}
-      <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm border-t p-4 space-y-3">
-        <p className="text-sm text-muted-foreground text-center">Tap a question to get recommendations:</p>
+      <div className="sticky bottom-0 bg-gradient-to-t from-background via-background to-background/80 backdrop-blur-md border-t-2 border-primary/20 shadow-2xl p-4 space-y-3">
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+          <p className="text-sm font-semibold text-foreground">Ask me anything about our menu!</p>
+          <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+        </div>
         
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+        <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
           {promptCategories.map((category) => (
             <div key={category.category} className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground">{category.category}</p>
+              <div className="flex items-center gap-2">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+                <p className="text-xs font-bold text-primary uppercase tracking-wide">{category.category}</p>
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              </div>
               <div className="space-y-2">
                 {category.questions.map((question) => (
                   <Button
                     key={question}
                     variant="outline"
-                    className="w-full justify-start text-left h-auto py-2 px-3"
+                    className="w-full justify-start text-left h-auto py-3 px-4 border-2 hover:border-primary hover:bg-primary/5 transition-all duration-200 hover:shadow-md"
                     onClick={() => handlePromptClick(question)}
                   >
-                    <span className="text-sm">{question}</span>
+                    <span className="text-sm font-medium">{question}</span>
                   </Button>
                 ))}
               </div>
