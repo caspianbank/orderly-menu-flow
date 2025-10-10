@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Sparkles, ShoppingCart, ChevronUp, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Sparkles, ShoppingCart, ChevronsDown, ChevronsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -57,7 +57,7 @@ const promptCategories: PromptButton[] = [
 const AIRecommendations = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [verticalOffset, setVerticalOffset] = useState(0);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       type: 'ai',
@@ -65,12 +65,8 @@ const AIRecommendations = () => {
     },
   ]);
 
-  const moveUp = () => {
-    setVerticalOffset(prev => Math.max(prev - 100, -300)); // Max move up by 300px
-  };
-
-  const moveDown = () => {
-    setVerticalOffset(prev => Math.min(prev + 100, 0)); // Max move down to original position
+  const togglePrompts = () => {
+    setIsMinimized(prev => !prev);
   };
 
   const getRecommendations = (question: string): MenuItemType[] => {
@@ -343,62 +339,64 @@ const AIRecommendations = () => {
 
       {/* Predefined Prompts */}
       <div 
-        className="sticky bg-gradient-to-t from-background via-background to-background/80 backdrop-blur-md border-t-2 border-primary/20 shadow-2xl p-4 space-y-3 transition-transform duration-300"
+        className="sticky bg-gradient-to-t from-background via-background to-background/80 backdrop-blur-md border-t-2 border-primary/20 shadow-2xl transition-all duration-300"
         style={{ 
           bottom: 0,
-          transform: `translateY(${verticalOffset}px)` 
+          transform: isMinimized ? 'translateY(calc(100% - 60px))' : 'translateY(0)'
         }}
       >
-        {/* Up/Down Controls */}
-        <div className="flex items-center justify-center gap-2 mb-2">
+        {/* Toggle Button */}
+        <div className="flex items-center justify-center p-2 border-b border-primary/10">
           <Button
-            size="icon"
-            variant="outline"
-            onClick={moveUp}
-            disabled={verticalOffset <= -300}
-            className="h-8 w-8"
+            size="sm"
+            variant="ghost"
+            onClick={togglePrompts}
+            className="gap-2 hover:bg-primary/10"
           >
-            <ChevronUp className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={moveDown}
-            disabled={verticalOffset >= 0}
-            className="h-8 w-8"
-          >
-            <ChevronDown className="h-4 w-4" />
+            {isMinimized ? (
+              <>
+                <ChevronsUp className="h-4 w-4" />
+                <span className="text-xs font-medium">Show Prompts</span>
+              </>
+            ) : (
+              <>
+                <ChevronsDown className="h-4 w-4" />
+                <span className="text-xs font-medium">Hide Prompts</span>
+              </>
+            )}
           </Button>
         </div>
 
-        <div className="flex items-center justify-center gap-2 mb-1">
-          <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-          <p className="text-sm font-semibold text-foreground">Ask me anything about our menu!</p>
-          <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-        </div>
-        
-        <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
-          {promptCategories.map((category) => (
-            <div key={category.category} className="space-y-2">
-              <div className="flex items-center gap-2">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-                <p className="text-xs font-bold text-primary uppercase tracking-wide">{category.category}</p>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        <div className={`p-4 space-y-3 ${isMinimized ? 'hidden' : ''}`}>
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+            <p className="text-sm font-semibold text-foreground">Ask me anything about our menu!</p>
+            <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+          </div>
+          
+          <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
+            {promptCategories.map((category) => (
+              <div key={category.category} className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+                  <p className="text-xs font-bold text-primary uppercase tracking-wide">{category.category}</p>
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+                </div>
+                <div className="space-y-2">
+                  {category.questions.map((question) => (
+                    <Button
+                      key={question}
+                      variant="outline"
+                      className="w-full justify-start text-left h-auto py-3 px-4 border-2 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover:shadow-md"
+                      onClick={() => handlePromptClick(question)}
+                    >
+                      <span className="text-sm font-medium">{question}</span>
+                    </Button>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-2">
-                {category.questions.map((question) => (
-                  <Button
-                    key={question}
-                    variant="outline"
-                    className="w-full justify-start text-left h-auto py-3 px-4 border-2 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 hover:shadow-md"
-                    onClick={() => handlePromptClick(question)}
-                  >
-                    <span className="text-sm font-medium">{question}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
