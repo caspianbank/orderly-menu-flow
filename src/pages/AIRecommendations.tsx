@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, Sparkles, ShoppingCart, ChevronsDown, ChevronsUp } from 'lucide-react';
+import { ArrowLeft, Sparkles, ShoppingCart, ChevronsDown, ChevronsUp, Dice5, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +12,11 @@ interface ChatMessage {
   type: 'user' | 'ai';
   content: string;
   recommendations?: MenuItemType[];
+  isQuizQuestion?: boolean;
+  mysteryReveal?: {
+    item: MenuItemType;
+    isRevealed: boolean;
+  };
 }
 
 interface PromptButton {
@@ -64,6 +69,9 @@ const AIRecommendations = () => {
       content: "Hi! I'm your AI food guide. What kind of dish are you looking for today? Tap any question below to get started!",
     },
   ]);
+  const [mysteryMode, setMysteryMode] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
+  const [currentQuizStep, setCurrentQuizStep] = useState(0);
 
   const togglePrompts = () => {
     setIsMinimized(prev => !prev);
@@ -245,6 +253,135 @@ const AIRecommendations = () => {
     });
   };
 
+  const quizQuestions = [
+    {
+      question: "What's your current mood? 🎭",
+      options: ["Adventurous", "Cozy & Relaxed", "Energetic", "Romantic"]
+    },
+    {
+      question: "Do you want something sweet, spicy, or balanced? 🌶️",
+      options: ["Sweet 🍰", "Spicy 🔥", "Balanced 🥗", "Savory 🍖"]
+    },
+    {
+      question: "Would you rather try something new or go with a classic? ✨",
+      options: ["Something New!", "Classic Comfort", "Chef's Special", "Surprise Me!"]
+    },
+    {
+      question: "Are you eating alone or with someone? 👥",
+      options: ["Solo Dining", "With Partner", "With Friends", "Family Feast"]
+    }
+  ];
+
+  const startMysteryMode = () => {
+    setMysteryMode(true);
+    setQuizAnswers([]);
+    setCurrentQuizStep(0);
+    setMessages(prev => [
+      ...prev,
+      {
+        type: 'ai',
+        content: "🎲 Welcome to the Mysterious Meal Finder! I'll ask you a few fun questions to find your perfect match. Ready?",
+      },
+      {
+        type: 'ai',
+        content: quizQuestions[0].question,
+        isQuizQuestion: true,
+      }
+    ]);
+  };
+
+  const handleQuizAnswer = (answer: string) => {
+    const newAnswers = [...quizAnswers, answer];
+    setQuizAnswers(newAnswers);
+    
+    setMessages(prev => [
+      ...prev,
+      { type: 'user', content: answer }
+    ]);
+
+    if (currentQuizStep < quizQuestions.length - 1) {
+      const nextStep = currentQuizStep + 1;
+      setCurrentQuizStep(nextStep);
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            type: 'ai',
+            content: quizQuestions[nextStep].question,
+            isQuizQuestion: true,
+          }
+        ]);
+      }, 500);
+    } else {
+      // Quiz complete - analyze and recommend
+      setTimeout(() => {
+        const recommendedItem = analyzeMysteryAnswers(newAnswers);
+        setMessages(prev => [
+          ...prev,
+          {
+            type: 'ai',
+            content: "✨ Based on your answers, I've found the perfect dish for you! Would you like to see it now or keep it mysterious?",
+            mysteryReveal: {
+              item: recommendedItem,
+              isRevealed: false
+            }
+          }
+        ]);
+        setMysteryMode(false);
+      }, 800);
+    }
+  };
+
+  const analyzeMysteryAnswers = (answers: string[]): MenuItemType => {
+    let filteredItems = [...menuItems];
+    
+    // Mood-based filtering
+    if (answers[0]?.includes('Adventurous') || answers[0]?.includes('Energetic')) {
+      filteredItems = filteredItems.filter(item => item.isSpecial || item.isTrending);
+    } else if (answers[0]?.includes('Cozy') || answers[0]?.includes('Romantic')) {
+      filteredItems = filteredItems.filter(item => 
+        item.category.id === 'pasta' || item.category.id === 'desserts'
+      );
+    }
+    
+    // Taste preference
+    if (answers[1]?.includes('Spicy')) {
+      filteredItems = filteredItems.filter(item => 
+        item.description.toLowerCase().includes('spicy')
+      );
+    } else if (answers[1]?.includes('Sweet')) {
+      filteredItems = filteredItems.filter(item => item.category.id === 'desserts');
+    }
+    
+    // Novelty vs classic
+    if (answers[2]?.includes('New') || answers[2]?.includes('Special')) {
+      filteredItems = filteredItems.filter(item => item.isSpecial || item.isTrending);
+    }
+    
+    // If filtering resulted in no items, use popular items
+    if (filteredItems.length === 0) {
+      filteredItems = menuItems.filter(item => item.isPopular || item.isTrending);
+    }
+    
+    // Return random item from filtered list
+    return filteredItems[Math.floor(Math.random() * filteredItems.length)];
+  };
+
+  const handleRevealMystery = (messageIndex: number) => {
+    setMessages(prev => prev.map((msg, idx) => {
+      if (idx === messageIndex && msg.mysteryReveal) {
+        return {
+          ...msg,
+          mysteryReveal: {
+            ...msg.mysteryReveal,
+            isRevealed: true
+          }
+        };
+      }
+      return msg;
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
@@ -275,7 +412,7 @@ const AIRecommendations = () => {
             <div className="max-w-[85%] space-y-3">
               {/* Message bubble */}
               <div
-                className={`rounded-2xl px-4 py-3 ${
+                className={`rounded-2xl px-4 py-3 animate-fade-in ${
                   message.type === 'user'
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-muted'
@@ -283,6 +420,85 @@ const AIRecommendations = () => {
               >
                 <p className="text-sm">{message.content}</p>
               </div>
+
+              {/* Quiz Question Options */}
+              {message.isQuizQuestion && message.type === 'ai' && (
+                <div className="grid grid-cols-2 gap-2 animate-scale-in">
+                  {quizQuestions[currentQuizStep]?.options.map((option) => (
+                    <Button
+                      key={option}
+                      variant="outline"
+                      className="h-auto py-3 text-sm border-2 hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200"
+                      onClick={() => handleQuizAnswer(option)}
+                    >
+                      {option}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+              {/* Mystery Reveal */}
+              {message.mysteryReveal && (
+                <div className="space-y-3">
+                  {!message.mysteryReveal.isRevealed ? (
+                    <Card className="p-6 text-center bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-dashed border-primary/50 animate-scale-in">
+                      <Dice5 className="h-16 w-16 mx-auto text-primary animate-pulse mb-4" />
+                      <h3 className="font-bold text-lg mb-2">Your Mysterious Meal Awaits! 🎭</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Are you ready to discover what destiny has prepared for you?
+                      </p>
+                      <Button
+                        onClick={() => handleRevealMystery(index)}
+                        className="gap-2"
+                      >
+                        <Eye className="h-4 w-4" />
+                        Reveal My Mystery Meal
+                      </Button>
+                    </Card>
+                  ) : (
+                    <Card className="overflow-hidden animate-scale-in shadow-lg">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+                        <img
+                          src={message.mysteryReveal.item.image}
+                          alt={message.mysteryReveal.item.name}
+                          className="w-full h-64 object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 z-20 p-4 text-white">
+                          <Badge className="mb-2 bg-primary/90">✨ Your Perfect Match</Badge>
+                          <h3 className="font-bold text-2xl">{message.mysteryReveal.item.name}</h3>
+                        </div>
+                      </div>
+                      <div className="p-4 space-y-3">
+                        <p className="text-sm text-muted-foreground">
+                          {message.mysteryReveal.item.description}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {message.mysteryReveal.item.dietary?.map((diet) => (
+                            <Badge key={diet} variant="secondary" className="text-xs">
+                              {diet}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t">
+                          <span className="font-bold text-primary text-xl">
+                            ${message.mysteryReveal.item.price.toFixed(2)}
+                          </span>
+                          <Button
+                            onClick={() => handleAddToBasket(message.mysteryReveal.item)}
+                            className="gap-2"
+                          >
+                            <ShoppingCart className="h-4 w-4" />
+                            Add to Basket
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  )}
+                </div>
+              )}
 
               {/* Recommendations */}
               {message.recommendations && message.recommendations.length > 0 && (
@@ -373,6 +589,16 @@ const AIRecommendations = () => {
             <p className="text-sm font-semibold text-foreground">Ask me anything about our menu!</p>
             <Sparkles className="h-4 w-4 text-primary animate-pulse" />
           </div>
+
+          {/* Mystery Meal Finder Button */}
+          <Button
+            onClick={startMysteryMode}
+            className="w-full gap-2 bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg py-6 shadow-lg"
+            disabled={mysteryMode}
+          >
+            <Dice5 className="h-5 w-5" />
+            Try Mysterious Meal Finder 🎲
+          </Button>
           
           <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
             {promptCategories.map((category) => (
