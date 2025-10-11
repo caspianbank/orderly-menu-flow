@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, Clock, Plus, Minus, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, Star, Clock, Plus, Minus, ChevronDown, ChevronUp, Glasses } from 'lucide-react';
 import { MenuItem as MenuItemType } from '@/types/menu';
 import { menuItems } from '@/data/menuData';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useToast } from '@/hooks/use-toast';
+import VRViewer from '@/components/restaurant/VRViewer';
 
 // Types for customization options
 interface SizeOption {
@@ -65,6 +66,7 @@ export default function MenuItemDetail() {
   const [specialNotes, setSpecialNotes] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showNutritionalInfo, setShowNutritionalInfo] = useState(false);
+  const [showVRViewer, setShowVRViewer] = useState(false);
 
   useEffect(() => {
     const foundItem = menuItems.find(menuItem => menuItem.id === id);
@@ -124,7 +126,16 @@ export default function MenuItemDetail() {
   const carouselImages = item.images && item.images.length > 0 ? item.images : [item.image];
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <>
+      {showVRViewer && (
+        <VRViewer 
+          itemName={item.name}
+          itemImage={item.image}
+          onClose={() => setShowVRViewer(false)}
+        />
+      )}
+      
+      <div className="min-h-screen bg-background pb-24">
       {/* Header with back button */}
       <div className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="container mx-auto px-4 py-3 flex items-center gap-3">
@@ -180,7 +191,18 @@ export default function MenuItemDetail() {
         {/* Core Info */}
         <div className="container mx-auto px-4 pt-8 pb-6 space-y-4">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold">{item.name}</h2>
+            <div className="flex items-start justify-between gap-4">
+              <h2 className="text-3xl font-bold">{item.name}</h2>
+              <Button
+                onClick={() => setShowVRViewer(true)}
+                variant="outline"
+                size="sm"
+                className="shrink-0 rounded-full shadow-lg border-2 hover:scale-105 transition-transform bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
+              >
+                <Glasses className="h-4 w-4 mr-2" />
+                View in VR
+              </Button>
+            </div>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="text-2xl font-bold text-primary">${item.price.toFixed(2)}</div>
               {item.prepTime && (
@@ -422,6 +444,7 @@ export default function MenuItemDetail() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
