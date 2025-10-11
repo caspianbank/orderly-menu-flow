@@ -190,19 +190,17 @@ export default function MenuItemDetail() {
 
         {/* Core Info */}
         <div className="container mx-auto px-4 pt-8 pb-6 space-y-4">
-          <div className="space-y-2">
-            <div className="flex items-start justify-between gap-4">
-              <h2 className="text-3xl font-bold">{item.name}</h2>
-              <Button
-                onClick={() => setShowVRViewer(true)}
-                variant="outline"
-                size="sm"
-                className="shrink-0 rounded-full shadow-lg border-2 hover:scale-105 transition-transform bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
-              >
-                <Glasses className="h-4 w-4 mr-2" />
-                View in VR
-              </Button>
-            </div>
+          <div className="space-y-3">
+            <h2 className="text-3xl md:text-4xl font-bold">{item.name}</h2>
+            <Button
+              onClick={() => setShowVRViewer(true)}
+              variant="secondary"
+              size="default"
+              className="w-full md:w-auto rounded-full shadow-lg hover:scale-105 transition-transform"
+            >
+              <Glasses className="h-5 w-5 mr-2" />
+              View in VR
+            </Button>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="text-2xl font-bold text-primary">${item.price.toFixed(2)}</div>
               {item.prepTime && (
