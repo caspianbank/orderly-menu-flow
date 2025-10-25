@@ -242,18 +242,18 @@ const Index = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative h-64 md:h-80 overflow-hidden">
+      <section className="relative h-48 sm:h-56 md:h-64 lg:h-80 overflow-hidden">
         <img
           src={restaurantHero}
           alt="Restaurant interior"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-overlay flex items-center justify-center">
-          <div className="text-center text-white animate-fade-in">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4">
+        <div className="absolute inset-0 bg-gradient-overlay flex items-center justify-center px-4">
+          <div className="text-center text-white animate-fade-in max-w-4xl mx-auto">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4">
               Welcome to Bella Vista
             </h1>
-            <p className="text-lg md:text-xl opacity-90">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl opacity-90">
               An elegant dining experience with Mediterranean flavors
             </p>
           </div>
@@ -282,17 +282,21 @@ const Index = () => {
       />
 
       {/* Menu Items Grid */}
-      <main className="container mx-auto px-4">
+      <main className="container mx-auto px-4 py-4 sm:py-6">
         {filteredMenuItems.length === 0 ? (
-          <div className="text-center py-16 animate-fade-in">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-semibold mb-2">No dishes found</h3>
-            <p className="text-muted-foreground">
+          <div className="text-center py-12 sm:py-16 animate-fade-in px-4">
+            <div className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">
+              <svg className="w-16 h-16 mx-auto text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <h3 className="text-lg sm:text-xl font-semibold mb-2">No dishes found</h3>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Try adjusting your search or browse different categories
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-4 sm:gap-x-4 sm:gap-y-6 md:gap-x-6 md:gap-y-8 animate-fade-in">
             {filteredMenuItems.map((item) => (
               <MenuItem
                 key={item.id}

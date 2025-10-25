@@ -148,7 +148,7 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md h-[90vh] p-0 bg-black border-none">
+      <DialogContent className="max-w-[95vw] sm:max-w-md h-[95vh] sm:h-[90vh] p-0 bg-black border-none">
         <div className="relative w-full h-full flex flex-col">
           {/* Progress bars */}
           <div className="absolute top-2 left-2 right-2 z-20 flex gap-1">
@@ -166,15 +166,15 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
           </div>
 
           {/* Header */}
-          <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between text-white pt-6">
-            <div className="flex items-center gap-3">
-              <Avatar className="w-8 h-8 border-2 border-white">
+          <div className="absolute top-4 left-3 right-3 sm:left-4 sm:right-4 z-20 flex items-center justify-between text-white pt-6">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+              <Avatar className="w-8 h-8 border-2 border-white flex-shrink-0">
                 <AvatarImage src={currentStory.author.avatar} />
                 <AvatarFallback>{currentStory.author.name[0]}</AvatarFallback>
               </Avatar>
-              <div>
-                <p className="font-semibold text-sm">{currentStory.author.name}</p>
-                <p className="text-xs text-white/80">
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-sm truncate">{currentStory.author.name}</p>
+                <p className="text-xs text-white/80 truncate">
                   {new Date(currentStory.timestamp).toLocaleTimeString([], {
                     hour: '2-digit',
                     minute: '2-digit'
@@ -186,7 +186,7 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="text-white hover:bg-white/20 p-2"
+              className="text-white hover:bg-white/20 p-2 h-8 w-8 flex-shrink-0"
             >
               <X className="w-5 h-5" />
             </Button>
@@ -222,15 +222,15 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
 
           {/* Story Title */}
           <motion.div
-            className="absolute bottom-0 z-20"
+            className="absolute bottom-0 z-20 px-3 sm:px-4"
             animate={{
               marginBottom: showResponses ? 60 : 0, // push up when input opens
             }}>
-            <h1 className="p-4 text-white text-lg font-bold mb-2">{currentStory.title}</h1>
+            <h1 className="p-3 sm:p-4 text-white text-base sm:text-lg font-bold mb-2">{currentStory.title}</h1>
           </motion.div>
 
           {/* Bottom actions + input */}
-          <div className="absolute bottom-4 right-4 left-4 z-20">
+          <div className="absolute bottom-3 right-3 left-3 sm:bottom-4 sm:right-4 sm:left-4 z-20">
             <motion.div
               animate={{
                 marginBottom: showResponses ? 60 : 0, // push up when input opens
@@ -242,30 +242,30 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
                 variant="ghost"
                 size="sm"
                 onClick={toggleLove}
-                className={`flex flex-col text-white w-12 hover:bg-white/20 py-8 transition-colors ${currentStory.isLoved ? "text-red-500" : ""}`}
+                className={`flex flex-col text-white w-10 sm:w-12 hover:bg-white/20 py-6 sm:py-8 transition-colors ${currentStory.isLoved ? "text-red-500" : ""}`}
               >
-                <Heart className={`w-6 h-6 ${currentStory.isLoved ? "fill-red-500" : ""}`} />
-                <span className="text-sm mt-1">{currentStory.loves}</span>
+                <Heart className={`w-5 h-5 sm:w-6 sm:h-6 ${currentStory.isLoved ? "fill-red-500" : ""}`} />
+                <span className="text-xs sm:text-sm mt-1">{currentStory.loves}</span>
               </Button>
 
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowResponses(!showResponses)}
-                className="flex flex-col text-white w-12 hover:bg-white/20 py-8 transition-colors"
+                className="flex flex-col text-white w-10 sm:w-12 hover:bg-white/20 py-6 sm:py-8 transition-colors"
               >
-                <MessageCircle className="w-6 h-6" />
-                <span className="text-sm mt-1">{currentStory.responses.length}</span>
+                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="text-xs sm:text-sm mt-1">{currentStory.responses.length}</span>
               </Button>
 
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleShare}
-                className="flex flex-col text-white w-12 hover:bg-white/20 py-8 transition-colors"
+                className="flex flex-col text-white w-10 sm:w-12 hover:bg-white/20 py-6 sm:py-8 transition-colors"
               >
-                <Share className="w-6 h-6" />
-                <span className="text-sm mt-1">Share</span>
+                <Share className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="text-xs sm:text-sm mt-1">Share</span>
               </Button>
             </motion.div>
 
@@ -285,14 +285,14 @@ export const Stories = ({ isOpen, onClose, initialStoryIndex = 0 }: StoriesProps
                       value={responseText}
                       onChange={(e) => setResponseText(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && sendResponse()}
-                      className="flex-1 bg-white text-black placeholder:text-gray-500 rounded-full px-4 py-2"
+                      className="flex-1 bg-white text-black placeholder:text-gray-500 rounded-full px-3 sm:px-4 py-2 text-sm"
                     />
                     <Button
                       onClick={sendResponse}
                       size="icon"
-                      className="rounded-full bg-green-500 hover:bg-green-600 text-white"
+                      className="rounded-full bg-green-500 hover:bg-green-600 text-white h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0"
                     >
-                      <Send className="w-4 h-4" />
+                      <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </Button>
                   </div>
                 </motion.div>
@@ -315,21 +315,22 @@ export const StoriesButton = ({ onClick }: StoriesButtonProps) => {
     <Button
       onClick={onClick}
       variant="outline"
-      className="flex items-center gap-2 bg-gradient-to-r from-pink-500/10 to-purple-600/10 border-pink-500/20 hover:from-pink-500/20 hover:to-purple-600/20"
+      className="flex items-center gap-2 bg-gradient-to-r from-pink-500/10 to-purple-600/10 border-pink-500/20 hover:from-pink-500/20 hover:to-purple-600/20 text-sm"
     >
-      <div className="relative">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 p-[2px]">
+      <div className="relative flex-shrink-0">
+        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 p-[2px]">
           <Avatar className="w-full h-full">
             <AvatarImage src={restaurantStories.avatar} />
             <AvatarFallback>BV</AvatarFallback>
           </Avatar>
         </div>
         {restaurantStories.hasUnread && (
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white" />
+          <div className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded-full border-2 border-white" />
         )}
       </div>
-      <span className="font-medium">Restaurant Stories</span>
-      <Play className="w-4 h-4" />
+      <span className="font-medium hidden xs:inline">Restaurant Stories</span>
+      <span className="font-medium xs:hidden">Stories</span>
+      <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
     </Button>
   );
 };

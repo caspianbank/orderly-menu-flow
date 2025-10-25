@@ -153,8 +153,8 @@ export default function MenuItemDetail() {
 
       {/* Section 1: Item Presentation */}
       <div className="w-full">
-        {/* Image Gallery */}
-        <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
+        {/* Image Gallery - Reduced height for mobile */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9]">
           <Carousel className="w-full h-full">
             <CarouselContent>
               {carouselImages.map((image, index) => (
@@ -183,31 +183,31 @@ export default function MenuItemDetail() {
                 </CarouselItem>
               )}
             </CarouselContent>
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
+            <CarouselPrevious className="left-2 sm:left-4 h-8 w-8 sm:h-10 sm:w-10" />
+            <CarouselNext className="right-2 sm:right-4 h-8 w-8 sm:h-10 sm:w-10" />
           </Carousel>
         </div>
 
-        {/* Core Info */}
-        <div className="container mx-auto px-4 pt-8 pb-6 space-y-4">
+        {/* Core Info - Added more top padding */}
+        <div className="container mx-auto px-4 pt-6 sm:pt-8 pb-4 sm:pb-6 space-y-3 sm:space-y-4">
           <div className="space-y-2">
-            <div className="flex items-start justify-between gap-4">
-              <h2 className="text-3xl font-bold">{item.name}</h2>
+            <div className="flex items-start justify-between gap-2 sm:gap-4">
+              <h2 className="text-2xl sm:text-3xl font-bold">{item.name}</h2>
               <Button
                 onClick={() => setShowVRViewer(true)}
                 variant="outline"
                 size="sm"
-                className="shrink-0 rounded-full shadow-lg border-2 hover:scale-105 transition-transform bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
+                className="shrink-0 rounded-full shadow-lg border-2 hover:scale-105 transition-transform bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-auto"
               >
-                <Glasses className="h-4 w-4 mr-2" />
-                View in VR
+                <Glasses className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">View in VR</span>
               </Button>
             </div>
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="text-2xl font-bold text-primary">${item.price.toFixed(2)}</div>
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+              <div className="text-xl sm:text-2xl font-bold text-primary">${item.price.toFixed(2)}</div>
               {item.prepTime && (
-                <div className="flex items-center gap-1 text-muted-foreground">
-                  <Clock className="h-4 w-4" />
+                <div className="flex items-center gap-1 text-muted-foreground text-sm">
+                  <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span>{item.prepTime} min</span>
                 </div>
               )}
@@ -217,15 +217,15 @@ export default function MenuItemDetail() {
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <Star key={star} className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <span className="text-sm text-muted-foreground">(4.8 · 234 reviews)</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">(4.8 · 234 reviews)</span>
             </div>
           </div>
 
           {/* Extended Description */}
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
             {item.description}. Expertly crafted with premium ingredients sourced from local suppliers, 
             this dish delivers an exceptional flavor profile that balances tradition with modern culinary innovation.
           </p>
@@ -233,25 +233,25 @@ export default function MenuItemDetail() {
       </div>
 
       {/* Section 2: Customization */}
-      <div className="container mx-auto px-4 py-6 space-y-6">
+      <div className="container mx-auto px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
         <Card>
-          <CardContent className="p-6 space-y-6">
+          <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
             <div>
-              <h3 className="text-lg font-semibold mb-4">Customize Your Order</h3>
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Customize Your Order</h3>
               
               {/* Size Selection */}
-              <div className="space-y-3">
-                <Label className="text-base font-medium">Size</Label>
+              <div className="space-y-2 sm:space-y-3">
+                <Label className="text-sm sm:text-base font-medium">Size</Label>
                 <RadioGroup value={selectedSize} onValueChange={setSelectedSize}>
                   {sizeOptions.map((size) => (
-                    <div key={size.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent/50 cursor-pointer">
-                      <div className="flex items-center space-x-3">
+                    <div key={size.id} className="flex items-center justify-between p-2 sm:p-3 border rounded-lg hover:bg-accent/50 cursor-pointer">
+                      <div className="flex items-center space-x-2 sm:space-x-3">
                         <RadioGroupItem value={size.id} id={size.id} />
-                        <Label htmlFor={size.id} className="cursor-pointer font-normal">
+                        <Label htmlFor={size.id} className="cursor-pointer font-normal text-sm sm:text-base">
                           {size.name}
                         </Label>
                       </div>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-xs sm:text-sm text-muted-foreground">
                         {size.priceModifier > 0 ? `+$${size.priceModifier.toFixed(2)}` : 
                          size.priceModifier < 0 ? `-$${Math.abs(size.priceModifier).toFixed(2)}` : 
                          'Standard'}
@@ -261,16 +261,16 @@ export default function MenuItemDetail() {
                 </RadioGroup>
               </div>
 
-              <Separator className="my-6" />
+              <Separator className="my-4 sm:my-6" />
 
               {/* Style Selection */}
-              <div className="space-y-3">
-                <Label className="text-base font-medium">Preparation Style</Label>
+              <div className="space-y-2 sm:space-y-3">
+                <Label className="text-sm sm:text-base font-medium">Preparation Style</Label>
                 <RadioGroup value={selectedStyle} onValueChange={setSelectedStyle}>
                   {styleOptions.map((style) => (
-                    <div key={style.id} className="flex items-center p-3 border rounded-lg hover:bg-accent/50 cursor-pointer">
-                      <RadioGroupItem value={style.id} id={`style-${style.id}`} className="mr-3" />
-                      <Label htmlFor={`style-${style.id}`} className="cursor-pointer font-normal">
+                    <div key={style.id} className="flex items-center p-2 sm:p-3 border rounded-lg hover:bg-accent/50 cursor-pointer">
+                      <RadioGroupItem value={style.id} id={`style-${style.id}`} className="mr-2 sm:mr-3" />
+                      <Label htmlFor={`style-${style.id}`} className="cursor-pointer font-normal text-sm sm:text-base">
                         {style.name}
                       </Label>
                     </div>
@@ -278,41 +278,41 @@ export default function MenuItemDetail() {
                 </RadioGroup>
               </div>
 
-              <Separator className="my-6" />
+              <Separator className="my-4 sm:my-6" />
 
               {/* Add-ons */}
-              <div className="space-y-3">
-                <Label className="text-base font-medium">Add-ons</Label>
+              <div className="space-y-2 sm:space-y-3">
+                <Label className="text-sm sm:text-base font-medium">Add-ons</Label>
                 <div className="space-y-2">
                   {addOns.map((addOn) => (
-                    <div key={addOn.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent/50">
-                      <div className="flex items-center space-x-3">
+                    <div key={addOn.id} className="flex items-center justify-between p-2 sm:p-3 border rounded-lg hover:bg-accent/50">
+                      <div className="flex items-center space-x-2 sm:space-x-3">
                         <Checkbox 
                           id={addOn.id}
                           checked={selectedAddOns.includes(addOn.id)}
                           onCheckedChange={() => toggleAddOn(addOn.id)}
                         />
-                        <Label htmlFor={addOn.id} className="cursor-pointer font-normal">
+                        <Label htmlFor={addOn.id} className="cursor-pointer font-normal text-sm sm:text-base">
                           {addOn.name}
                         </Label>
                       </div>
-                      <span className="text-sm text-muted-foreground">+${addOn.price.toFixed(2)}</span>
+                      <span className="text-xs sm:text-sm text-muted-foreground">+${addOn.price.toFixed(2)}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <Separator className="my-6" />
+              <Separator className="my-4 sm:my-6" />
 
               {/* Special Notes */}
-              <div className="space-y-3">
-                <Label htmlFor="special-notes" className="text-base font-medium">Special Instructions</Label>
+              <div className="space-y-2 sm:space-y-3">
+                <Label htmlFor="special-notes" className="text-sm sm:text-base font-medium">Special Instructions</Label>
                 <Textarea
                   id="special-notes"
                   placeholder="Any special requests or dietary restrictions?"
                   value={specialNotes}
                   onChange={(e) => setSpecialNotes(e.target.value)}
-                  className="min-h-[100px]"
+                  className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                 />
               </div>
             </div>

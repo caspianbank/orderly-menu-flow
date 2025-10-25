@@ -35,9 +35,9 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
   };
 
   return (
-    <Card className="menu-card bg-gradient-card border shadow-soft overflow-hidden flex flex-col h-full">
-      <div className="relative">
-        <div className="aspect-[4/3] overflow-hidden">
+    <Card className="menu-card bg-white border-0 shadow-md hover:shadow-lg overflow-hidden flex flex-col h-full">
+      <div className="relative flex-[4]">
+        <div className="h-full overflow-hidden">
           <img 
             src={item.image} 
             alt={item.name}
@@ -45,79 +45,47 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
           />
         </div>
         
-        {/* Badges */}
+        {/* Badges - Only trending/popular/special */}
         <div className="absolute top-2 left-2 flex gap-1">
           {item.isTrending && (
-            <Badge className="bg-red-500 text-white border-0 shadow-sm animate-pulse">
-              🔥 Trending
+            <Badge className="bg-red-500 text-white border-0 shadow-sm animate-pulse text-xs">
+              Trending
             </Badge>
           )}
           {item.isPopular && (
-            <Badge className="bg-menu-popular text-white border-0 shadow-sm">
+            <Badge className="bg-menu-popular text-white border-0 shadow-sm text-xs">
               Popular
             </Badge>
           )}
           {item.isSpecial && (
-            <Badge className="bg-menu-special text-primary-foreground border-0 shadow-sm">
+            <Badge className="bg-menu-special text-primary-foreground border-0 shadow-sm text-xs">
               Special
             </Badge>
           )}
         </div>
-
-        {/* Price */}
-        <div className="absolute top-2 right-2">
-          <Badge variant="secondary" className="bg-card/95 text-card-foreground shadow-sm font-semibold">
-            ${item.price.toFixed(2)}
-          </Badge>
-        </div>
       </div>
 
-      <CardContent className="p-4 space-y-3 flex flex-col flex-1">
-        <div className="space-y-2 flex-1">
-          <h3 className="font-semibold text-lg text-card-foreground line-clamp-1">
+      <CardContent className="p-3 sm:p-4 space-y-2 flex flex-col flex-[1] bg-white">
+        <div className="flex-1">
+          <h3 className="font-semibold text-sm sm:text-base lg:text-lg text-card-foreground line-clamp-2">
             {item.name}
           </h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {item.description}
-          </p>
         </div>
 
-        {/* Prep Time */}
-        {item.prepTime && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="h-3 w-3" />
-            <span>{item.prepTime} min</span>
+        {/* Price and Button Section */}
+        <div className="flex items-center justify-between gap-2 mt-auto">
+          <div className="text-lg sm:text-xl font-bold text-primary">
+            ${item.price.toFixed(2)}
           </div>
-        )}
-
-        {/* Dietary Info */}
-        {item.dietary.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {item.dietary.slice(0, 2).map((dietary) => (
-              <Badge 
-                key={dietary} 
-                variant="outline" 
-                className={`text-xs ${getDietaryBadgeColor(dietary)}`}
-              >
-                {dietary}
-              </Badge>
-            ))}
-            {item.dietary.length > 2 && (
-              <Badge variant="outline" className="text-xs">
-                +{item.dietary.length - 2} more
-              </Badge>
-            )}
-          </div>
-        )}
-
-        <Button 
-          size="sm" 
-          onClick={handleViewDetails}
-          className="w-full gap-1 bg-primary hover:bg-primary-hover text-primary-foreground shadow-sm"
-        >
-          <Plus className="h-3 w-3" />
-          View & Customize
-        </Button>
+          <Button 
+            size="sm" 
+            onClick={handleViewDetails}
+            className="gap-1 bg-primary hover:bg-primary-hover text-primary-foreground shadow-sm h-8 text-xs sm:text-sm px-2 sm:px-3"
+          >
+            <Plus className="h-3 w-3" />
+            <span className="hidden sm:inline">View</span>
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

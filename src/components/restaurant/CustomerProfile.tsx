@@ -235,8 +235,7 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                 <div className="text-center sm:text-left">
                   <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">{profileData.fullName}</h1>
                   <p className="text-muted-foreground flex items-center gap-2 justify-center sm:justify-start mt-1">
-                    <span>🎉</span>
-                    Member since {new Date(customerDetails.joinDate).toLocaleDateString()}
+                    <span>Member since {new Date(customerDetails.joinDate).toLocaleDateString()}</span>
                   </p>
                 </div>
               </div>
@@ -268,7 +267,9 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="h-14 w-14 bg-gradient-to-br from-accent to-accent/70 rounded-xl flex items-center justify-center shadow-md">
-                  <span className="text-2xl">🍽️</span>
+                  <svg className="h-7 w-7 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
                 </div>
                 <div>
                   <p className="text-3xl font-bold bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent">{customerDetails.totalOrders}</p>
@@ -282,7 +283,9 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="h-14 w-14 bg-gradient-to-br from-secondary to-secondary/70 rounded-xl flex items-center justify-center shadow-md">
-                  <span className="text-2xl">❤️</span>
+                  <svg className="h-7 w-7 text-secondary-foreground" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{customerDetails.favoriteCategory}</p>
@@ -388,7 +391,9 @@ export function CustomerProfile({ customer, onLogout, onBack }: CustomerProfileP
                   <div className="space-y-2">
                     <Label>Member Since</Label>
                     <div className="flex items-center gap-2 p-3 border-2 border-border rounded-lg bg-muted/50 opacity-50">
-                      <span className="text-xl">🎉</span>
+                      <svg className="h-5 w-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
                       <span>{new Date(customerDetails.joinDate).toLocaleDateString()}</span>
                     </div>
                   </div>

@@ -28,40 +28,40 @@ export const RestaurantInfoCard = () => {
   };
 
   return (
-    <section className="container mx-auto px-4 py-6">
+    <section className="container mx-auto px-4 py-4 sm:py-6">
       <Card className="border-primary/20 bg-card/50 backdrop-blur-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Wifi className="h-5 w-5 text-primary" />
-            Restaurant Information
+        <CardHeader className="pb-2 sm:pb-3">
+          <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+            <Wifi className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+            <span className="truncate">Restaurant Information</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4">
           {/* Wi-Fi Section */}
           {restaurantInfo.wifi && (
-            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+            <div className="bg-muted/50 rounded-lg p-3 sm:p-4 space-y-2">
               <div className="flex items-center gap-2 mb-2">
-                <Wifi className="h-4 w-4 text-primary" />
-                <h4 className="font-semibold text-sm">Free Wi-Fi</h4>
+                <Wifi className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                <h4 className="font-semibold text-xs sm:text-sm">Free Wi-Fi</h4>
               </div>
-              <div className="grid gap-2 text-sm">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Network:</span>
-                  <Badge variant="secondary" className="font-mono">
+              <div className="grid gap-2 text-xs sm:text-sm">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-muted-foreground flex-shrink-0">Network:</span>
+                  <Badge variant="secondary" className="font-mono text-xs break-all text-right">
                     {restaurantInfo.wifi.ssid}
                   </Badge>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Password:</span>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="font-mono">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-muted-foreground flex-shrink-0">Password:</span>
+                  <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+                    <Badge variant="secondary" className="font-mono text-xs truncate max-w-[150px] sm:max-w-none">
                       {restaurantInfo.wifi.password}
                     </Badge>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={handleCopyPassword}
-                      className="h-6 w-6 p-0"
+                      className="h-5 w-5 sm:h-6 sm:w-6 p-0 flex-shrink-0"
                       title="Copy password"
                     >
                       <Copy className="h-3 w-3" />
@@ -78,24 +78,24 @@ export const RestaurantInfoCard = () => {
           )}
 
           {/* Contact Info */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={handlePhoneClick}
-              className="gap-2 flex-1 min-w-[140px]"
+              className="gap-2 flex-1 justify-start sm:justify-center text-xs sm:text-sm"
             >
-              <Phone className="h-4 w-4" />
-              <span className="text-xs">{restaurantInfo.phone}</span>
+              <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="truncate">{restaurantInfo.phone}</span>
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={handleLocationClick}
-              className="gap-2 flex-1 min-w-[140px]"
+              className="gap-2 flex-1 text-xs sm:text-sm"
             >
-              <MapPin className="h-4 w-4" />
-              <span className="text-xs">Get Directions</span>
+              <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span>Get Directions</span>
             </Button>
           </div>
         </CardContent>

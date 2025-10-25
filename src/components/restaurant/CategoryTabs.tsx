@@ -5,6 +5,8 @@ import {
   ScrollBar,
 } from '@/components/ui/scroll-area';
 import { FilterDialog, FilterOptions } from './FilterDialog';
+import { SlidersHorizontal, LayoutGrid } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface CategoryTabsProps {
   categories: MenuCategory[];
@@ -21,55 +23,123 @@ export function CategoryTabs({
   filters,
   onFiltersChange,
 }: CategoryTabsProps) {
+  // Count active filters
+  const activeFiltersCount = 
+    (filters.selectedCategories.length > 0 ? 1 : 0) +
+    (filters.labels.length > 0 ? 1 : 0) +
+    (filters.priceRange[0] !== 0 || filters.priceRange[1] !== 50 ? 1 : 0) +
+    (filters.sortBy !== 'name' || filters.sortOrder !== 'asc' ? 1 : 0);
+
   return (
-    <div className="sticky z-30 bg-background/95 backdrop-blur-sm border-b py-4 top-[calc(145px)] md:top-[80px] lg:top-[100px]">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-          <ScrollArea className="w-full lg:flex-1">
-            <div className="flex gap-2 pb-2 w-max">
-              <Button
-                variant={activeCategory === null ? "default" : "ghost"}
-                size="sm"
-                onClick={() => onCategorySelect(null)}
-                className={`whitespace-nowrap ${
-                  activeCategory === null
-                    ? 'bg-primary text-primary-foreground shadow-soft'
-                    : 'hover:bg-muted hover:text-foreground'
-                }`}
-              >
-                All Menu
-              </Button>
-              {categories.map((category) => (
+    <nav className="sticky z-40 bg-white/95 backdrop-blur-md border-t border-b border-gray-200 shadow-sm top-[57px] sm:top-[65px] md:top-[73px]">
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Main Navigation Bar */}
+        <div className="flex items-center justify-between gap-4 py-3 sm:py-4">
+          {/* Categories Section */}
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="hidden sm:flex items-center gap-2 text-gray-500 flex-shrink-0">
+              <LayoutGrid className="h-4 w-4" />
+              <span className="text-sm font-medium">Categories:</span>
+            </div>
+            
+            <ScrollArea className="w-full">
+              <div className="flex gap-2 pb-2 w-max">
                 <Button
-                  key={category.id}
-                  variant={activeCategory === category.id ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => onCategorySelect(category.id)}
-                  className={`whitespace-nowrap gap-2 ${
-                    activeCategory === category.id
-                      ? 'bg-primary text-primary-foreground shadow-soft'
-                      : 'hover:bg-muted hover:text-foreground'
+                  variant={activeCategory === null ? "default" : "outline"}
+                  onClick={() => onCategorySelect(null)}
+                  className={`whitespace-nowrap px-4 py-2 h-9 font-medium text-sm transition-all ${
+                    activeCategory === null
+                      ? 'bg-primary text-white hover:bg-primary/90 shadow-sm'
+                      : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300'
                   }`}
                 >
-                  <span className="text-lg">{category.icon}</span>
-                  <span>{category.name}</span>
+                  All Items
                 </Button>
-              ))}
-            </div>
-            {/* ✅ optional: custom horizontal scrollbar */}
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+                {categories.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant={activeCategory === category.id ? "default" : "outline"}
+                    onClick={() => onCategorySelect(category.id)}
+                    className={`whitespace-nowrap px-4 py-2 h-9 font-medium text-sm transition-all ${
+                      activeCategory === category.id
+                        ? 'bg-primary text-white hover:bg-primary/90 shadow-sm'
+                        : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300'
+                    }`}
+                  >
+                    {category.name}
+                  </Button>
+                ))}
+              </div>
+              <ScrollBar orientation="horizontal" className="h-1" />
+            </ScrollArea>
+          </div>
 
-          {/* Filter controls */}
-          <div className="flex gap-2 items-center w-full lg:w-auto">
-            <FilterDialog
-              categories={categories}
-              filters={filters}
-              onFiltersChange={onFiltersChange}
-            />
+          {/* Filter Button */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {}}
+              className="gap-2 h-9 px-3 sm:px-4 bg-white hover:bg-gray-50 border-gray-300 relative"
+              asChild
+            >
+              <div>
+                <FilterDialog
+                  categories={categories}
+                  filters={filters}
+                  onFiltersChange={onFiltersChange}
+                />
+              </div>
+            </Button>
           </div>
         </div>
+
+        {/* Active Filters Display */}
+        {activeFiltersCount > 0 && (
+          <div className="pb-3 flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-gray-500 font-medium">Active filters:</span>
+            {filters.labels.map((label) => (
+              <Badge 
+                key={label} 
+                variant="secondary" 
+                className="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20"
+              >
+                {label}
+              </Badge>
+            ))}
+            {filters.selectedCategories.length > 0 && (
+              <Badge 
+                variant="secondary" 
+                className="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20"
+              >
+                {filters.selectedCategories.length} categories
+              </Badge>
+            )}
+            {(filters.priceRange[0] !== 0 || filters.priceRange[1] !== 50) && (
+              <Badge 
+                variant="secondary" 
+                className="text-xs px-2 py-0.5 bg-primary/10 text-primary border border-primary/20"
+              >
+                ${filters.priceRange[0]} - ${filters.priceRange[1]}
+              </Badge>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onFiltersChange({
+                sortBy: 'name',
+                sortOrder: 'asc',
+                selectedCategories: [],
+                priceRange: [0, 50],
+                labels: [],
+              })}
+              className="h-6 px-2 text-xs text-gray-500 hover:text-gray-700"
+            >
+              Clear all
+            </Button>
+          </div>
+        )}
       </div>
-    </div>
+    </nav>
   );
 }

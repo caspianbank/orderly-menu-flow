@@ -2,132 +2,135 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Nunito Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap');
+
 /* Restaurant Menu Design System - Elegant & Appetizing Colors */
 
 @layer base {
   :root {
     /* Restaurant Brand Colors */
-    --background: 40 8% 98%;
-    --foreground: 160 25% 15%;
+    --background: 0 0% 96%;
+    --foreground: 0 0% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 160 25% 15%;
+    --card-foreground: 0 0% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 25% 15%;
+    --popover-foreground: 0 0% 20%;
 
-    /* Primary - Deep Emerald Green */
-    --primary: 160 85% 25%;
-    --primary-foreground: 40 8% 98%;
-    --primary-hover: 160 85% 20%;
+    /* Primary - Deep Red (#9D080F) */
+    --primary: 356 90% 32%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 356 90% 32%;
 
-    /* Secondary - Warm Gold */
-    --secondary: 42 95% 55%;
-    --secondary-foreground: 160 25% 15%;
-    --secondary-hover: 42 95% 50%;
+    /* Secondary - Deep Red (#9D080F) */
+    --secondary: 356 90% 32%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 356 90% 32%;
 
-    /* Muted - Soft Cream */
-    --muted: 40 15% 95%;
-    --muted-foreground: 160 15% 45%;
+    /* Muted - Light Gray */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
 
-    /* Accent - Rich Terracotta */
-    --accent: 15 75% 65%;
+    /* Accent - Deep Red (#9D080F) */
+    --accent: 356 90% 32%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 15 75% 60%;
+    --accent-hover: 356 90% 32%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 160 15% 90%;
-    --input: 160 15% 95%;
-    --ring: 160 85% 25%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 356 90% 32%;
 
     /* Special restaurant colors */
-    --menu-special: 42 95% 55%;
-    --menu-popular: 15 75% 65%;
-    --menu-category: 160 85% 25%;
+    --menu-special: 356 90% 32%;
+    --menu-popular: 356 90% 32%;
+    --menu-category: 356 90% 32%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(160 85% 25%), hsl(160 85% 30%));
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(40 15% 98%));
-    --gradient-overlay: linear-gradient(180deg, transparent, hsl(160 25% 15% / 0.8));
+    --gradient-hero: linear-gradient(135deg, hsl(356 90% 32%), hsl(356 90% 36%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    --gradient-overlay: linear-gradient(180deg, transparent, hsl(0 0% 20% / 0.8));
 
     /* Shadows */
-    --shadow-soft: 0 2px 20px hsl(160 25% 15% / 0.08);
-    --shadow-hover: 0 8px 30px hsl(160 25% 15% / 0.12);
-    --shadow-dish: 0 4px 25px hsl(160 25% 15% / 0.1);
+    --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.08);
+    --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.12);
+    --shadow-dish: 0 4px 25px hsl(0 0% 0% / 0.1);
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 96%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-foreground: 0 0% 20%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 356 90% 32%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 100%;
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 0 0% 93%;
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent-foreground: 0 0% 20%;
 
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 0 0% 90%;
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 356 90% 32%;
   }
 
   .dark {
     /* Dark mode for restaurant menu */
-    --background: 160 25% 8%;
-    --foreground: 40 8% 95%;
+    --background: 0 0% 15%;
+    --foreground: 0 0% 95%;
 
-    --card: 160 25% 10%;
-    --card-foreground: 40 8% 95%;
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 160 25% 10%;
-    --popover-foreground: 40 8% 95%;
+    --popover: 0 0% 18%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 160 85% 35%;
-    --primary-foreground: 160 25% 8%;
-    --primary-hover: 160 85% 40%;
+    --primary: 356 90% 38%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 356 90% 38%;
 
-    --secondary: 42 95% 60%;
-    --secondary-foreground: 160 25% 8%;
-    --secondary-hover: 42 95% 65%;
+    --secondary: 356 90% 38%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 356 90% 38%;
 
-    --muted: 160 25% 15%;
-    --muted-foreground: 160 15% 65%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 15 75% 70%;
-    --accent-foreground: 160 25% 8%;
-    --accent-hover: 15 75% 75%;
+    --accent: 356 90% 38%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 356 90% 38%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 160 25% 20%;
-    --input: 160 25% 15%;
-    --ring: 160 85% 35%;
+    --border: 0 0% 25%;
+    --input: 0 0% 20%;
+    --ring: 356 90% 38%;
 
-    --menu-special: 42 95% 60%;
-    --menu-popular: 15 75% 70%;
-    --menu-category: 160 85% 35%;
+    --menu-special: 356 90% 38%;
+    --menu-popular: 356 90% 38%;
+    --menu-category: 356 90% 38%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(160 85% 30%), hsl(160 85% 35%));
-    --gradient-card: linear-gradient(180deg, hsl(160 25% 12%), hsl(160 25% 8%));
-    --gradient-overlay: linear-gradient(180deg, transparent, hsl(40 8% 95% / 0.8));
+    --gradient-hero: linear-gradient(135deg, hsl(356 90% 35%), hsl(356 90% 40%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 20%), hsl(0 0% 15%));
+    --gradient-overlay: linear-gradient(180deg, transparent, hsl(0 0% 95% / 0.8));
 
     --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.2);
     --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.3);
     --shadow-dish: 0 4px 25px hsl(0 0% 0% / 0.25);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 0 0% 18%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 356 90% 38%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 0 0% 22%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 356 90% 38%;
   }
 }
 
@@ -139,6 +142,8 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background-color: #F5F5F5;
   }
 
   /* Custom animations for restaurant menu */

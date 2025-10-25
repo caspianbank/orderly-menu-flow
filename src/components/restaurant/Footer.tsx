@@ -24,15 +24,15 @@ export function Footer() {
   };
 
   return (
-    <footer className="mt-16 bg-muted/30 border-t">
-      <div className="container mx-auto px-4 py-8">
+    <footer className="mt-12 sm:mt-16 bg-muted/30 border-t">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
         <Card className="bg-gradient-card shadow-soft">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {/* Restaurant Info */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-primary">{restaurantInfo.name}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-lg sm:text-xl font-bold text-primary">{restaurantInfo.name}</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                   {restaurantInfo.description}
                 </p>
 
@@ -41,10 +41,10 @@ export function Footer() {
                     variant="ghost"
                     size="sm"
                     onClick={handleLocationClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
+                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground w-full"
                   >
-                    <MapPin className="h-4 w-4 text-primary shrink-0" />
-                    <span className="text-sm text-left break-words whitespace-normal">
+                    <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0 self-start mt-0.5" />
+                    <span className="text-xs sm:text-sm text-left break-words whitespace-normal">
                       {restaurantInfo.address}
                     </span>
                   </Button>
@@ -53,36 +53,36 @@ export function Footer() {
                     variant="ghost"
                     size="sm"
                     onClick={handleCallClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
+                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground w-full"
                   >
-                    <Phone className="h-4 w-4 text-primary" />
-                    <span className="text-sm hover:text-foreground">{restaurantInfo.phone}</span>
+                    <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                    <span className="text-xs sm:text-sm hover:text-foreground truncate">{restaurantInfo.phone}</span>
                   </Button>
 
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={handleEmailClick}
-                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground"
+                    className="justify-start gap-2 h-auto p-2 hover:bg-muted/50 hover:text-foreground w-full"
                   >
-                    <Mail className="h-4 w-4 text-primary" />
-                    <span className="text-sm hover:text-foreground">{restaurantInfo.email}</span>
+                    <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                    <span className="text-xs sm:text-sm hover:text-foreground truncate">{restaurantInfo.email}</span>
                   </Button>
                 </div>
               </div>
 
               {/* Opening Hours */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-primary" />
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-semibold flex items-center gap-2">
+                  <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                   Opening Hours
                 </h3>
                 <div className="space-y-1">
                   {Object.entries(restaurantInfo.hours).map(([day, hours]) => {
                     return (
-                      <div key={day} className="flex justify-between text-sm">
-                        <span className="font-medium">{day}:</span>
-                        <span className={`${hours === 'Closed' ? 'text-muted-foreground' : 'text-foreground'}`}>
+                      <div key={day} className="flex justify-between text-xs sm:text-sm gap-2">
+                        <span className="font-medium capitalize">{day}:</span>
+                        <span className={`${hours === 'Closed' ? 'text-muted-foreground' : 'text-foreground'} text-right`}>
                           {hours}
                         </span>
                       </div>
@@ -92,18 +92,18 @@ export function Footer() {
               </div>
 
               {/* Social Media & Actions */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Connect With Us</h3>
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="text-base sm:text-lg font-semibold">Connect With Us</h3>
 
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   {restaurantInfo.socialMedia.facebook && (
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleSocialClick(restaurantInfo.socialMedia.facebook!)}
-                      className="gap-2"
+                      className="gap-2 h-9"
                     >
-                      <Facebook className="h-4 w-4" />
+                      <Facebook className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       <span className="sr-only">Facebook</span>
                     </Button>
                   )}
@@ -113,9 +113,9 @@ export function Footer() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleSocialClick(restaurantInfo.socialMedia.instagram!)}
-                      className="gap-2"
+                      className="gap-2 h-9"
                     >
-                      <Instagram className="h-4 w-4" />
+                      <Instagram className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       <span className="sr-only">Instagram</span>
                     </Button>
                   )}
@@ -125,9 +125,9 @@ export function Footer() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleSocialClick(restaurantInfo.socialMedia.twitter!)}
-                      className="gap-2"
+                      className="gap-2 h-9"
                     >
-                      <Twitter className="h-4 w-4" />
+                      <Twitter className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       <span className="sr-only">Twitter</span>
                     </Button>
                   )}
@@ -137,9 +137,9 @@ export function Footer() {
                       variant="outline"
                       size="sm"
                       onClick={() => handleSocialClick(restaurantInfo.socialMedia.youtube!)}
-                      className="gap-2"
+                      className="gap-2 h-9"
                     >
-                      <Youtube className="h-4 w-4" />
+                      <Youtube className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       <span className="sr-only">YouTube</span>
                     </Button>
                   )}
@@ -155,21 +155,21 @@ export function Footer() {
                   <Button
                     variant="outline"
                     onClick={handleCallClick}
-                    className="w-full gap-2"
+                    className="w-full gap-2 text-xs sm:text-sm h-9 sm:h-auto"
                   >
-                    <Phone className="h-4 w-4" />
+                    <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     Make a Reservation
                   </Button>
                 </div>
               </div>
             </div>
 
-            <Separator className="my-6" />
+            <Separator className="my-5 sm:my-6" />
 
-            <div className="text-center text-sm text-muted-foreground">
+            <div className="text-center text-xs sm:text-sm text-muted-foreground space-y-1">
               <p>&copy; {new Date().getFullYear()} {restaurantInfo.name}. All rights reserved.</p>
-              <p className="mt-1">Crafted with care for an exceptional dining experience.</p>
-               <p>Powered by <span className="font-medium">CassaPoint</span></p>
+              <p>Crafted with care for an exceptional dining experience.</p>
+              <p>Powered by <span className="font-medium">CassaPoint</span></p>
             </div>
           </CardContent>
         </Card>

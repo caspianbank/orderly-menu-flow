@@ -52,23 +52,23 @@ export function Header({
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b shadow-soft">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm shadow-soft">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
           {/* Mobile Layout - Clean 3-element header */}
           <div className="flex md:hidden items-center justify-between">
             {/* Restaurant Logo/Name */}
-            <Link to="/" className="text-2xl font-bold text-primary">
+            <Link to="/" className="text-xl sm:text-2xl font-bold text-primary truncate max-w-[60%]">
               {restaurantInfo.name}
             </Link>
 
             {/* Right Actions: Search Icon + Hamburger Menu */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               {/* Search Icon */}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsSearchExpanded(!isSearchExpanded)}
-                className="h-9 w-9"
+                className="h-9 w-9 flex-shrink-0"
               >
                 <Search className="h-5 w-5" />
               </Button>
@@ -76,15 +76,15 @@ export function Header({
               {/* Hamburger Menu */}
               <Sheet open={isHamburgerOpen} onOpenChange={setIsHamburgerOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9">
+                  <Button variant="ghost" size="icon" className="h-9 w-9 flex-shrink-0">
                     <MenuIcon className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetContent side="right" className="w-[85vw] max-w-[400px] overflow-y-auto">
                   <SheetHeader>
                     <SheetTitle>Menu</SheetTitle>
                   </SheetHeader>
-                  <div className="flex flex-col gap-4 mt-6">
+                  <div className="flex flex-col gap-4 mt-6 pb-6">
                     {/* Login/Profile - Top Item */}
                     {currentCustomer ? (
                       <Button
@@ -93,15 +93,15 @@ export function Header({
                           onShowProfile();
                           setIsHamburgerOpen(false);
                         }}
-                        className="justify-start gap-3 h-auto py-3"
+                        className="justify-start gap-3 h-auto py-3 w-full"
                       >
-                        <Avatar className="h-10 w-10">
+                        <Avatar className="h-10 w-10 flex-shrink-0">
                           <AvatarFallback className="bg-primary text-primary-foreground">
                             {currentCustomer.fullName.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="text-left">
-                          <div className="font-medium">{currentCustomer.fullName}</div>
+                        <div className="text-left truncate">
+                          <div className="font-medium truncate">{currentCustomer.fullName}</div>
                           <div className="text-sm text-muted-foreground">View Profile</div>
                         </div>
                       </Button>
@@ -224,12 +224,12 @@ export function Header({
         </div>
 
         {/* Desktop & Tablet Layout */}
-        <div className="hidden md:flex items-center justify-between gap-4">
+        <div className="hidden md:flex items-center justify-between gap-2 lg:gap-4">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="text-2xl font-bold text-primary">
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <Link to="/" className="text-xl lg:text-2xl font-bold text-primary">
               {restaurantInfo.name}
-            </div>
+            </Link>
           </div>
 
           {/* Search Bar - Desktop Only */}
@@ -240,13 +240,13 @@ export function Header({
                 placeholder="Search dishes..."
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="pl-10 bg-muted/50 border-border focus:bg-card"
+                className="pl-10 bg-muted/50 border-border focus:bg-card w-full"
               />
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 lg:gap-2 flex-shrink-0">
             <ThemeToggle />
             <LanguageSelector
               currentLanguage={currentLanguage}
@@ -258,7 +258,7 @@ export function Header({
               variant="ghost"
               size="icon"
               onClick={onStoriesClick}
-              className="relative rounded-full"
+              className="relative rounded-full flex-shrink-0"
             >
               {hasNewStories && (
                 <Circle className="absolute -top-0.5 -right-0.5 h-3 w-3 fill-primary text-primary animate-pulse" />
@@ -272,10 +272,10 @@ export function Header({
             </Button>
 
             {/* Rewards Link */}
-            <Link to="/rewards">
+            <Link to="/rewards" className="flex-shrink-0">
               <Button variant="ghost" size="sm" className="gap-2">
                 <Trophy className="h-4 w-4" />
-                <span className="hidden sm:inline">Rewards</span>
+                <span className="hidden lg:inline">Rewards</span>
               </Button>
             </Link>
 
@@ -283,10 +283,10 @@ export function Header({
               variant="outline"
               size="sm"
               onClick={() => setIsWaiterDialogOpen(true)}
-              className="gap-2 hover:bg-accent hover:text-accent-foreground"
+              className="gap-2 hover:bg-accent hover:text-accent-foreground flex-shrink-0"
             >
               <Phone className="h-4 w-4" />
-              <span className="hidden sm:inline">Call Waiter</span>
+              <span className="hidden lg:inline">Call Waiter</span>
             </Button>
             
             {/* Login/Profile on the right */}
@@ -295,7 +295,7 @@ export function Header({
                 variant="ghost"
                 size="sm"
                 onClick={onShowProfile}
-                className="p-2 hover:bg-transparent"
+                className="p-2 hover:bg-transparent flex-shrink-0"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarFallback className="bg-primary text-primary-foreground">
@@ -315,25 +315,25 @@ export function Header({
         </div>
 
         {/* Tablet Search Bar - Below header */}
-        <div className="hidden md:block lg:hidden mt-4">
-          <div className="relative w-full max-w-md mx-auto">
+        <div className="hidden md:block lg:hidden mt-3 px-4">
+          <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder="Search dishes..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="pl-10 bg-muted/50 border-border focus:bg-card"
+              className="pl-10 bg-muted/50 border-border focus:bg-card w-full"
             />
           </div>
         </div>
 
         {/* Restaurant Hours Info */}
-        <div className="mt-3 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-          <Clock className="h-4 w-4" />
+        <div className="mt-2 sm:mt-3 flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground px-4">
+          <Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
           {(() => {
             const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
             const todayHours = restaurantInfo.hours[today as keyof typeof restaurantInfo.hours] || 'Closed';
-            return <span>Today: {todayHours}</span>;
+            return <span className="truncate">Today: {todayHours}</span>;
           })()}
         </div>
       </header>
@@ -342,10 +342,10 @@ export function Header({
       <div className="md:hidden">
         <Button
           onClick={() => setIsWaiterDialogOpen(true)}
-          className="fixed bottom-6 left-6 h-14 w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
+          className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
           size="icon"
         >
-          <Bell className="h-6 w-6" />
+          <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
         </Button>
       </div>
 
