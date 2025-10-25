@@ -1,7 +1,9 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, Flame, ShoppingCart } from 'lucide-react';
+import { TrendingUp, Flame, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { MenuItem } from '@/types/menu';
+import { useRef, useState, useEffect } from 'react';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface TrendingItemsProps {
   items: MenuItem[];
@@ -9,68 +11,147 @@ interface TrendingItemsProps {
 }
 
 export const TrendingItems = ({ items, onAddToOrder }: TrendingItemsProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
   const trendingItems = items
     .filter(item => item.isTrending)
     .sort((a, b) => (b.ordersToday || 0) - (a.ordersToday || 0))
-    .slice(0, 3);
+    .slice(0, 6); // Increased to 6 items for better scrolling
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (scrollContainerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        setCanScrollLeft(scrollLeft > 0);
+        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+      }
+    };
+
+    checkScroll();
+    const container = scrollContainerRef.current;
+    container?.addEventListener('scroll', checkScroll);
+    window.addEventListener('resize', checkScroll);
+
+    return () => {
+      container?.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [trendingItems]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 320; // Width of one card + gap
+      const newScrollLeft = scrollContainerRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   if (trendingItems.length === 0) return null;
 
   return (
-    <section className="container mx-auto px-4 py-4 sm:py-6">
-      <div className="flex items-center gap-2 mb-3 sm:mb-4">
-        <TrendingUp className="text-destructive flex-shrink-0" size={20} />
-        <h2 className="text-xl sm:text-2xl font-bold">Most Ordered Today</h2>
-        <Flame className="text-destructive animate-pulse flex-shrink-0" size={18} />
+    <section className="container mx-auto px-4">
+      <div className="bg-gray-50/50 rounded-2xl p-5 sm:p-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-5">
+        <div className="flex items-center gap-2">
+          <TrendingUp className="text-primary flex-shrink-0" size={20} />
+          <h2 className="text-xl sm:text-2xl font-bold">Most Ordered Today</h2>
+          <Flame className="text-primary animate-pulse flex-shrink-0" size={18} />
+        </div>
+
+        {/* Navigation Buttons - Desktop */}
+        <div className="hidden md:flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => scroll('left')}
+            disabled={!canScrollLeft}
+            className="h-8 w-8 rounded-full disabled:opacity-30"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => scroll('right')}
+            disabled={!canScrollRight}
+            className="h-8 w-8 rounded-full disabled:opacity-30"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-        {trendingItems.map((item, index) => (
+      {/* Horizontal Scrolling Container */}
+      <div className="relative pt-3">
+        <ScrollArea className="w-full">
           <div 
-            key={item.id}
-            className="relative bg-card rounded-lg border p-3 sm:p-4 hover:shadow-lg transition-shadow animate-fade-in"
-            style={{ animationDelay: `${index * 100}ms` }}
+            ref={scrollContainerRef}
+            className="flex gap-4 pb-4 overflow-x-auto scroll-smooth"
+            style={{ scrollbarWidth: 'thin' }}
           >
-            <Badge 
-              variant="destructive" 
-              className="absolute -top-2 -right-2 flex items-center gap-1 text-xs px-2 py-1"
-            >
-              <Flame size={12} className="flex-shrink-0" />
-              #{index + 1}
-            </Badge>
-            
-            <div className="flex items-center gap-2 sm:gap-3">
-              <img 
-                src={item.image} 
-                alt={item.name}
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-primary flex-shrink-0"
-              />
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm truncate">{item.name}</h3>
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {item.description}
-                </p>
-                <div className="flex items-center justify-between mt-1 sm:mt-2 gap-2">
-                  <span className="font-bold text-primary text-sm sm:text-base">${item.price}</span>
-                  <Badge variant="outline" className="text-xs px-1.5 py-0.5 flex-shrink-0">
-                    {item.ordersToday} orders
-                  </Badge>
+            {trendingItems.map((item, index) => (
+              <div 
+                key={item.id}
+                className="relative bg-white rounded-xl border-2 border-gray-100 hover:border-primary/30 p-5 hover:shadow-xl transition-all animate-fade-in flex-shrink-0 w-[280px] sm:w-[300px] mt-2"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-2 -right-2 flex items-center gap-1 text-xs px-2.5 py-1 shadow-md"
+                >
+                  <Flame size={12} className="flex-shrink-0" />
+                  #{index + 1}
+                </Badge>
+                
+                <div className="flex items-start gap-3 mb-3">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-primary/20 shadow-sm flex-shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-sm text-gray-900 line-clamp-1 mb-1">{item.name}</h3>
+                    <p className="text-xs text-gray-600 line-clamp-2 mb-2">
+                      {item.description}
+                    </p>
+                    <Badge variant="outline" className="text-xs px-2 py-0.5 bg-primary/5 border-primary/20">
+                      {item.ordersToday} orders today
+                    </Badge>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t">
+                  <span className="font-bold text-primary text-lg">${item.price.toFixed(2)}</span>
+                  {onAddToOrder && (
+                    <Button
+                      onClick={() => onAddToOrder(item)}
+                      className="gap-2 text-xs h-8 px-3 bg-primary hover:bg-primary/90 shadow-sm"
+                      size="sm"
+                    >
+                      <ShoppingCart className="h-3 w-3" />
+                      Add
+                    </Button>
+                  )}
                 </div>
               </div>
-            </div>
-            
-            {onAddToOrder && (
-              <Button
-                onClick={() => onAddToOrder(item)}
-                className="w-full mt-2 sm:mt-3 gap-2 text-xs sm:text-sm h-8 sm:h-auto"
-                size="sm"
-              >
-                <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4" />
-                Add to Basket
-              </Button>
-            )}
+            ))}
           </div>
-        ))}
+          <ScrollBar orientation="horizontal" className="h-2" />
+        </ScrollArea>
+
+        {/* Gradient Overlays for Visual Scroll Indicators */}
+        {canScrollLeft && (
+          <div className="absolute left-0 top-3 bottom-4 w-8 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none hidden sm:block" />
+        )}
+        {canScrollRight && (
+          <div className="absolute right-0 top-3 bottom-4 w-8 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none hidden sm:block" />
+        )}
+      </div>
       </div>
     </section>
   );
