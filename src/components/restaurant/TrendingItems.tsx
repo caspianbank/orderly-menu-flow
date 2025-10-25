@@ -54,9 +54,9 @@ export const TrendingItems = ({ items, onAddToOrder }: TrendingItemsProps) => {
   if (trendingItems.length === 0) return null;
 
   return (
-    <section className="container mx-auto px-4">
-      <div className="bg-gray-50/50 rounded-2xl p-5 sm:p-6">
-        <div className="flex items-center justify-between mb-4 sm:mb-5">
+    <section className="container mx-auto px-4 py-0">
+      <div className="bg-gray-50/50 rounded-2xl p-2">
+        <div className="flex items-center justify-between mb-0">
         <div className="flex items-center gap-2">
           <TrendingUp className="text-primary flex-shrink-0" size={20} />
           <h2 className="text-xl sm:text-2xl font-bold">Most Ordered Today</h2>
