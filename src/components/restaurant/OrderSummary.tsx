@@ -71,10 +71,10 @@ export function OrderSummary({
         <Dialog open={showOrderDialog} onOpenChange={setShowOrderDialog}>
           <DialogTrigger asChild>
             <Button
-              size="lg"
-              className="h-14 w-14 rounded-full shadow-hover bg-primary hover:bg-primary-hover relative"
+              size="icon"
+              className="h-[56px] w-[56px] min-w-[56px] max-w-[56px] rounded-full shadow-hover bg-primary hover:bg-primary-hover relative flex-shrink-0"
             >
-              <ShoppingCart className="h-6 w-6" />
+              <ShoppingCart className="h-5 w-5" />
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-lg w-[95vw] max-h-[90vh] overflow-y-auto bg-card px-4 sm:px-6 mx-auto rounded-xl">
@@ -96,10 +96,10 @@ export function OrderSummary({
       <Dialog open={showOrderDialog} onOpenChange={setShowOrderDialog}>
         <DialogTrigger asChild>
           <Button
-            size="lg"
-            className="h-14 w-14 rounded-full shadow-hover bg-primary hover:bg-primary-hover relative"
+            size="icon"
+            className="h-[56px] w-[56px] min-w-[56px] max-w-[56px] rounded-full shadow-hover bg-primary hover:bg-primary-hover relative flex-shrink-0"
           >
-            <ShoppingCart className="h-6 w-6" />
+            <ShoppingCart className="h-5 w-5" />
             <Badge
               className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center bg-secondary text-secondary-foreground font-bold text-xs min-w-[24px]"
             >

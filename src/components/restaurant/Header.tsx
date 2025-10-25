@@ -285,7 +285,7 @@ export function Header({
               onClick={() => setIsWaiterDialogOpen(true)}
               className="gap-2 hover:bg-accent hover:text-accent-foreground flex-shrink-0"
             >
-              <Phone className="h-4 w-4" />
+              <Phone className="h-5 w-5" />
               <span className="hidden lg:inline">Call Waiter</span>
             </Button>
             
@@ -342,10 +342,10 @@ export function Header({
       <div className="md:hidden">
         <Button
           onClick={() => setIsWaiterDialogOpen(true)}
-          className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
+          className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 h-[56px] w-[56px] rounded-full shadow-lg z-50 bg-primary hover:bg-primary/90"
           size="icon"
         >
-          <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
+          <Bell className="h-5 w-5" />
         </Button>
       </div>
 
