@@ -208,7 +208,7 @@ export function MiniGames() {
         <h3 className="text-lg font-semibold">Memory Match</h3>
         <p className="text-sm text-muted-foreground">Moves: {memoryMoves}</p>
         {memoryCards.length === 0 && (
-          <Button onClick={initMemoryGame}>Start Game</Button>
+          <Button onClick={initMemoryGame} className="text-white" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>Start Game</Button>
         )}
       </div>
       
@@ -250,9 +250,10 @@ export function MiniGames() {
         <Button
           variant="outline"
           size="lg"
-          className="gap-3 bg-gradient-card hover:shadow-hover transition-all duration-300 animate-fade-in"
+          className="gap-3 text-white border-none font-semibold transition-all duration-300 animate-fade-in"
+          style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}
         >
-          <Gamepad2 className="h-5 w-5 text-accent" />
+          <Gamepad2 className="h-5 w-5" />
           <span className="font-medium">Mini Games</span>
         </Button>
       </DialogTrigger>

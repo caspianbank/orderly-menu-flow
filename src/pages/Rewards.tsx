@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Trophy, Gift, Sparkles } from 'lucide-react';
+import { ChevronLeft, Gift, Target, Zap, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import MysteryChoice from '@/components/restaurant/MysteryChoice';
 import { SpinRoulette } from '@/components/restaurant/SpinRoulette';
 import { MiniGames } from '@/components/restaurant/MiniGames';
@@ -16,113 +17,137 @@ const Rewards = () => {
   const handleAddToOrder = (item: any) => {
     console.log('Adding to order:', item);
   };
+  
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#F5F5F5]">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 sm:h-16 items-center px-4">
+      <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
+        <div className="container flex h-16 items-center px-4 sm:px-6">
           <Link to="/">
-            <Button variant="ghost" size="sm" className="gap-2 text-xs sm:text-sm">
-              <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              Back to Menu
+            <Button variant="ghost" size="sm" className="gap-2 hover:bg-gray-100">
+              <ChevronLeft className="h-4 w-4" />
+              <span className="font-medium">Back to Menu</span>
             </Button>
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container py-4 sm:py-6 md:py-8 px-4">
-        <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8">
-          {/* Page Header */}
-          <div className="text-center space-y-3 sm:space-y-4">
-            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 mb-2 sm:mb-4">
-              <Trophy className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-primary" />
-            </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Rewards & Games</h1>
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-              Enjoy exclusive rewards, surprise deals, and fun games while you wait for your order!
-            </p>
+      <main className="container px-4 sm:px-6 py-8 sm:py-10">
+        <div className="max-w-5xl mx-auto">
+          
+          {/* Page Title */}
+          <div className="text-center mb-8 sm:mb-10">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-3" style={{ color: '#9D080F' }}>Games</h1>
+            <p className="text-gray-600 text-base sm:text-lg">Play games and win rewards while you wait</p>
           </div>
-
-          {/* Features Grid */}
-          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Mystery Choice */}
-            <Card className="border-2 hover:shadow-lg transition-shadow">
-              <CardHeader className="text-center pb-3 sm:pb-4 p-4 sm:p-6">
-                <div className="mx-auto mb-2 sm:mb-3 h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg flex items-center justify-center">
-                  <Gift className="h-5 w-5 sm:h-6 sm:w-6 text-purple-500" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Mystery Choice</CardTitle>
-                <CardDescription className="text-xs sm:text-sm">
-                  Let us surprise you with a random dish from your favorite category
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-center pb-4 sm:pb-6 px-4">
+          
+          {/* Games Grid - All in one section */}
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+            
+            {/* Mystery Choice - Hidden Dialog Implementation */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Card className="bg-white border-0 shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                  <CardContent className="p-6 sm:p-8 text-center">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>
+                        <Gift className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl sm:text-2xl mb-2 font-bold text-gray-900">Mystery Choice</CardTitle>
+                        <CardDescription className="text-sm sm:text-base text-gray-600">
+                          Random dish from your favorite category
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2 text-center">
+                    <Gift className="h-5 w-5" style={{ color: '#9D080F' }} />
+                    Mystery Choice
+                  </DialogTitle>
+                </DialogHeader>
                 <MysteryChoice />
-              </CardContent>
-            </Card>
+              </DialogContent>
+            </Dialog>
 
-            {/* Spin Roulette */}
-            <Card className="border-2 hover:shadow-lg transition-shadow">
-              <CardHeader className="text-center pb-3 sm:pb-4 p-4 sm:p-6">
-                <div className="mx-auto mb-2 sm:mb-3 h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-lg flex items-center justify-center">
-                  <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-orange-500" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Spin to Order</CardTitle>
-                <CardDescription className="text-xs sm:text-sm">
-                  Spin the wheel and discover exciting menu items with special deals
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-center pb-4 sm:pb-6 px-4">
+            {/* Spin to Win - Hidden Dialog Implementation */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Card className="bg-white border-0 shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                  <CardContent className="p-6 sm:p-8 text-center">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>
+                        <Target className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl sm:text-2xl mb-2 font-bold text-gray-900">Spin to Win</CardTitle>
+                        <CardDescription className="text-sm sm:text-base text-gray-600">
+                          Spin for special deals and discounts
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl">
                 <SpinRoulette items={menuItems} categories={categories} onAddToOrder={handleAddToOrder} />
-              </CardContent>
-            </Card>
+              </DialogContent>
+            </Dialog>
 
-            {/* Mini Games */}
-            <Card className="border-2 hover:shadow-lg transition-shadow">
-              <CardHeader className="text-center pb-3 sm:pb-4 p-4 sm:p-6">
-                <div className="mx-auto mb-2 sm:mb-3 h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-lg flex items-center justify-center">
-                  <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Mini Games</CardTitle>
-                <CardDescription className="text-xs sm:text-sm">
-                  Play fun games while waiting for your order to arrive
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-center pb-4 sm:pb-6 px-4">
+            {/* Mini Games - Hidden Dialog Implementation */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Card className="bg-white border-0 shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                  <CardContent className="p-6 sm:p-8 text-center">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>
+                        <Zap className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl sm:text-2xl mb-2 font-bold text-gray-900">Mini Games</CardTitle>
+                        <CardDescription className="text-sm sm:text-base text-gray-600">
+                          Quick games while waiting for order
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-hidden">
                 <MiniGames />
-              </CardContent>
-            </Card>
+              </DialogContent>
+            </Dialog>
 
-            {/* Challenges */}
-            <Card className="border-2 hover:shadow-lg transition-shadow">
-              <CardHeader className="text-center pb-3 sm:pb-4 p-4 sm:p-6">
-                <div className="mx-auto mb-2 sm:mb-3 h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-lg flex items-center justify-center">
-                  <Trophy className="h-6 w-6 text-green-500" />
-                </div>
-                <CardTitle className="text-xl">Challenges</CardTitle>
-                <CardDescription>
-                  Complete fun challenges to unlock exclusive rewards and badges
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-center pb-6">
+            {/* Daily Challenges - Hidden Dialog Implementation */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Card className="bg-white border-0 shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                  <CardContent className="p-6 sm:p-8 text-center">
+                    <div className="flex flex-col items-center space-y-3">
+                      <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>
+                        <Award className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl sm:text-2xl mb-2 font-bold text-gray-900">Daily Challenges</CardTitle>
+                        <CardDescription className="text-sm sm:text-base text-gray-600">
+                          Complete challenges for rewards
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                 <Challenges />
-              </CardContent>
-            </Card>
-          </div>
+              </DialogContent>
+            </Dialog>
 
-          {/* Info Section */}
-          <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-primary" />
-                More Rewards Coming Soon!
-              </CardTitle>
-              <CardDescription>
-                We're constantly adding new ways for you to earn points, unlock deals, and have fun while dining with us.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          </div>
         </div>
       </main>
     </div>

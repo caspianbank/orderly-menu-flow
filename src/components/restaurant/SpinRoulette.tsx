@@ -54,10 +54,10 @@ export const SpinRoulette = ({ items, categories, onAddToOrder }: SpinRoulettePr
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20 hover:from-primary/20 hover:to-secondary/20">
+        <Button variant="outline" className="flex items-center gap-2 text-white border-none" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>
           <Dices className="w-5 h-5" />
           Spin to Order
-          <Sparkles className="w-4 h-4 text-primary" />
+          <Sparkles className="w-4 h-4" />
         </Button>
       </DialogTrigger>
       
@@ -159,7 +159,8 @@ export const SpinRoulette = ({ items, categories, onAddToOrder }: SpinRoulettePr
             onClick={spinWheel}
             disabled={isSpinning || filteredItems.length === 0}
             size="lg"
-            className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
+            className="text-white text-lg px-8 py-6"
+            style={{ background: isSpinning || filteredItems.length === 0 ? undefined : 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}
           >
             {isSpinning ? (
               <>
@@ -212,8 +213,9 @@ export const SpinRoulette = ({ items, categories, onAddToOrder }: SpinRoulettePr
                 
                 <Button 
                   onClick={() => onAddToOrder(selectedItem)}
-                  className="w-full"
+                  className="w-full text-white"
                   size="lg"
+                  style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}
                 >
                   Add to Order
                 </Button>

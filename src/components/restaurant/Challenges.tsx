@@ -143,11 +143,11 @@ const Challenges = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-gradient-to-r from-orange-500 to-red-500 text-white border-none hover:from-orange-600 hover:to-red-600 font-semibold">
+        <Button variant="outline" className="text-white border-none font-semibold" style={{ background: 'linear-gradient(135deg, #9D080F 0%, #c20a13 100%)' }}>
           <Trophy className="mr-2 h-4 w-4" />
           Challenges
           {activeChallenge.length > 0 && (
-            <Badge className="ml-2 bg-white text-orange-600">
+            <Badge className="ml-2 bg-white" style={{ color: '#9D080F' }}>
               {activeChallenge.length}
             </Badge>
           )}
