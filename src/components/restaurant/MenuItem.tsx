@@ -35,8 +35,8 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
   };
 
   return (
-    <Card className="menu-card bg-white border-0 shadow-md hover:shadow-lg overflow-hidden flex flex-col h-full">
-      <div className="relative flex-[4]">
+    <Card className="menu-card bg-white border-0 shadow-md hover:shadow-lg overflow-hidden flex flex-col h-full min-h-[320px] sm:min-h-[360px]">
+      <div className="relative flex-[5]">
         <div className="h-full overflow-hidden">
           <img 
             src={item.image} 
@@ -74,7 +74,7 @@ export function MenuItem({ item, onAddToOrder }: MenuItemProps) {
 
         {/* Price and Button Section */}
         <div className="flex items-center justify-between gap-2 mt-auto">
-          <div className="text-lg sm:text-xl font-bold text-primary">
+          <div className="text-base sm:text-lg font-semibold text-primary">
             ${item.price.toFixed(2)}
           </div>
           <Button 
