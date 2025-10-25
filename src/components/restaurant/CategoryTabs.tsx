@@ -35,6 +35,15 @@ export function CategoryTabs({
       <div className="container mx-auto px-4 sm:px-6">
         {/* Main Navigation Bar */}
         <div className="flex items-center justify-between gap-4 py-3 sm:py-4">
+          {/* Filter Button - Left Side */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <FilterDialog
+              categories={categories}
+              filters={filters}
+              onFiltersChange={onFiltersChange}
+            />
+          </div>
+
           {/* Categories Section */}
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="hidden sm:flex items-center gap-2 text-gray-500 flex-shrink-0">
@@ -43,7 +52,7 @@ export function CategoryTabs({
             </div>
             
             <ScrollArea className="w-full">
-              <div className="flex gap-2 pb-2 w-max">
+              <div className="flex gap-2 py-2 w-max">
                 <Button
                   variant={activeCategory === null ? "default" : "outline"}
                   onClick={() => onCategorySelect(null)}
@@ -72,25 +81,6 @@ export function CategoryTabs({
               </div>
               <ScrollBar orientation="horizontal" className="h-1" />
             </ScrollArea>
-          </div>
-
-          {/* Filter Button */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {}}
-              className="gap-2 h-9 px-3 sm:px-4 bg-white hover:bg-gray-50 border-gray-300 relative"
-              asChild
-            >
-              <div>
-                <FilterDialog
-                  categories={categories}
-                  filters={filters}
-                  onFiltersChange={onFiltersChange}
-                />
-              </div>
-            </Button>
           </div>
         </div>
 

@@ -85,18 +85,14 @@ export function FilterDialog({ categories, filters, onFiltersChange }: FilterDia
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button 
-          variant="outline" 
-          size="icon"
-          className="relative h-9 w-9 rounded-lg border-gray-300 hover:border-primary/50 transition-colors"
-        >
-          <SlidersHorizontal className="h-4 w-4" />
+        <button className="relative cursor-pointer transition-opacity hover:opacity-70 px-2 py-2 h-9 flex items-center justify-center">
+          <SlidersHorizontal className="h-4 w-4" style={{ color: '#9D080F' }} />
           {activeFiltersCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-primary text-white text-xs font-semibold flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full text-white text-xs font-semibold flex items-center justify-center" style={{ backgroundColor: '#9D080F' }}>
               {activeFiltersCount}
             </span>
           )}
-        </Button>
+        </button>
       </DialogTrigger>
       <DialogContent className="max-w-lg max-h-[75vh] overflow-hidden flex flex-col p-0 rounded-2xl">
         <DialogHeader className="px-5 pt-5 pb-3 border-b bg-gray-50/50">
